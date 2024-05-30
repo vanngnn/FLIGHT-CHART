@@ -1,7 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RegistroEntrada.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.RegistroEntrada" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Reportes.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.Reportes" %>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -10,31 +9,31 @@
     <title>Shipping Display</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="template/plugins/fontawesome-free/css/all.min.css" />
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="template/plugins/daterangepicker/daterangepicker.css" />
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="template/plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="template/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css" />
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="template/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" />
-    <!-- iCheck -->
-    <link rel="stylesheet" href="template/plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
-    <!-- JQVMap -->
-    <link rel="stylesheet" href="template/plugins/jqvmap/jqvmap.min.css" />
-    <!-- Theme style -->
-    <link rel="stylesheet" href="template/dist/css/adminlte.min.css" />
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="template/plugins/overlayScrollbars/css/OverlayScrollbars.min.css" />
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="template/plugins/daterangepicker/daterangepicker.css" />
-    <!-- summernote -->
-    <link rel="stylesheet" href="template/plugins/summernote/summernote-bs4.min.css" />
     <!-- Select2 -->
     <link rel="stylesheet" href="template/plugins/select2/css/select2.min.css" />
-    <link rel="stylesheet" href="template/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" />
+    <link rel="stylesheet" href="template/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css"/>
+    <!-- Bootstrap4 Duallistbox -->
+    <link rel="stylesheet" href="template/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css" />
+    <!-- BS Stepper -->
+    <link rel="stylesheet" href="template/plugins/bs-stepper/css/bs-stepper.min.css" />
+    <!-- dropzonejs -->
+    <link rel="stylesheet" href="template/plugins/dropzone/min/dropzone.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="template/dist/css/adminlte.min.css" />
+
     <script type = "text/javascript">
         function DisableButton()
         {
-            document.getElementById("<%=btnRegistrar.ClientID %>").disabled = true;
+            document.getElementById("<%=btnFiltrar.ClientID %>").disabled = true;
         }
         window.onbeforeunload = DisableButton;
         function isDelete() {
@@ -58,7 +57,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="DASHBOARD.aspx" class="nav-link">Dashboard</a>
+                <a href="DASHBOARD.aspx" class="nav-link">Home</a>
             </li>
         </ul>
         <!-- Right navbar links -->
@@ -86,7 +85,7 @@
                     <img src="Template/dist/img/user_icon.png" class="img-circle elevation-2" alt="User Image" />
                 </div>
                 <div class="info">
-                    <span class="brand-text font-weight-light"><asp:Label ID="lblNombre" runat="server" Text="Usuario" ForeColor ="White"></asp:Label></span>
+                    <span class="brand-text font-weight-light"><asp:Label ID="lblNombre" runat="server" Text="Username" ForeColor ="White"></asp:Label></span>
                 </div>
             </div>
             <nav class="mt-2">
@@ -96,55 +95,38 @@
                             <i class="nav-icon fas fa-tachometer-alt"></i><p>Dashboard</p>
                         </asp:HyperLink>
                     </li>
-
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkDashEmb" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkDashEmb" NavigateUrl="SHIPMENT.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-ellipsis-h"></i><p>Shipments</p>
                         </asp:HyperLink>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <asp:HyperLink ID="???" NavigateUrl="SHIPMENT_INPUT.aspx" runat="server" Visible="true" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i><p>Inputs</p>
-                                </asp:HyperLink>
-                            </li>
-                            <li class="nav-item">
-                                <asp:HyperLink ID="???" NavigateUrl="SHIPMENT_OUTPUT.aspx" runat="server" Visible="true" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i><p>Outputs</p>
-                                </asp:HyperLink>
-                            </li>
-                        </ul>
                     </li>
-
                     <li class="nav-item menu-open">
-                        <asp:HyperLink ID="LinkConfig" NavigateUrl="#" runat="server" Visible="true"  class="nav-link active"> 
+                         <asp:HyperLink ID="LinkConfig" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-edit"></i><p>Daily Log<i class="fas fa-angle-left right"></i></p>
                         </asp:HyperLink>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="DAILYLOG_INPUT.aspx" runat="server" Visible="true"  class="nav-link active"> 
-                                    <i class="far fa-circle nav-icon"></i><p>Inputs</p>
+                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="DAILYLOG_INPUT.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                    <i class="far fa-circle nav-icon"></i><p>Input</p>
                                 </asp:HyperLink>
                             </li>
                             <li class="nav-item">
                                 <asp:HyperLink ID="LinkRegOut" NavigateUrl="DAILYLOG_OUTPUT.aspx" runat="server" Visible="true"  class="nav-link"> 
-                                    <i class="far fa-circle nav-icon"></i><p>Outputs</p>
+                                    <i class="far fa-circle nav-icon"></i><p>Output</p>
                                 </asp:HyperLink>
                             </li>
                         </ul>
                     </li>
-
                     <li class="nav-item">
                         <asp:HyperLink ID="LinkShipper" NavigateUrl="SHIPPER.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-book"></i><p>Shipper</p>
                         </asp:HyperLink>
                     </li>
-
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkReport" NavigateUrl="REPORTS.aspx" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkReport" NavigateUrl="REPORTS.aspx" runat="server" Visible="true"  class="nav-link active"> 
                             <i class="nav-icon far fa-calendar-alt"></i><p>Reports</p>
                         </asp:HyperLink>
                     </li>
-
                     <li class="nav-item">
                         <a href="#" class="nav-link"><i class="nav-icon fa fa-cog"></i><p>Configuration<i class="fas fa-angle-left right"></i></p></a>
                         <ul class="nav nav-treeview">
@@ -155,13 +137,11 @@
                             </li>
                         </ul>
                     </li>
-
                      <li class="nav-item">
                         <asp:LinkButton ID="LinkSalir" runat="server" OnClick="LinkSalir_Click"  class="nav-link">
-                            <i class="nav-icon ion-log-out"></i><p>Log out</p>
+                            <i class="nav-icon ion-log-out"></i><p>Logout</p>
                         </asp:LinkButton>
                     </li>
-
                 </ul>
             </nav>
         </div>
@@ -175,12 +155,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Daily entry</h1>
+                        <h1 class="m-0"></h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Daily entry</li>
+                            <li class="breadcrumb-item active">Reports</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -203,77 +183,28 @@
                         <!-- /.card-header -->
                         <!-- form start -->
                         <div class="card-body">
-
-                                //TIME
-                                <div class="form-group row">
-                                    <label for="inputTime" class="col-sm-2 col-form-label">TIME:</label>
-                                    <div class="col-sm-10">
-                                        <asp:TextBox ID="TextBox1" runat="server" class="form-control" placeholder="Time" Enable="false" Visible="false"></asp:TextBox>
-                                        <asp.DropDownList ID="AspDropDownList1" runat="server" class="form-control select2" style="width": 100%;"></asp.DropDownList>
+                            <!-- Date range -->
+                            <div class="form-group">
+                                <label>Date:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </span>
                                     </div>
-                                </div>
-                                
-                                //CARRIER
-                                <div class="form-group row">
-                                    <label for="inputCarrier???" class="col-sm-2 col-form-label">CARRIER:</label>
-                                    <div class="col-sm-10">
-                                        <asp:TextBox ID="txtId_reg" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
-                                        <asp:DropDownList ID="dblCarrier" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
-                                    </div>
-                                </div>
-
-                                //PART NUMBER
-                                <div class="form-group row">
-                                    <label for="inputCliente???" class="col-sm-2 col-form-label">P/N:</label>
-                                        <div class="col-sm-10">
-                                            <asp:DropDownList ID="dblCliente" runat="server"  class="form-control select2" style="width: 100%;"></asp:DropDownList>
-                                        </div>
-                                </div>
-
-                                //PROJECT
-                                <div class="form-group row">
-                                    <label for="inputplacas" class="col-sm-2 col-form-label">PROJECT:</label>
-                                    <div class="col-sm-10">
-                                        <asp:TextBox ID="txtPlacas" runat="server" class="form-control" placeholder="Plates"></asp:TextBox>
-                                    </div>
-                                </div>
-
-                                //TO
-                                <div class="form-group row">
-                                    <label for="inputCaja??" class="col-sm-2 col-form-label">TO:</label>
-                                    <div class="col-sm-10">
-                                        <asp:TextBox ID="txtCaja" runat="server" class="form-control" placeholder="Box number"></asp:TextBox>
-                                    </div>
-                                </div>
-
-                                //BILL OF LANDING
-                                <div class="form-group row">
-                                    <label for="inputOperador???" class="col-sm-2 col-form-label">B/L:</label>
-                                    <div class="col-sm-10">
-                                        <asp:TextBox ID="txtOperador" runat="server" class="form-control" placeholder="Name"></asp:TextBox>
-                                    </div>
-                                </div>
-                                
-                                //QUANTITY
-                                <div class="form-group row">
-                                    <label for="inputTelefono??" class="col-sm-2 col-form-label">QUANTITY:</label>
-                                    <div class="col-sm-10">
-                                        <asp:TextBox ID="txtTelefono" runat="server" class="form-control" placeholder="Phone"></asp:TextBox>
-                                    </div>
-                                </div>
-
-                                //STATUS
-                                <div class="form-group row">
-                                    <label for="inputTarjeta???" class="col-sm-2 col-form-label">STATUS:</label>
-                                    <div class="col-sm-10">
-                                        <asp:TextBox ID="txtAcceso" runat="server" class="form-control" placeholder="..." Rows="2" TextMode="MultiLine" ></asp:TextBox>
-                                    </div>
+                                    <asp:TextBox ID="reservation" class="form-control float-right" runat="server"></asp:TextBox>
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <label>Plant:</label>
+                                <div class="input-group"> 
+                                    <asp:DropDownList ID="dblPlanta" runat="server" class="select2" style="width: 100%;"></asp:DropDownList>
+                                </div>
+                            </div>
+                        </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <asp:Button ID="btnRegistrar" runat="server" Text="Save"  class="btn btn-block btn-info btn-lg" OnClick="btnRegistrar_Click"/>
+                            <asp:Button ID="btnFiltrar" runat="server" Text="Filter"  class="btn btn-block btn-info btn-lg" OnClick="btnFiltrar_Click" />
                         </div>
                             <!-- /.card-footer -->                  
                     </div>
@@ -285,30 +216,34 @@
                         <!-- /.card -->
                         <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">List</h3>
+                            <h3 class="card-title">Daily Log</h3>
+                            <div class="card-tools">
+                                <%--<span title="3 New Messages" class="badge badge-primary">--%>
+                                <asp:Button ID="btnExporta" class="btn btn-box-tool" runat="server" Text="Export" OnClick="btnExporta_Click" />
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                             
+                            </div>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
+                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" >
                                 <Columns>
-                                    <asp:BoundField HeaderText="TIME" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="ID" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
                                     <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
-                                    <asp:BoundField HeaderText="P/N" DataField="???" />
-                                    <asp:BoundField HeaderText="PROJECT" DataField="Entrada" />
-                                    <asp:BoundField HeaderText="TO" DataField="Caja" />
-                                    <asp:BoundField HeaderText="B/L" DataField="Placas" />
-                                    <asp:BoundField HeaderText="QUANTITY" DataField="NombreOperador" />
-                                    <asp:BoundField HeaderText="STATUS" DataField="Telefono" />
-                                    <asp:TemplateField>
-                                        <ItemTemplate>
-                                            <asp:Button text="Edit" CommandName="Editar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-primary" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <ItemTemplate>
-                                            <asp:Button text="Delete" CommandName="Eliminar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-danger" OnClientClick="return isDelete();" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
+                                    <asp:BoundField HeaderText="B/L" DataField="Salida" />
+                                    <asp:BoundField HeaderText="P/N" DataField="Caja" />
+                                    <asp:BoundField HeaderText="QUANTITY" DataField="RutaName" />
+                                    <asp:BoundField HeaderText="TO" DataField="Input" />
+                                    <asp:BoundField HeaderText="FROM" DataField="Output" />
+                                    <asp:BoundField HeaderText="SHIPPER" DataField="Shipper" />
+                                    <%--<asp:BoundField HeaderText="ASN Sent" DataField="ASN_Sent" />
+                                    <asp:BoundField HeaderText="ASN Ack" DataField="ASN_Ack" />--%>
                                 </Columns>
                             </asp:GridView>
                         </div>
@@ -342,39 +277,32 @@
 
 <!-- jQuery -->
 <script src="template/plugins/jquery/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="template/plugins/jquery-ui/jquery-ui.min.js"></script>
-
 <!-- Bootstrap 4 -->
 <script src="template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- ChartJS -->
-<script src="template/plugins/chart.js/Chart.min.js"></script>
-<!-- Sparkline -->
-<script src="template/plugins/sparklines/sparkline.js"></script>
-<!-- JQVMap -->
-<script src="template/plugins/jqvmap/jquery.vmap.min.js"></script>
-<script src="template/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="template/plugins/jquery-knob/jquery.knob.min.js"></script>
-<!-- daterangepicker -->
-<script src="template/plugins/moment/moment.min.js"></script>
-<script src="template/plugins/daterangepicker/daterangepicker.js"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="template/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-<!-- Summernote -->
-<script src="template/plugins/summernote/summernote-bs4.min.js"></script>
-<!-- overlayScrollbars -->
-<script src="template/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-<!-- AdminLTE App -->
-<script src="template/dist/js/adminlte.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="template/dist/js/demo.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="template/dist/js/pages/dashboard.js"></script>
-<!-- bs-custom-file-input -->
-<script src="template/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 <!-- Select2 -->
 <script src="template/plugins/select2/js/select2.full.min.js"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="template/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+<!-- InputMask -->
+<script src="template/plugins/moment/moment.min.js"></script>
+<script src="template/plugins/inputmask/jquery.inputmask.min.js"></script>
+<!-- date-range-picker -->
+<script src="template/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap color picker -->
+<script src="template/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="template/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Bootstrap Switch -->
+<script src="template/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<!-- BS-Stepper -->
+<script src="template/plugins/bs-stepper/js/bs-stepper.min.js"></script>
+<!-- dropzonejs -->
+<script src="template/plugins/dropzone/min/dropzone.min.js"></script>
+<!-- AdminLTE App -->
+<script src="template/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="template/dist/js/demo.js"></script>
+<!-- Page specific script -->
 <script>
   $(function () {
     //Initialize Select2 Elements
@@ -511,5 +439,3 @@
 </script>
 </body>
 </html>
-
-

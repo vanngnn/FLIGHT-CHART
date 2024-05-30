@@ -92,47 +92,64 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkDash" NavigateUrl="Dashboard.aspx" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkDash" NavigateUrl="DASHBOARD.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-tachometer-alt"></i><p>Dashboard</p>
                         </asp:HyperLink>
                     </li>
+
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkDashEmb" NavigateUrl="DashboardV1.aspx" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkDashEmb" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-ellipsis-h"></i><p>Shipments</p>
                         </asp:HyperLink>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <asp:HyperLink ID="???" NavigateUrl="SHIPMENT_INPUT.aspx" runat="server" Visible="true" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i><p>Inputs</p>
+                                </asp:HyperLink>
+                            </li>
+                            <li class="nav-item">
+                                <asp:HyperLink ID="???" NavigateUrl="SHIPMENT_OUTPUT.aspx" runat="server" Visible="true" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i><p>Outputs</p>
+                                </asp:HyperLink>
+                            </li>
+                        </ul>
                     </li>
+
                     <li class="nav-item menu-close">
                         <asp:HyperLink ID="LinkConfig" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-edit"></i><p>Daily Log<i class="fas fa-angle-left right"></i></p>
                         </asp:HyperLink>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="RegistroEntrada.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="DAILYLOG_INPUT.aspx" runat="server" Visible="true"  class="nav-link"> 
                                     <i class="far fa-circle nav-icon"></i><p>Inputs</p>
                                 </asp:HyperLink>
                             </li>
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="RegistroSalida.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="DAILYLOG_OUTPUT.aspx" runat="server" Visible="true"  class="nav-link"> 
                                     <i class="far fa-circle nav-icon"></i><p>Outputs</p>
                                 </asp:HyperLink>
                             </li>
                         </ul>
                     </li>
+
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkShipper" NavigateUrl="Shipper.aspx" runat="server" Visible="true"  class="nav-link active"> 
+                        <asp:HyperLink ID="LinkShipper" NavigateUrl="SHIPPER.aspx" runat="server" Visible="true"  class="nav-link active"> 
                             <i class="nav-icon fas fa-book"></i><p>Shipper</p>
                         </asp:HyperLink>
                     </li>
+
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkReport" NavigateUrl="Reportes.aspx" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkReport" NavigateUrl="REPORTS.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon far fa-calendar-alt"></i><p>Reports</p>
                         </asp:HyperLink>
                     </li>
+
                     <li class="nav-item">
                         <a href="#" class="nav-link"><i class="nav-icon fa fa-cog"></i><p>Configuration<i class="fas fa-angle-left right"></i></p></a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegister" NavigateUrl="RegistroUsuarios.aspx" runat="server" Visible="true" class="nav-link">
+                                <asp:HyperLink ID="LinkRegister" NavigateUrl="REGISTERUSER.aspx" runat="server" Visible="true" class="nav-link">
                                     <i class="nav-icon fa fa-user-plus"></i><p>Users profiles</p>
                                 </asp:HyperLink>
                             </li>
@@ -143,6 +160,7 @@
                             <i class="nav-icon ion-log-out"></i><p>Logout</p>
                         </asp:LinkButton>
                     </li>
+
                 </ul>
             </nav>
         </div>
