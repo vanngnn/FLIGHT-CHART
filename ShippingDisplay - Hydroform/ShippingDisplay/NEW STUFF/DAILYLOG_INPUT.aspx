@@ -464,7 +464,7 @@
 
   // Update the total progress bar
   myDropzone.on("totaluploadprogress", function(progress) {
-    document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
+    document.querySelector("#total-progress.progress-bar").style.width = progress + "%"
   })
 
   myDropzone.on("sending", function(file) {

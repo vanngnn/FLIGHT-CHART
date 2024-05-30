@@ -1,12 +1,13 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DASHBOARD.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.DASHBOARD" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DashboardV1.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.DashboardV1" %>
 
 <!DOCTYPE html>
+
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="refresh" content="30" />
+    <meta http-equiv="refresh" content="10" />
     <link rel="icon" type="image/png" href="Template/img/martinrea_logo.png"/>
     <title>Shipping Display</title>
     <!-- Google Font: Source Sans Pro -->
@@ -30,7 +31,7 @@
     <!-- summernote -->
     <link rel="stylesheet" href="template/plugins/summernote/summernote-bs4.min.css" />
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini sidebar-collapse">
     
 <div class="wrapper">
     <!-- Preloader -->
@@ -45,7 +46,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="DASHBOARD.aspx" class="nav-link">DASHBOARD</a>
+                <a href="Dashboard.aspx" class="nav-link">Dashboard</a>
             </li>
         </ul>
         <!-- Right navbar links -->
@@ -63,7 +64,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         
         <!-- Brand Logo -->
-        <a href="DASHBOARD.aspx" class="brand-link">
+        <a href="dashboard.aspx" class="brand-link">
             <img src="template/img/martinrea_logo.png" alt="Martinrea" class="brand-image img-circle elevation-3" style="opacity: .8" />
             <span class="brand-text font-weight-light">Martinrea</span>
         </a>
@@ -81,76 +82,57 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkDash" NavigateUrl="DASHBOARD.aspx" runat="server" Visible="true"  class="nav-link active"> 
-                            <i class="nav-icon fas fa-tachometer-alt"></i><p>DASHBOARD</p>
+                        <asp:HyperLink ID="LinkDash" NavigateUrl="Dashboard.aspx" runat="server" Visible="true"  class="nav-link"> 
+                            <i class="nav-icon fas fa-tachometer-alt"></i><p>Dashboard</p>
                         </asp:HyperLink>
                     </li>
-
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkDashEmb" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkDashEmb" NavigateUrl="DashboardV1.aspx" runat="server" Visible="true"  class="nav-link active"> 
                             <i class="nav-icon fas fa-ellipsis-h"></i><p>Shipments</p>
                         </asp:HyperLink>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <asp:HyperLink ID="???" NavigateUrl="SHIPMENT_INPUT.aspx" runat="server" Visible="true" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i><p>Inputs</p>
-                                </asp:HyperLink>
-                            </li>
-                            <li class="nav-item">
-                                <asp:HyperLink ID="???" NavigateUrl="SHIPMENT_OUTPUT.aspx" runat="server" Visible="true" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i><p>Outputs</p>
-                                </asp:HyperLink>
-                            </li>
-                        </ul>
                     </li>
-
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkConfig" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
+                         <asp:HyperLink ID="LinkConfig" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-edit"></i><p>Daily Log<i class="fas fa-angle-left right"></i></p>
                         </asp:HyperLink>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="DAILYLOG_INPUT.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="RegistroEntrada.aspx" runat="server" Visible="true"  class="nav-link"> 
                                     <i class="far fa-circle nav-icon"></i><p>Inputs</p>
                                 </asp:HyperLink>
                             </li>
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="DAILYLOG_OUTPUT.aspx" runat="server" Visible="true"  class="nav-link" > 
+                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="RegistroSalida.aspx" runat="server" Visible="true"  class="nav-link" > 
                                     <i class="far fa-circle nav-icon"></i><p>Outputs</p>
                                 </asp:HyperLink>
                             </li>
                         </ul>
                     </li>
-
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkShipper" NavigateUrl="SHIPPER.aspx" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkShipper" NavigateUrl="Shipper.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-book"></i><p>Shipper</p>
                         </asp:HyperLink>
                     </li>
-
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkReport" NavigateUrl="REPORTS.aspx" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkReport" NavigateUrl="Reportes.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon far fa-calendar-alt"></i><p>Reports</p>
                         </asp:HyperLink>
                     </li>
-
                     <li class="nav-item">
                         <a href="#" class="nav-link"><i class="nav-icon fa fa-cog"></i><p>Configuration<i class="fas fa-angle-left right"></i></p></a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegister" NavigateUrl="REGISTERUSER.aspx" runat="server" Visible="true" class="nav-link">
+                                <asp:HyperLink ID="LinkRegister" NavigateUrl="RegistroUsuarios.aspx" runat="server" Visible="true" class="nav-link">
                                     <i class="nav-icon fa fa-user-plus"></i><p>Users profiles</p>
                                 </asp:HyperLink>
                             </li>
                         </ul>
                     </li>
-
                     <li class="nav-item">
                         <asp:LinkButton ID="LinkSalir" runat="server" OnClick="LinkSalir_Click"  class="nav-link">
-                            <i class="nav-icon fa ion-log-out"></i><p>Log out</p>
+                            <i class="nav-icon ion-log-out"></i><p>Log out</p>
                         </asp:LinkButton>
                     </li>
-                    
                 </ul>
             </nav>
         </div>
@@ -164,12 +146,12 @@
             <div class="container-fluid">
                 <%--<div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">DASHBOARD</h1>
+                        <h1 class="m-0">Dashboard</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">DASHBOARD</li>
+                            <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->--%>
@@ -226,13 +208,13 @@
                         <div class="small-box bg-info">
                             <div class="inner">
                                 <h3><asp:Label ID="lblEnviado" runat="server" Text="0"></asp:Label></h3>
-                                <p><h3>Shipped</h3></p>
+                                <p><h3>Sent</h3></p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-checkmark-round"></i>
                             </div>
                         </div>
-                    </div>            
+                    </div>   
                 </div>
                 <!-- /.row -->
 
@@ -247,15 +229,12 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-    
-    
                 <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" OnRowDataBound="gvRegistros_RowDataBound" >
                                 <Columns>
                                     <asp:BoundField HeaderText="TIME" DataField="Id_reg" />
                                     <asp:BoundField HeaderText="CARRIER" DataField="ClienteName" />
                                     <asp:BoundField HeaderText="P/N" DataField="CarrierName" />
                                     <asp:BoundField HeaderText="PROJECT" DataField="Entrada" />
-                                    <asp:BoundField HeaderText="TO" DataField="Salida" />
                                     <asp:BoundField HeaderText="FROM" DataField="Caja" />
                                     <asp:BoundField HeaderText="B/L" DataField="RutaName" />
                                     <asp:BoundField HeaderText="QUANITTY" DataField="Shipper" />
