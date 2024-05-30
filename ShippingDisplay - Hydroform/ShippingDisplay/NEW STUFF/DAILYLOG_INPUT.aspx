@@ -58,7 +58,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="Dashboard.aspx" class="nav-link">Dashboard</a>
+                <a href="DASHBOARD.aspx" class="nav-link">Dashboard</a>
             </li>
         </ul>
         <!-- Right navbar links -->
@@ -75,7 +75,7 @@
     <form class="form-horizontal" runat="server">
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="dashboard.aspx" class="brand-link">
+        <a href="DASHBOARD.aspx" class="brand-link">
             <img src="template/img/martinrea_logo.png" alt="Martinrea" class="brand-image img-circle elevation-3" style="opacity: .8" />
             <span class="brand-text font-weight-light">Martinrea</span>
         </a>
@@ -92,15 +92,29 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkDash" NavigateUrl="Dashboard.aspx" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkDash" NavigateUrl="DASHBOARD.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-tachometer-alt"></i><p>Dashboard</p>
                         </asp:HyperLink>
                     </li>
+                    
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkDashEmb" NavigateUrl="DashboardV1.aspx" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkDashEmb" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-ellipsis-h"></i><p>Shipments</p>
                         </asp:HyperLink>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <asp:HyperLink ID="???" NavigateUrl="SHIPMENT_INPUT.aspx" runat="server" Visible="true" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i><p>Inputs</p>
+                                </asp:HyperLink>
+                            </li>
+                            <li class="nav-item">
+                                <asp:HyperLink ID="???" NavigateUrl="SHIPMENT_OUTPUT.aspx" runat="server" Visible="true" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i><p>Outputs</p>
+                                </asp:HyperLink>
+                            </li>
+                        </ul>
                     </li>
+
                     <li class="nav-item menu-open">
                         <asp:HyperLink ID="LinkConfig" NavigateUrl="#" runat="server" Visible="true"  class="nav-link active"> 
                             <i class="nav-icon fas fa-edit"></i><p>Daily Log<i class="fas fa-angle-left right"></i></p>
@@ -118,16 +132,19 @@
                             </li>
                         </ul>
                     </li>
+
                     <li class="nav-item">
                         <asp:HyperLink ID="LinkShipper" NavigateUrl="Shipper.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-book"></i><p>Shipper</p>
                         </asp:HyperLink>
                     </li>
+
                     <li class="nav-item">
                         <asp:HyperLink ID="LinkReport" NavigateUrl="Reportes.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon far fa-calendar-alt"></i><p>Reports</p>
                         </asp:HyperLink>
                     </li>
+
                     <li class="nav-item">
                         <a href="#" class="nav-link"><i class="nav-icon fa fa-cog"></i><p>Configuration<i class="fas fa-angle-left right"></i></p></a>
                         <ul class="nav nav-treeview">
@@ -138,6 +155,7 @@
                             </li>
                         </ul>
                     </li>
+                    
                      <li class="nav-item">
                         <asp:LinkButton ID="LinkSalir" runat="server" OnClick="LinkSalir_Click"  class="nav-link">
                             <i class="nav-icon ion-log-out"></i><p>Log out</p>
