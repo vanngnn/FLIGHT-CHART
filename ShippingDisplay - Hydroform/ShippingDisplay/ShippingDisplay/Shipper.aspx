@@ -190,18 +190,28 @@
                                         <asp:TextBox ID="txtId_reg" runat="server" class="form-control" placeholder="ID" Enable="false"></asp:TextBox>
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
-                                    <label for="inputTarjeta" class="col-sm-2 col-form-label">N° Shipper:</label>
+                                    <label for="inputTarjeta" class="col-sm-2 col-form-label">Shipper name:</label>
                                     <div class="col-sm-10">
                                         <asp:TextBox ID="txtShipper" runat="server" class="form-control" placeholder="..." ></asp:TextBox>
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
-                                    <label for="inputplacas" class="col-sm-2 col-form-label">Route:</label>
+                                    <label for="inputplacas" class="col-sm-2 col-form-label">Route (window times):</label>
                                     <div class="col-sm-10">
                                         <asp:DropDownList ID="dblRuta" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
                                     </div>
                                 </div>
+
+                                <div class="form-group row">
+                                    <label for="txtShipperLocation"  class="col-sm-2 col-form-label">Tracked location:</label>
+                                    <div class="col-sm-10">
+                                        <asp:TextBox ID="txtTrackedLocation" runat="server" class="form-control" placeholder="location"></asp:TextBox>
+                                    </div>
+                                </div>
+                                
                             </div>
                         <!-- /.card-body -->
                         <div class="card-footer">

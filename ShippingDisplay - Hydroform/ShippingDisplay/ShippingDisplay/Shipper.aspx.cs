@@ -23,6 +23,7 @@ namespace ShippingDisplay.ShippingDisplay
                     CargarPerfil(Username);
                     CargarRuta();
                     CargarGrid();
+                    TruckLocation();
                 }
                 else
                 {
@@ -85,6 +86,14 @@ namespace ShippingDisplay.ShippingDisplay
             txtId_reg.Text = Convert.ToString(Reg.Id_reg);
 
         }
+
+        private void TruckLocation()
+        {
+            txtTrackedLocation.DataTextField="location";
+        }
+
+
+
         protected void gvRegistros_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Editar")
