@@ -192,41 +192,55 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inputCliente" class="col-sm-2 col-form-label">Customer:</label>
+                                    <label for="inputCliente" class="col-sm-2 col-form-label">Project:</label>
                                         <div class="col-sm-10">
                                             <asp:DropDownList ID="dblCliente" runat="server"  class="form-control select2" style="width: 100%;"></asp:DropDownList>
                                         </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inputplacas" class="col-sm-2 col-form-label">Truck plates:</label>
+                                    <label for="inputTime" class="col-sm-2 col-form-label">Time:</label>
                                     <div class="col-sm-10">
-                                        <asp:TextBox ID="txtPlacas" runat="server" class="form-control" placeholder="Plates"></asp:TextBox>
+                                        <input id="assignTime" type="time" name="shpt-time" value="12:00" />
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label for="inputCaja" class="col-sm-2 col-form-label">Box number:</label>
-                                    <div class="col-sm-10">
-                                        <asp:TextBox ID="txtCaja" runat="server" class="form-control" placeholder="Box number"></asp:TextBox>
-                                    </div>
+                            <div class="form-group row">
+                                <label for="inputPN" class="col-sm-2 col-form-label">P/N:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtPN" runat="server" class="form-control" placeholder="Part Number"></asp:TextBox>
                                 </div>
-                                <div class="form-group row">
-                                    <label for="inputOperador" class="col-sm-2 col-form-label">Operator name:</label>
-                                    <div class="col-sm-10">
-                                        <asp:TextBox ID="txtOperador" runat="server" class="form-control" placeholder="Name"></asp:TextBox>
-                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputBL" class="col-sm-2 col-form-label">B/L:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtBL" runat="server" class="form-control" placeholder="Bill Of Landing"></asp:TextBox>
                                 </div>
-                                <div class="form-group row">
-                                    <label for="inputTelefono" class="col-sm-2 col-form-label">Phone:</label>
-                                    <div class="col-sm-10">
-                                        <asp:TextBox ID="txtTelefono" runat="server" class="form-control" placeholder="Phone"></asp:TextBox>
-                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputQTY" class="col-sm-2 col-form-label">Quantity:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtQTY" runat="server" class="form-control" placeholder="Quantity"></asp:TextBox>
                                 </div>
-                                <div class="form-group row">
-                                    <label for="inputTarjeta" class="col-sm-2 col-form-label">Access card:</label>
-                                    <div class="col-sm-10">
-                                        <asp:TextBox ID="txtAcceso" runat="server" class="form-control" placeholder="..." Rows="2" TextMode="MultiLine" ></asp:TextBox>
-                                    </div>
+                            </div>    
+                            <div class="form-group row">
+                                <label for="inputStatus" class="col-sm-2 col-form-label">Status:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtStatus" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:DropDownList ID="StatusDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
                                 </div>
+                            </div>  
+                            <div class="form-group row">
+                                <label for="inputStatus" class="col-sm-2 col-form-label">Reason:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtReason" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:DropDownList ID="ReasonDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputComment" class="col-sm-2 col-form-label">Comment:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtComment" runat="server" class="form-control" placeholder="Additional Comments"></asp:TextBox>
+                                </div>
+                            </div>  
                             </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
@@ -249,14 +263,16 @@
                             <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
                                 <Columns>
                                     <asp:BoundField HeaderText="ID" DataField="Id_reg" />
-                                    <asp:BoundField HeaderText="Customer" DataField="ClienteName" />
-                                    <asp:BoundField HeaderText="Carrier" DataField="CarrierName" />
-                                    <asp:BoundField HeaderText="Input" DataField="Entrada" />
-                                    <asp:BoundField HeaderText="Box" DataField="Caja" />
-                                    <asp:BoundField HeaderText="Plates" DataField="Placas" />
-                                    <asp:BoundField HeaderText="Operator name" DataField="NombreOperador" />
-                                    <asp:BoundField HeaderText="Phone" DataField="Telefono" />
-                                    <asp:BoundField HeaderText="Card" DataField="Tarjeta" />
+                                    <asp:BoundField HeaderText="TIME" DataField="timeHeader" />
+                                    <asp:BoundField HeaderText="P/N" DataField="pnHeader" />
+                                    <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
+                                    <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
+                                    <asp:BoundField HeaderText="FROM" DataField="Entrada" />
+                                    <asp:BoundField HeaderText="B/L" DataField="Caja" />
+                                    <asp:BoundField HeaderText="QTY" DataField="Placas" />
+                                    <asp:BoundField HeaderText="STATUS" DataField="NombreOperador" />
+                                    <asp:BoundField HeaderText="REASON" DataField="NombreOperador" />
+                                    <asp:BoundField HeaderText="COMMENT" DataField="NombreOperador" />
                                     <asp:TemplateField>
                                         <ItemTemplate>
                                             <asp:Button text="Edit" CommandName="Editar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-primary" />

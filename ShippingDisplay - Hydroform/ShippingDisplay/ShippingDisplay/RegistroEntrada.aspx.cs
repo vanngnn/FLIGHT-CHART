@@ -24,7 +24,9 @@ namespace ShippingDisplay.ShippingDisplay
                     CargarPerfil(Username);
                     CargarCarrier();
                     CargarCliente();
-                    CargarGrid();    
+                    CargarGrid();
+                    setStatusDropdown();
+                    setReasonDropDown();
                 }
                 else
                 {
@@ -71,8 +73,26 @@ namespace ShippingDisplay.ShippingDisplay
             dblCliente.DataBind();
             dblCliente.Items.Insert(0, " - Customer - ");
         }
+        private void setStatusDropdown()
+        {
+            StatusDropDown.Items.Insert(0, "On Time");
+            StatusDropDown.Items.Insert(1, "Delayed");
+            StatusDropDown.Items.Insert(2, "Without Shipper");
+            StatusDropDown.Items.Insert(3, "Shipped");
+        }
+        private void setReasonDropDown()
+        {
+            ReasonDropDown.Items.Insert(0, "On the Way");
+            ReasonDropDown.Items.Insert(1, "Ready to Ship");
+            ReasonDropDown.Items.Insert(2, "Arrived on Time");
+            ReasonDropDown.Items.Insert(3, "Waiting for Loading");
+            ReasonDropDown.Items.Insert(4, "Waiting for Production");
+            ReasonDropDown.Items.Insert(5, "Waiting for Carrier");
+            ReasonDropDown.Items.Insert(6, "Delayed to Arrive");
+            ReasonDropDown.Items.Insert(7, "Other (Please comment):");
+        }
 
-        protected void btnRegistrar_Click(object sender, EventArgs e)
+        protected void btnRegistrar_Click(object sender, EventArgs e) //onclick for register button
         {
             try
             {
@@ -80,29 +100,28 @@ namespace ShippingDisplay.ShippingDisplay
                 CargarPerfil(Username);
                 string ID;
                 ID = txtId_reg.Text;
-                string Caja = txtCaja.Text;
                 string Carrier = dblCarrier.SelectedItem.Text;
                 if (ID == "")
                 {
-                    //DEFINICIÓN DE VARIABLES LOCALES
+                    //
                     Registro Reg = new Registro();
                     {
                         Reg.Id_cliente = Convert.ToInt32(dblCliente.SelectedValue);
                         Reg.Id_carrier = Convert.ToInt32(dblCarrier.SelectedValue);
                         Reg.Status = 1;
-                        Reg.Placas = txtPlacas.Text;
-                        Reg.Caja = txtCaja.Text;
-                        Reg.NombreOperador = txtOperador.Text;
-                        Reg.Telefono = txtTelefono.Text;
+                        // Reg.Placas = txtPlacas.Text;
+                        // Reg.Caja = txtCaja.Text;
+                        // Reg.NombreOperador = txtOperador.Text;
+                        // Reg.Telefono = txtTelefono.Text;
                         Reg.Id_planta = Id_Planta;
-                        Reg.Tarjeta = Convert.ToInt32(txtAcceso.Text);
+                        // Reg.Tarjeta = Convert.ToInt32(txtAcceso.Text);
                     }
                     RegistroDAL.AgregarNuevo(Reg);
                     try
                     {
                         string PlantaCorrepondiente = "Plant " + Id_Planta;
                         string Msj = "SHIPPING DISPLAY INPUT";
-                        c.enviarCorreo("van.nguyen@martinrea.com", "Ali.Akhoondzadeh@martinrea.com", "Transport input", Msj, PlantaCorrepondiente, Carrier, Caja);
+                        // c.enviarCorreo("van.nguyen@martinrea.com", "Ali.Akhoondzadeh@martinrea.com", "Transport input", Msj, PlantaCorrepondiente, Carrier, Caja);
 
                         string script = @"<script type='text/javascript'> alert('Successfully sent data'); </script>";
                         ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
@@ -125,11 +144,11 @@ namespace ShippingDisplay.ShippingDisplay
                             Reg.Id_reg = Convert.ToInt32(txtId_reg.Text);
                             Reg.Id_cliente = Convert.ToInt32(dblCliente.SelectedValue);
                             Reg.Id_carrier = Convert.ToInt32(dblCarrier.SelectedValue);
-                            Reg.Placas = txtPlacas.Text;
-                            Reg.Caja = txtCaja.Text;
-                            Reg.NombreOperador = txtOperador.Text;
-                            Reg.Telefono = txtTelefono.Text;
-                            Reg.Tarjeta = Convert.ToInt32(txtAcceso.Text);
+                            // Reg.Placas = txtPlacas.Text;
+                            // Reg.Caja = txtCaja.Text;
+                            // Reg.NombreOperador = txtOperador.Text;
+                            // Reg.Telefono = txtTelefono.Text;
+                            // Reg.Tarjeta = Convert.ToInt32(txtAcceso.Text);
                         }
                         RegistroDAL.ActualizarRegistro(Reg);
                         CleanControl(this.Controls);
@@ -187,11 +206,11 @@ namespace ShippingDisplay.ShippingDisplay
             txtId_reg.Text = Convert.ToString(Reg.Id_reg);
             dblCliente.SelectedValue = Convert.ToString(Reg.Id_cliente);
             dblCarrier.SelectedValue = Convert.ToString(Reg.Id_carrier);
-            txtPlacas.Text = Convert.ToString(Reg.Placas);
-            txtCaja.Text = Convert.ToString(Reg.Caja);
-            txtOperador.Text = Convert.ToString(Reg.NombreOperador);
-            txtTelefono.Text = Convert.ToString(Reg.Telefono);
-            txtAcceso.Text = Convert.ToString(Reg.Tarjeta);
+            // txtPlacas.Text = Convert.ToString(Reg.Placas);
+            // txtCaja.Text = Convert.ToString(Reg.Caja);
+            // txtOperador.Text = Convert.ToString(Reg.NombreOperador);
+            // txtTelefono.Text = Convert.ToString(Reg.Telefono);
+            // txtAcceso.Text = Convert.ToString(Reg.Tarjeta);
         }
         public void CleanControl(ControlCollection controles)
         {
