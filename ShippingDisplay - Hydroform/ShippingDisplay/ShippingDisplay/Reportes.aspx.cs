@@ -28,6 +28,7 @@ namespace ShippingDisplay.ShippingDisplay
                     string Username = HttpContext.Current.User.Identity.Name;
                     CargarPerfil(Username);
                     CargarPlanta();
+                    ReportShipmentDropDown();
                 }
                 else
                 {
@@ -101,6 +102,14 @@ namespace ShippingDisplay.ShippingDisplay
             response.Write(sw.ToString());
             response.End();
         }
+
+        private void ReportShipmentDropDown()
+        {
+            ReportFilterDropDown.Items.Insert(0,"All");
+            ReportFilterDropDown.Items.Insert(1,"Inputs");
+            ReportFilterDropDown.Items.Insert(2,"Outputs");
+        }
+
         protected void btnExporta_Click(object sender, EventArgs e)
         {
             ExportToExcel("Informe.xls", gvRegistros);

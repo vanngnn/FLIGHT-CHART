@@ -195,12 +195,25 @@
                                     <asp:TextBox ID="reservation" class="form-control float-right" runat="server"></asp:TextBox>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label>Plant:</label>
                                 <div class="input-group"> 
                                     <asp:DropDownList ID="dblPlanta" runat="server" class="select2" style="width: 100%;"></asp:DropDownList>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label>Shipment:</label>
+                                <div class="input-group">
+                                    <asp:TextBox ID="txtReportShipment" runat="server" class="form-control" placeholder=" " Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:DropDownList ID="ReportFilterDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+
+                                </div>
+                            </div>
+
+
+
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
