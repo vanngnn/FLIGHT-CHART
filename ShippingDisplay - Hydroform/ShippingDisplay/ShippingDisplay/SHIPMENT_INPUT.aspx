@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DashboardV1.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.DashboardV1" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DashboardV1.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.DashboardV1" %>
 
 <!DOCTYPE html>
 
@@ -93,12 +93,12 @@
                         </asp:HyperLink>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <asp:HyperLink ID="???" NavigateUrl="SHIPMENT_INPUT.aspx" runat="server" Visible="true" class="nav-link">
+                                <asp:HyperLink ID="LinkShipIn" NavigateUrl="SHIPMENT_INPUT.aspx" runat="server" Visible="true" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i><p>Inputs</p>
                                 </asp:HyperLink>
                             </li>
                             <li class="nav-item">
-                                <asp:HyperLink ID="???" NavigateUrl="SHIPMENT_OUTPUT.aspx" runat="server" Visible="true" class="nav-link">
+                                <asp:HyperLink ID="LinkShipOut" NavigateUrl="SHIPMENT_OUTPUT.aspx" runat="server" Visible="true" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i><p>Outputs</p>
                                 </asp:HyperLink>
                             </li>

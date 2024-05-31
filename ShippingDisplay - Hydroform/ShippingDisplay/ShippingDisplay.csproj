@@ -70,6 +70,15 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="NEW STUFF\DAILYLOG_INPUT.aspx" />
+    <Content Include="NEW STUFF\DAILYLOG_OUTPUT.aspx" />
+    <Content Include="NEW STUFF\DASHBOARD.aspx" />
+    <Content Include="NEW STUFF\REGISTERUSER.aspx" />
+    <Content Include="NEW STUFF\REPORTS.aspx" />
+    <Content Include="NEW STUFF\SHIPMENT.aspx" />
+    <Content Include="ShippingDisplay\SHIPMENT_INPUT.aspx" />
+    <Content Include="ShippingDisplay\SHIPMENT_OUTPUT.aspx" />
+    <Content Include="NEW STUFF\SHIPPER.aspx" />
     <Content Include="ShippingDisplay\Dashboard.aspx" />
     <Content Include="ShippingDisplay\DashboardV1.aspx" />
     <Content Include="ShippingDisplay\login.aspx" />

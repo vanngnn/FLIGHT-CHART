@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.Dashboard" %>
+﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.Dashboard" %>
 
 <!DOCTYPE html>
 
@@ -85,10 +85,22 @@
                             <i class="nav-icon fas fa-tachometer-alt"></i><p>Dashboard</p>
                         </asp:HyperLink>
                     </li>
-                    <li class="nav-item">
-                        <asp:HyperLink ID="LinkDashEmb" NavigateUrl="DashboardV1.aspx" runat="server" Visible="true"  class="nav-link"> 
-                            <i class="nav-icon fas fa-ellipsis-h"></i><p>Shipments</p>
+                     <li class="nav-item">
+                        <asp:HyperLink ID="HyperLink4" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
+                            <i class="nav-icon fas fa-ellipsis-h"></i><p>Shipments<i class="fas fa-angle-left right"></i></p>
                         </asp:HyperLink>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <asp:HyperLink ID="LinkShipIn" NavigateUrl="SHIPMENT_INPUT.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                    <i class="far fa-circle nav-icon"></i><p>Inputs</p>
+                                </asp:HyperLink>
+                            </li>
+                            <li class="nav-item">
+                                <asp:HyperLink ID="LinkShipOut" NavigateUrl="SHIPMENT_OUTPUT.aspx" runat="server" Visible="true"  class="nav-link" > 
+                                    <i class="far fa-circle nav-icon"></i><p>Outputs</p>
+                                </asp:HyperLink>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <asp:HyperLink ID="LinkConfig" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
@@ -281,7 +293,7 @@
 <script src="template/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
-  $.widget.bridge('uibutton', $.ui.button)
+    $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
 <script src="template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
