@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DashboardV1.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.DashboardV1" %>
+﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DashboardV1.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.DashboardV1" %>
 
 <!DOCTYPE html>
 
@@ -196,7 +196,7 @@
                         <div class="small-box bg-warning">
                             <div class="inner">
                                 <h3><asp:Label ID="lblSinShipper" runat="server" Text="0"></asp:Label></h3>
-                                <p><h3>Without Shipper</h3></p>
+                                <p><h3>WITHOUT SHIPPER</h3></p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-android-checkmark-circle"></i>
@@ -208,7 +208,7 @@
                         <div class="small-box bg-info">
                             <div class="inner">
                                 <h3><asp:Label ID="lblEnviado" runat="server" Text="0"></asp:Label></h3>
-                                <p><h3>Sent</h3></p>
+                                <p><h3>SHIPPED</h3></p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-checkmark-round"></i>
@@ -279,7 +279,7 @@
 <script src="template/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
-  $.widget.bridge('uibutton', $.ui.button)
+    $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
 <script src="template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

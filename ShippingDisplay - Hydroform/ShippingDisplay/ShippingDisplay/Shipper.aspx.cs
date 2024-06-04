@@ -89,7 +89,7 @@ namespace ShippingDisplay.ShippingDisplay
 
         private void TruckLocation()
         {
-            txtTrackedLocation.DataTextField="location";
+            //txtTrackedLocation.DataTextField="location";
         }
 
 

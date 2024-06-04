@@ -105,9 +105,9 @@ namespace ShippingDisplay.ShippingDisplay
 
         private void ReportShipmentDropDown()
         {
-            ReportFilterDropDown.Items.Insert(0,"All");
-            ReportFilterDropDown.Items.Insert(1,"Inputs");
-            ReportFilterDropDown.Items.Insert(2,"Outputs");
+            ReportFilterDropDown.Items.Insert(0, "All");
+            ReportFilterDropDown.Items.Insert(1, "Inputs");
+            ReportFilterDropDown.Items.Insert(2, "Outputs");
         }
 
         protected void btnExporta_Click(object sender, EventArgs e)

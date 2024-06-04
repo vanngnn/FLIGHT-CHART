@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Reportes.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.Reportes" %>
+﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Reportes.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.Reportes" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -31,8 +31,7 @@
     <link rel="stylesheet" href="template/dist/css/adminlte.min.css" />
 
     <script type = "text/javascript">
-        function DisableButton()
-        {
+        function DisableButton() {
             document.getElementById("<%=btnFiltrar.ClientID %>").disabled = true;
         }
         window.onbeforeunload = DisableButton;
@@ -42,7 +41,7 @@
         }
     </script>
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini sidebar-collapse">
 
 <div class="wrapper">
     <!-- Preloader -->
@@ -184,6 +183,7 @@
                         <!-- form start -->
                         <div class="card-body">
                             <!-- Date range -->
+
                             <div class="form-group">
                                 <label>Date:</label>
                                 <div class="input-group">
@@ -204,16 +204,11 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Shipment:</label>
+                                <label>Type of shipment:</label>
                                 <div class="input-group">
-                                    <asp:TextBox ID="txtReportShipment" runat="server" class="form-control" placeholder=" " Enable="false" Visible="false"></asp:TextBox>
-                                    <asp:DropDownList ID="ReportFilterDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
-
+                                    <asp:DropDownList ID="ReportFilterDropDown" runat="server" class="select2" style="width: 100%;"></asp:DropDownList>
                                 </div>
                             </div>
-
-
-
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
@@ -247,16 +242,17 @@
                             <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" >
                                 <Columns>
                                     <asp:BoundField HeaderText="ID" DataField="Id_reg" />
-                                    <asp:BoundField HeaderText="Customer" DataField="ClienteName" />
-                                    <asp:BoundField HeaderText="Carrier" DataField="CarrierName" />
-                                    <asp:BoundField HeaderText="Input" DataField="Entrada" />
-                                    <asp:BoundField HeaderText="Output" DataField="Salida" />
-                                    <asp:BoundField HeaderText="Box" DataField="Caja" />
+                                    <asp:BoundField HeaderText="TIME" DataField="timeHeader" />
+                                    <asp:BoundField HeaderText="P/N" DataField="pnHeader" />
+                                    <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
+                                    <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
+                                    <asp:BoundField HeaderText="FROM" DataField="Entrada" />
+                                    <asp:BoundField HeaderText="TO" DataField="Salida" />
                                     <asp:BoundField HeaderText="Route" DataField="RutaName" />
-                                    <asp:BoundField HeaderText="Input Route" DataField="Input" />
-                                    <asp:BoundField HeaderText="Output Route" DataField="Output" />
-                                    <asp:BoundField HeaderText="Shipper" DataField="Shipper" />
-                                    <asp:BoundField HeaderText="Status" DataField="Estado" />
+                                    <asp:BoundField HeaderText="FROM Route" DataField="Input" />
+                                    <asp:BoundField HeaderText="TO Route" DataField="Output" />
+                                    <asp:BoundField HeaderText="SHIPPER" DataField="Shipper" />
+                                    <asp:BoundField HeaderText="STATUS" DataField="Estado" />
                                     <%--<asp:BoundField HeaderText="ASN Sent" DataField="ASN_Sent" />
                                     <asp:BoundField HeaderText="ASN Ack" DataField="ASN_Ack" />--%>
                                 </Columns>
@@ -319,138 +315,138 @@
 <script src="template/dist/js/demo.js"></script>
 <!-- Page specific script -->
 <script>
-  $(function () {
-    //Initialize Select2 Elements
-    $('.select2').select2()
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2()
 
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+
+        //Datemask dd/mm/yyyy
+        $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+        //Datemask2 mm/dd/yyyy
+        $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+        //Money Euro
+        $('[data-mask]').inputmask()
+
+        //Date picker
+        $('#reservationdate').datetimepicker({
+            format: 'L'
+        });
+
+        //Date and time picker
+        $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+
+        //Date range picker
+        $('#reservation').daterangepicker()
+        //Date range picker with time picker
+        $('#reservationtime').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 30,
+            locale: {
+                format: 'MM/DD/YYYY hh:mm A'
+            }
+        })
+        //Date range as a button
+        $('#daterange-btn').daterangepicker(
+            {
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                startDate: moment().subtract(29, 'days'),
+                endDate: moment()
+            },
+            function (start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+            }
+        )
+
+        //Timepicker
+        $('#timepicker').datetimepicker({
+            format: 'LT'
+        })
+
+        //Bootstrap Duallistbox
+        $('.duallistbox').bootstrapDualListbox()
+
+        //Colorpicker
+        $('.my-colorpicker1').colorpicker()
+        //color picker with addon
+        $('.my-colorpicker2').colorpicker()
+
+        $('.my-colorpicker2').on('colorpickerChange', function (event) {
+            $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+        })
+
+        $("input[data-bootstrap-switch]").each(function () {
+            $(this).bootstrapSwitch('state', $(this).prop('checked'));
+        })
+
+    })
+    // BS-Stepper Init
+    document.addEventListener('DOMContentLoaded', function () {
+        window.stepper = new Stepper(document.querySelector('.bs-stepper'))
     })
 
-    //Datemask dd/mm/yyyy
-    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-    //Datemask2 mm/dd/yyyy
-    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-    //Money Euro
-    $('[data-mask]').inputmask()
+    // DropzoneJS Demo Code Start
+    Dropzone.autoDiscover = false
 
-    //Date picker
-    $('#reservationdate').datetimepicker({
-        format: 'L'
-    });
+    // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+    var previewNode = document.querySelector("#template")
+    previewNode.id = ""
+    var previewTemplate = previewNode.parentNode.innerHTML
+    previewNode.parentNode.removeChild(previewNode)
 
-    //Date and time picker
-    $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
-
-    //Date range picker
-    $('#reservation').daterangepicker()
-    //Date range picker with time picker
-    $('#reservationtime').daterangepicker({
-      timePicker: true,
-      timePickerIncrement: 30,
-      locale: {
-        format: 'MM/DD/YYYY hh:mm A'
-      }
-    })
-    //Date range as a button
-    $('#daterange-btn').daterangepicker(
-      {
-        ranges   : {
-          'Today'       : [moment(), moment()],
-          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        startDate: moment().subtract(29, 'days'),
-        endDate  : moment()
-      },
-      function (start, end) {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-      }
-    )
-
-    //Timepicker
-    $('#timepicker').datetimepicker({
-      format: 'LT'
+    var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+        url: "/target-url", // Set the url
+        thumbnailWidth: 80,
+        thumbnailHeight: 80,
+        parallelUploads: 20,
+        previewTemplate: previewTemplate,
+        autoQueue: false, // Make sure the files aren't queued until manually added
+        previewsContainer: "#previews", // Define the container to display the previews
+        clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
     })
 
-    //Bootstrap Duallistbox
-    $('.duallistbox').bootstrapDualListbox()
-
-    //Colorpicker
-    $('.my-colorpicker1').colorpicker()
-    //color picker with addon
-    $('.my-colorpicker2').colorpicker()
-
-    $('.my-colorpicker2').on('colorpickerChange', function(event) {
-      $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+    myDropzone.on("addedfile", function (file) {
+        // Hookup the start button
+        file.previewElement.querySelector(".start").onclick = function () { myDropzone.enqueueFile(file) }
     })
 
-    $("input[data-bootstrap-switch]").each(function(){
-      $(this).bootstrapSwitch('state', $(this).prop('checked'));
+    // Update the total progress bar
+    myDropzone.on("totaluploadprogress", function (progress) {
+        document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
     })
 
-  })
-  // BS-Stepper Init
-  document.addEventListener('DOMContentLoaded', function () {
-    window.stepper = new Stepper(document.querySelector('.bs-stepper'))
-  })
+    myDropzone.on("sending", function (file) {
+        // Show the total progress bar when upload starts
+        document.querySelector("#total-progress").style.opacity = "1"
+        // And disable the start button
+        file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+    })
 
-  // DropzoneJS Demo Code Start
-  Dropzone.autoDiscover = false
+    // Hide the total progress bar when nothing's uploading anymore
+    myDropzone.on("queuecomplete", function (progress) {
+        document.querySelector("#total-progress").style.opacity = "0"
+    })
 
-  // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
-  var previewNode = document.querySelector("#template")
-  previewNode.id = ""
-  var previewTemplate = previewNode.parentNode.innerHTML
-  previewNode.parentNode.removeChild(previewNode)
-
-  var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-    url: "/target-url", // Set the url
-    thumbnailWidth: 80,
-    thumbnailHeight: 80,
-    parallelUploads: 20,
-    previewTemplate: previewTemplate,
-    autoQueue: false, // Make sure the files aren't queued until manually added
-    previewsContainer: "#previews", // Define the container to display the previews
-    clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
-  })
-
-  myDropzone.on("addedfile", function(file) {
-    // Hookup the start button
-    file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file) }
-  })
-
-  // Update the total progress bar
-  myDropzone.on("totaluploadprogress", function(progress) {
-    document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
-  })
-
-  myDropzone.on("sending", function(file) {
-    // Show the total progress bar when upload starts
-    document.querySelector("#total-progress").style.opacity = "1"
-    // And disable the start button
-    file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
-  })
-
-  // Hide the total progress bar when nothing's uploading anymore
-  myDropzone.on("queuecomplete", function(progress) {
-    document.querySelector("#total-progress").style.opacity = "0"
-  })
-
-  // Setup the buttons for all transfers
-  // The "add files" button doesn't need to be setup because the config
-  // `clickable` has already been specified.
-  document.querySelector("#actions .start").onclick = function() {
-    myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
-  }
-  document.querySelector("#actions .cancel").onclick = function() {
-    myDropzone.removeAllFiles(true)
-  }
-  // DropzoneJS Demo Code End
+    // Setup the buttons for all transfers
+    // The "add files" button doesn't need to be setup because the config
+    // `clickable` has already been specified.
+    document.querySelector("#actions .start").onclick = function () {
+        myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+    }
+    document.querySelector("#actions .cancel").onclick = function () {
+        myDropzone.removeAllFiles(true)
+    }
+    // DropzoneJS Demo Code End
 </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.Dashboard" %>
+﻿﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.Dashboard" %>
 
 <!DOCTYPE html>
 
@@ -30,7 +30,7 @@
     <!-- summernote -->
     <link rel="stylesheet" href="template/plugins/summernote/summernote-bs4.min.css" />
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini sidebar-collapse">
     
 <div class="wrapper">
     <!-- Preloader -->
@@ -207,7 +207,7 @@
                         <div class="small-box bg-warning">
                             <div class="inner">
                                 <h3><asp:Label ID="lblSinShipper" runat="server" Text="0"></asp:Label></h3>
-                                <p><h3>Without Shipper</h3></p>
+                                <p><h3>WITHOUT SHIPPER</h3></p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-android-checkmark-circle"></i>
@@ -219,7 +219,7 @@
                         <div class="small-box bg-info">
                             <div class="inner">
                                 <h3><asp:Label ID="lblEnviado" runat="server" Text="0"></asp:Label></h3>
-                                <p><h3>Sent</h3></p>
+                                <p><h3>SHIPPED</h3></p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-checkmark-round"></i>
