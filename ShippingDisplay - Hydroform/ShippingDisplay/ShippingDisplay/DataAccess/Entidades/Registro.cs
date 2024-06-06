@@ -20,6 +20,13 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         public int Tarjeta { get; set; }
         public int Status { get; set; }
         public string shipStatus { get; set; }
+        public string shipComment { get; set; }
+        public string partNumber { get; set; }
+        public DateTime timeAssigned { get; set; }
+        public string sBL { get; set; }
+        public int partQuantity { get; set; }
+        public string shipReason { get; set; }
+
 
 
         //DETALLE

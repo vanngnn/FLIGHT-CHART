@@ -17,7 +17,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
             {
                 conn.Open();
-                //OBTENER EL ID UNICO DEL ISSUE
+                //OBTAIN THE UNIQUE ID OF THE ISSUE
                 int ID;
 
                 string query = @"INSERT INTO Shipreg (Id_cliente, Id_carrier, Entrada, Salida, Shipper, Id_ruta, Id_planta, Tarjeta, Estatus)
@@ -45,7 +45,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             }
             return Reg;
         }
-        public static Registro ActualizarRegistro(Registro Reg)
+        public static Registro ActualizarRegistro(Registro Reg) //UpdateRegistry
         {
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
             {

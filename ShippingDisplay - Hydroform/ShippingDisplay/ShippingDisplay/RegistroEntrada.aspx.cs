@@ -40,7 +40,7 @@ namespace ShippingDisplay.ShippingDisplay
             Usuario perfil = UsuarioDAL.ObtenerUser(username);
             lblNombre.Text = perfil.Nombre;
             Id_Planta = perfil.Id_planta;
-            //ACTIVAR PESTAÑAS DE ACUERDO AL NIVEL DE USUARIO
+            //ACTIVATE TABS ACCORDING TO THE USER LEVEL
             int Dept = Convert.ToInt32(perfil.Id_depto);
             if (Dept == 1)
             {
@@ -94,8 +94,8 @@ namespace ShippingDisplay.ShippingDisplay
 
         protected void btnRegistrar_Click(object sender, EventArgs e) //onclick for register button
         {
-            try
-            {
+            //try
+            //{
                 string Username = HttpContext.Current.User.Identity.Name;
                 CargarPerfil(Username);
                 string ID;
@@ -103,12 +103,21 @@ namespace ShippingDisplay.ShippingDisplay
                 string Carrier = dblCarrier.SelectedItem.Text;
                 if (ID == "")
                 {
-                    //
+                    
                     Registro Reg = new Registro();
                     {
                         Reg.Id_cliente = Convert.ToInt32(dblCliente.SelectedValue);
                         Reg.Id_carrier = Convert.ToInt32(dblCarrier.SelectedValue);
+                        //TODO: Check if there isin't bulshit input on the clientside first
                         Reg.Status = 1;
+                        Reg.shipStatus = txtStatus.Text;
+                        Reg.shipComment = txtComment.Text;
+                        Reg.timeAssigned = Convert.ToDateTime(assignTime.Value);
+                        Reg.partNumber = txtPN.Text;
+                        Reg.sBL = txtBL.Text;
+                        Reg.partQuantity = Convert.ToInt32(txtQTY.Text);
+                        Reg.shipReason = txtReason.Text;
+                        Reg.shipComment = txtComment.Text;
                         // Reg.Placas = txtPlacas.Text;
                         // Reg.Caja = txtCaja.Text;
                         // Reg.NombreOperador = txtOperador.Text;
@@ -162,12 +171,12 @@ namespace ShippingDisplay.ShippingDisplay
                         ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
                     }
                 }       
-            }
-            catch
-            {
-                string script = @"<script type='text/javascript'> alert('Oops! Something went wrong.'); </script>";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
-            }
+            //}
+            //catch
+            //{
+            //   string script = @"<script type='text/javascript'> alert('Oops! Something went wrong.'); </script>";
+            //    ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
+            //}
         }
         private void CargarGrid()
         {
