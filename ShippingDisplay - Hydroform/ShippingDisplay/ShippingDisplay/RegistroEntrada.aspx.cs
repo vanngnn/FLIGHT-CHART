@@ -112,19 +112,13 @@ namespace ShippingDisplay.ShippingDisplay
                         Reg.Status = 1;
                         Reg.shipStatus = txtStatus.Text;
                         Reg.shipComment = txtComment.Text;
-                        Reg.timeAssigned = Convert.ToDateTime(assignTime.Value);
+                        Reg.timeAssigned = Convert.ToDateTime(assignTime.Text);
                         Reg.partNumber = txtPN.Text;
                         Reg.sBL = txtBL.Text;
                         Reg.partQuantity = Convert.ToInt32(txtQTY.Text);
                         Reg.shipReason = txtReason.Text;
                         Reg.shipComment = txtComment.Text;
-                        // Reg.Placas = txtPlacas.Text;
-                        // Reg.Caja = txtCaja.Text;
-                        // Reg.NombreOperador = txtOperador.Text;
-                        // Reg.Telefono = txtTelefono.Text;
-                        Reg.Id_planta = Id_Planta;
-                        // Reg.Tarjeta = Convert.ToInt32(txtAcceso.Text);
-                    }
+                        Reg.Id_planta = Id_Planta;                    }
                     RegistroDAL.AgregarNuevo(Reg);
                     try
                     {

@@ -132,6 +132,15 @@ namespace ShippingDisplay.ShippingDisplay
         protected global::System.Web.UI.WebControls.DropDownList dblCliente;
 
         /// <summary>
+        /// assignTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox assignTime;
+
+        /// <summary>
         /// txtPN control.
         /// </summary>
         /// <remarks>
@@ -220,14 +229,5 @@ namespace ShippingDisplay.ShippingDisplay
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvRegistros;
-
-        /// <summary>
-        /// gvRegistros control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl assignTime;
     }
 }

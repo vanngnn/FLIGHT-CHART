@@ -20,14 +20,20 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 //OBTAIN THE UNIQUE ID OF THE ISSUE
                 int ID;
 
-                string query = @"INSERT INTO Shipreg (Id_cliente, Id_carrier, Entrada, Salida, Shipper, Id_ruta, Id_planta, Tarjeta, Estatus)
-                                 VALUES (@Id_cliente, @Id_carrier, GETDATE(), '', '', '',@Id_planta, @Tarjeta, @Estatus); SELECT SCOPE_IDENTITY()";
+                string query = @"INSERT INTO logInputData (assignedTime, partNumber, id_project, id_carrier, id_plant, billOfLanding, partQuantity, shipStatus, shipReason, shipComment)
+                                 VALUES (@assignedTime, @partNumber, @pid, @cid, @plid, @bol,@quant, @status, @reason, @comment); SELECT SCOPE_IDENTITY()";
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Id_cliente", Reg.Id_cliente);
-                cmd.Parameters.AddWithValue("@Id_carrier", Reg.Id_carrier);
-                cmd.Parameters.AddWithValue("@Id_planta", Reg.Id_planta);
-                cmd.Parameters.AddWithValue("@Tarjeta", Reg.Tarjeta);
-                cmd.Parameters.AddWithValue("@Estatus", Reg.Status);
+                cmd.Parameters.AddWithValue("@assignedTime", Reg.timeAssigned);
+                cmd.Parameters.AddWithValue("@partNumber", Reg.partNumber);
+                cmd.Parameters.AddWithValue("@pid", Reg.Id_cliente);
+                cmd.Parameters.AddWithValue("@cid", Reg.Id_carrier);
+                cmd.Parameters.AddWithValue("@plid", Reg.Id_planta);
+                cmd.Parameters.AddWithValue("@bol", Reg.sBL);
+                cmd.Parameters.AddWithValue("@quant", Reg.sBL);
+                cmd.Parameters.AddWithValue("@status", Reg.shipStatus);
+                cmd.Parameters.AddWithValue("@reason", Reg.shipReason);
+                cmd.Parameters.AddWithValue("@comment", Reg.shipComment);
+
                 //RECUPERAR ID GENERADO POR LA TAB
                 Reg.Id_reg = Convert.ToInt32(cmd.ExecuteScalar());
                 ID = Reg.Id_reg;

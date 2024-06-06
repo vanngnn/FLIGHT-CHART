@@ -200,7 +200,7 @@
                                 <div class="form-group row">
                                     <label for="inputTime" class="col-sm-2 col-form-label">Time:</label>
                                     <div class="col-sm-10">
-                                        <input id="assignTime" type="time" name="shpt-time" value="12:00" />
+                                        <asp:TextBox id="assignTime" TextMode="DateTimeLocal" runat="server"/>
                                     </div>
                                 </div>
                             <div class="form-group row">
