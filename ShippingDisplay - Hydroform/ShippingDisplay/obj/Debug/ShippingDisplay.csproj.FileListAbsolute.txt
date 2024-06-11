@@ -222,3 +222,7 @@ C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN\ShippingDispla
 C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN\ShippingDisplay - Hydroform\ShippingDisplay\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN\ShippingDisplay - Hydroform\ShippingDisplay\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN\ShippingDisplay - Hydroform\ShippingDisplay\obj\Debug\Shipping.B566B210.Up2Date
+C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN 3\FLIGHT-CHART\ShippingDisplay - Hydroform\ShippingDisplay\obj\Debug\ShippingDisplay.csproj.AssemblyReference.cache
+C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN 3\FLIGHT-CHART\ShippingDisplay - Hydroform\ShippingDisplay\obj\Debug\ShippingDisplay.csproj.CoreCompileInputs.cache
+C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN 3\FLIGHT-CHART\ShippingDisplay - Hydroform\ShippingDisplay\obj\Debug\ShippingDisplay.dll
+C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN 3\FLIGHT-CHART\ShippingDisplay - Hydroform\ShippingDisplay\obj\Debug\ShippingDisplay.pdb

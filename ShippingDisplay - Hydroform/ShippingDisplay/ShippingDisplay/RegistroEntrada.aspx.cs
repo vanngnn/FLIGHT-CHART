@@ -40,7 +40,7 @@ namespace ShippingDisplay.ShippingDisplay
             Usuario perfil = UsuarioDAL.ObtenerUser(username);
             lblNombre.Text = perfil.Nombre;
             Id_Planta = perfil.Id_planta;
-            //ACTIVAR PESTAÑAS DE ACUERDO AL NIVEL DE USUARIO
+            //ACTIVATE TABS ACCORDING TO THE USER LEVEL
             int Dept = Convert.ToInt32(perfil.Id_depto);
             if (Dept == 1)
             {
@@ -94,80 +94,84 @@ namespace ShippingDisplay.ShippingDisplay
 
         protected void btnRegistrar_Click(object sender, EventArgs e) //onclick for register button
         {
-            try
+            //try
+            //{
+            string Username = HttpContext.Current.User.Identity.Name;
+            CargarPerfil(Username);
+            string ID;
+            ID = txtId_reg.Text;
+            string Carrier = dblCarrier.SelectedItem.Text;
+            if (ID == "")
             {
-                string Username = HttpContext.Current.User.Identity.Name;
-                CargarPerfil(Username);
-                string ID;
-                ID = txtId_reg.Text;
-                string Carrier = dblCarrier.SelectedItem.Text;
-                if (ID == "")
+
+                Registro Reg = new Registro();
                 {
-                    //
+                    Reg.Id_cliente = Convert.ToInt32(dblCliente.SelectedValue);
+                    Reg.Id_carrier = Convert.ToInt32(dblCarrier.SelectedValue);
+                    //TODO: Check if there isin't bulshit input on the clientside first
+                    Reg.Status = 1;
+                    Reg.shipStatus = txtStatus.Text;
+                    Reg.shipComment = txtComment.Text;
+                    Reg.timeAssigned = Convert.ToDateTime(assignTime.Text);
+                    Reg.partNumber = txtPN.Text;
+                    Reg.sBL = txtBL.Text;
+                    Reg.partQuantity = Convert.ToInt32(txtQTY.Text);
+                    Reg.shipReason = txtReason.Text;
+                    Reg.shipComment = txtComment.Text;
+                    Reg.Id_planta = Id_Planta;
+                }
+                RegistroDAL.AgregarNuevo(Reg);
+                try
+                {
+                    string PlantaCorrepondiente = "Plant " + Id_Planta;
+                    string Msj = "SHIPPING DISPLAY INPUT";
+                    // c.enviarCorreo("van.nguyen@martinrea.com", "Ali.Akhoondzadeh@martinrea.com", "Transport input", Msj, PlantaCorrepondiente, Carrier, Caja);
+
+                    string script = @"<script type='text/javascript'> alert('Successfully sent data'); </script>";
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
+                }
+                catch
+                {
+                    string script = @"<script type='text/javascript'> alert('Error sending e-mail notification'); </script>";
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
+                }
+                CleanControl(this.Controls);
+                CargarGrid();
+            }
+            else
+            {
+                try
+                {
+                    //DEFINICIÓN DE VARIABLES LOCALES
                     Registro Reg = new Registro();
                     {
+                        Reg.Id_reg = Convert.ToInt32(txtId_reg.Text);
                         Reg.Id_cliente = Convert.ToInt32(dblCliente.SelectedValue);
                         Reg.Id_carrier = Convert.ToInt32(dblCarrier.SelectedValue);
-                        Reg.Status = 1;
                         // Reg.Placas = txtPlacas.Text;
                         // Reg.Caja = txtCaja.Text;
                         // Reg.NombreOperador = txtOperador.Text;
                         // Reg.Telefono = txtTelefono.Text;
-                        Reg.Id_planta = Id_Planta;
                         // Reg.Tarjeta = Convert.ToInt32(txtAcceso.Text);
                     }
-                    RegistroDAL.AgregarNuevo(Reg);
-                    try
-                    {
-                        string PlantaCorrepondiente = "Plant " + Id_Planta;
-                        string Msj = "SHIPPING DISPLAY INPUT";
-                        // c.enviarCorreo("van.nguyen@martinrea.com", "Ali.Akhoondzadeh@martinrea.com", "Transport input", Msj, PlantaCorrepondiente, Carrier, Caja);
-
-                        string script = @"<script type='text/javascript'> alert('Successfully sent data'); </script>";
-                        ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
-                    }
-                    catch
-                    {
-                        string script = @"<script type='text/javascript'> alert('Error sending e-mail notification'); </script>";
-                        ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
-                    }
+                    RegistroDAL.ActualizarRegistro(Reg);
                     CleanControl(this.Controls);
                     CargarGrid();
+                    string script = @"<script type='text/javascript'> alert('Updated successfully'); </script>";
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
                 }
-                else
+                catch
                 {
-                    try
-                    {
-                        //DEFINICIÓN DE VARIABLES LOCALES
-                        Registro Reg = new Registro();
-                        {
-                            Reg.Id_reg = Convert.ToInt32(txtId_reg.Text);
-                            Reg.Id_cliente = Convert.ToInt32(dblCliente.SelectedValue);
-                            Reg.Id_carrier = Convert.ToInt32(dblCarrier.SelectedValue);
-                            // Reg.Placas = txtPlacas.Text;
-                            // Reg.Caja = txtCaja.Text;
-                            // Reg.NombreOperador = txtOperador.Text;
-                            // Reg.Telefono = txtTelefono.Text;
-                            // Reg.Tarjeta = Convert.ToInt32(txtAcceso.Text);
-                        }
-                        RegistroDAL.ActualizarRegistro(Reg);
-                        CleanControl(this.Controls);
-                        CargarGrid();
-                        string script = @"<script type='text/javascript'> alert('Updated successfully'); </script>";
-                        ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
-                    }
-                    catch
-                    {
-                        string script = @"<script type='text/javascript'> alert('Error sending email notification'); </script>";
-                        ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
-                    }
-                }       
+                    string script = @"<script type='text/javascript'> alert('Error sending email notification'); </script>";
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
+                }
             }
-            catch
-            {
-                string script = @"<script type='text/javascript'> alert('Oops! Something went wrong.'); </script>";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
-            }
+            //}
+            //catch
+            //{
+            //   string script = @"<script type='text/javascript'> alert('Oops! Something went wrong.'); </script>";
+            //    ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
+            //}
         }
         private void CargarGrid()
         {
@@ -175,7 +179,7 @@ namespace ShippingDisplay.ShippingDisplay
             gvRegistros.DataSource = RegistroDAL.ListadoRegistros(Estatus, Id_Planta);
             gvRegistros.DataBind();
         }
-        
+
         protected void gvRegistros_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Editar")

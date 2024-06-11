@@ -19,6 +19,8 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         public int Id_planta { get; set; }
         public int Tarjeta { get; set; }
         public int Status { get; set; }
+        public string shipStatus { get; set; }
+
 
         //DETALLE
         public int Id_det { get; set; }
