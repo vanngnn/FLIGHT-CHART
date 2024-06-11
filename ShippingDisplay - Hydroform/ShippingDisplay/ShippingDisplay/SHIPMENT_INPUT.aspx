@@ -249,14 +249,15 @@
               <div class="card-body">
                 <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" OnRowDataBound="gvRegistros_RowDataBound" >
                                 <Columns>
-                                    <asp:BoundField HeaderText="TIME" DataField="Id_reg" />
-                                    <asp:BoundField HeaderText="CARRIER" DataField="ClienteName" />
-                                    <asp:BoundField HeaderText="P/N" DataField="CarrierName" />
-                                    <asp:BoundField HeaderText="PROJECT" DataField="Entrada" />
-                                    <asp:BoundField HeaderText="FROM" DataField="Caja" />
-                                    <asp:BoundField HeaderText="B/L" DataField="RutaName" />
-                                    <asp:BoundField HeaderText="QUANITTY" DataField="Shipper" />
-                                    <asp:BoundField HeaderText="STATUS" DataField="Estado" />
+                                    <asp:BoundField HeaderText="ID" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
+                                    <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
+                                    <asp:BoundField HeaderText="FROM" DataField="Entrada" />
+                                    <asp:BoundField HeaderText="B/L" DataField="Caja" />
+                                    <asp:BoundField HeaderText="QTY" DataField="Placas" />
+                                    <asp:BoundField HeaderText="STATUS" DataField="NombreOperador" />
+                                    <asp:BoundField HeaderText="REASON" DataField="NombreOperador" />
+                                    <asp:BoundField HeaderText="COMMENT" DataField="NombreOperador" />
                                     <%--<asp:BoundField HeaderText="ASN Sent" DataField="ASN_Sent" />
                                     <asp:BoundField HeaderText="ASN Ack" DataField="ASN_Ack" />--%>
                                 </Columns>

@@ -20,6 +20,8 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         public int Tarjeta { get; set; }
         public int Status { get; set; }
         public string shipStatus { get; set; }
+        public DateTime timeHeader { get; set; }
+
 
 
         //DETALLE
