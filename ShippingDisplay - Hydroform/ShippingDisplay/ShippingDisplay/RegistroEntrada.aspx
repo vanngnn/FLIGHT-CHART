@@ -333,6 +333,7 @@
                             <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
                                 <Columns>
                                     <asp:BoundField HeaderText="ID" DataField="Id_reg" />
+                                    
                                     <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
                                     <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
                                     <asp:BoundField HeaderText="FROM" DataField="Entrada" />
@@ -341,6 +342,7 @@
                                     <asp:BoundField HeaderText="STATUS" DataField="NombreOperador" />
                                     <asp:BoundField HeaderText="REASON" DataField="NombreOperador" />
                                     <asp:BoundField HeaderText="COMMENT" DataField="NombreOperador" />
+                                    <asp:BoundField HeaderText="ASSIGNED TIME" DataField="timeHeader" />
                                     <asp:TemplateField>
                                         <ItemTemplate>
                                             <asp:Button text="Edit" CommandName="Editar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-primary" />

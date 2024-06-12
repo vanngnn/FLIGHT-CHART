@@ -252,7 +252,7 @@
                         <div class="small-box bg-success">
                             <div class="inner">
                                 <h3><asp:Label ID="lblEntiempo" runat="server" Text="0"></asp:Label></h3>
-                                <p><h3>On time</h3></p>
+                                <p><h3>ON TIME</h3></p>
                             </div>
                             <div class="icon"> 
                                 <i class="ion ion-ios-clock"></i>                 
