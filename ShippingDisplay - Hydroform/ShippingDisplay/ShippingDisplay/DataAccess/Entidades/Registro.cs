@@ -9,17 +9,17 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
     {
         public Registro() { }
         //HEADER
-        public int Id_reg { get; set; }
-        public int Id_cliente { get; set; }
-        public int Id_carrier { get; set; }
-        public DateTime Entrada { get; set; }
-        public string Salida { get; set; }
-        public int Shipper { get; set; }
-        public int Id_ruta { get; set; }
-        public int Id_planta { get; set; }
-        public int Tarjeta { get; set; }
-        public int Status { get; set; }
-        public string shipStatus { get; set; }
+        public int Id_reg { get; set; } //MAIN KEY
+        public int Id_cliente { get; set; } //PROJECT
+        public int Id_carrier { get; set; } //CARRIER
+        public DateTime Entrada { get; set; } //THE DATE WHEN U ENTER THE SHIPMENT (not needed)
+        public string Salida { get; set; } //THE DATE WHEN U OUTPUT THE SHIPMENT (not needed)
+        public int Shipper { get; set; } //ID SHIPPER
+        public int Id_ruta { get; set; } //ID ROUTE
+        public int Id_planta { get; set; } //ID PLANTS
+        public int Tarjeta { get; set; } //SHIPPER ACCESS CARD
+        public int Status { get; set; } //STATUS
+        public int 
 
         //DETALLE
         public int Id_det { get; set; }
@@ -41,6 +41,5 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         public string Estado { get; set; }
         public string Input { get; set; }
         public string Output { get; set; }
-        public string timeHeader { get; set; }
     }
 }

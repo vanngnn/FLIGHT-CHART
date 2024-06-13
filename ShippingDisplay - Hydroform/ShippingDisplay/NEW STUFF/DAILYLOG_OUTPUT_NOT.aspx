@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RegistroUsuarios.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.RegistroUsuarios" %>
+﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RegistroSalida.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.RegistroSalida" %>
 
 <!DOCTYPE html>
 
@@ -6,7 +6,6 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="refresh" content="30" />
     <link rel="icon" type="image/png" href="Template/img/martinrea_logo.png"/>
     <title>Shipping Display</title>
     <!-- Google Font: Source Sans Pro -->
@@ -29,9 +28,21 @@
     <link rel="stylesheet" href="template/plugins/daterangepicker/daterangepicker.css" />
     <!-- summernote -->
     <link rel="stylesheet" href="template/plugins/summernote/summernote-bs4.min.css" />
+    <!-- Select2 -->
+    <link rel="stylesheet" href="template/plugins/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="template/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" />
+    <script type = "text/javascript">
+        function DisableButton() {
+            document.getElementById("<%=btnRegistrar.ClientID %>").disabled = true;
+        }
+        window.onbeforeunload = DisableButton;
+        function isDelete() {
+            var r = confirm("Are you sure you want to delete this record?");
+            return r;
+        }
+    </script>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
-    
 <div class="wrapper">
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
@@ -162,7 +173,7 @@
                                         </asp:HyperLink>
                                     </li>
                                     <li class="nav-item">
-                                        <asp:HyperLink ID="dailyoutput_dock6" NavigateUrl="~/ShippingDisplay/DAILYOUTPUT_DOCK6.aspx" runat="server" Visible="true" class="nav-link">
+                                        <asp:HyperLink ID="dailyoutput_dock6" NavigateUrl="~/ShippingDisplay/DAILYOUTPUT_DOCK5.aspx" runat="server" Visible="true" class="nav-link">
                                             <p>DOCK 6</p>
                                         </asp:HyperLink>
                                     </li>
@@ -177,12 +188,12 @@
                         </asp:HyperLink>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="DAILYLOG_INPUT.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="RegistroEntrada.aspx" runat="server" Visible="true"  class="nav-link"> 
                                     <i class="far fa-circle nav-icon"></i><p>Inputs</p>
                                 </asp:HyperLink>
                             </li>
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="DAILYLOG_OUTPUT.aspx" runat="server" Visible="true"  class="nav-link" > 
+                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="RegistroSalida.aspx" runat="server" Visible="true"  class="nav-link" > 
                                     <i class="far fa-circle nav-icon"></i><p>Outputs</p>
                                 </asp:HyperLink>
                             </li>
@@ -218,140 +229,153 @@
         </div>
         <!-- /.sidebar -->
     </aside>
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <section class="content-header">
+        <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h5>Perfiles</h5>
-                    </div>
+                        <h1 class="m-0">Daily entry</h1>
+                    </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Users</li>
+                            <li class="breadcrumb-item active">Daily entry</li>
                         </ol>
-                    </div>
-                </div>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
             </div><!-- /.container-fluid -->
-        </section>
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
         <section class="content">
+            <!-- container-fluid -->
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-3">
-                        <!-- Profile Image -->
-				        <div class="card card-outline card-info">
-				            <div class="card-body box-profile">
-					            <div class="text-center">
-					                <img class="profile-user-img img-fluid img-circle" src="Template/dist/img/UserAdd.png" alt="User profile picture" />
-					            </div>
-					            <h3 class="profile-username text-center"><asp:Label ID="txtNameUsr" runat="server" placeholder="Name"/></h3>
-					            <p class="text-muted text-center"><asp:Label ID="txtUser" runat="server" placeholder="Username"/></p>
-					            <ul class="list-group list-group-unbordered mb-3">
-					                <li class="list-group-item">
-						                <b></b> <a class="float-right"></a>
-					                </li>
-					                <li class="list-group-item">
-						                <b></b> <a class="float-right"></a>
-					                </li>
-					                <li class="list-group-item">
-						                <b></b> <a class="float-right"></a>
-					                </li>
-					            </ul>
-				            </div>
-				            <!-- /.card-body -->
-				        </div>
-				        <!-- /.card -->
-                    </div>
-                    <div class="col-md-9">
-                        <div class="card">
-                            <div class="card-header p-2">
-                                <ul class="nav nav-pills">
-                                    <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Users</a></li>
-                                </ul>
-                            </div>
-                            <div class="card-body">
-                            <div class="tab-content">
-                                <div class="active tab-pane" id="activity">
-                                    <div class="form-group row">
-                                        <label for="inputName" class="col-sm-2 col-form-label">Name</label>
-                                        <div class="col-sm-10">
-                                            <asp:TextBox ID="txtNombre" class="form-control" runat="server" placeholder="Name"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="inputEmail" class="col-sm-2 col-form-label">User</label>
-                                        <div class="col-sm-10">
-                                             <asp:TextBox ID="txtUsuario" class="form-control" runat="server" placeholder="Username"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="inputName2" class="col-sm-2 col-form-label">Password</label>
-                                        <div class="col-sm-10">
-                                            <asp:TextBox ID="txtPassword" class="form-control" runat="server" type="password" />
-                                            <asp:TextBox runat="server" Visible="false" ID="txtSalt" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="inputExperience" class="col-sm-2 col-form-label">E-mail:</label>
-                                        <div class="col-sm-10">
-                                            <asp:TextBox ID="txtEmail" class="form-control" runat="server" placeholder="Ejm: juan.perez@martinrea.com" TextMode="Email" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="inputSkills" class="col-sm-2 col-form-label">Plant</label>
-                                        <div class="col-sm-10">
-                                            <asp:DropDownList ID="dblPlanta" class="form-control" runat="server"></asp:DropDownList>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="inputSkills" class="col-sm-2 col-form-label">Department</label>
-                                        <div class="col-sm-10">
-                                            <asp:DropDownList ID="dblDepartamento" class="form-control" runat="server"></asp:DropDownList>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="offset-sm-2 col-sm-10">
-                                            <div class="checkbox">
-                                                <label>Status: </label>
-                                                    <asp:RadioButtonList ID="rbActivo" runat="server" RepeatDirection="Horizontal">
-                                                             <asp:ListItem text="YES" Value=1></asp:ListItem>
-                                                             <asp:ListItem text="NOT" Value=0></asp:ListItem>
-                                                    </asp:RadioButtonList>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="offset-sm-2 col-sm-10">
-                                            <asp:Button ID="btnGuardar" Text="Save" CssClass="btn btn-success"  runat="server" OnClick="btnGuardar_Click" />
-                                        </div>
-                                    </div>
+               
+                <!-- Small boxes (Stat box) -->
+                <div class="card card-default">
+                    <!-- Horizontal Form -->
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <%--<h3 class="card-title">Horizontal Form</h3>--%>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <div class="card-body">
+
+                             <div class="form-group row">
+                                 <label for="inputTimePeriodAssigned" class="col-sm-2 col-form-label">Time period assigned:</label>
+                                 <div class="col-sm-3">
+                                     <label for="inpu4tEntryDate" class="col-form-label">Date:</label>
+                                        <input id="EntryDate" type="date" name="input-entry-date" value="2024-01-01" />
+                                 </div>
+                                 <div class="col-sm-3">
+                                     <label for="inputFromTime" class="col-form-label">From:</label>
+                                     <input id="fromTime" type="time" name="from-time" value="12:00" />
+                                 </div>
+                                 <div class="col-sm-3">
+                                     <label for="inputToTime" class="col-form-label">To:</label>
+                                     <input id="toTime" type="time" name="to-time" value="12:00" />
+                                 </div>
+                             </div>
+
+                            <div class="form-group row">
+                                <label for="inputPN" class="col-sm-2 col-form-label">P/N:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtPN" runat="server" class="form-control" placeholder="Part Number"></asp:TextBox>
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <label for="inputCliente" class="col-sm-2 col-form-label">Project:</label>
+                                    <div class="col-sm-10">
+                                        <asp:DropDownList ID="dblCliente" runat="server"  class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputPlant" class="col-sm-2 col-form-label">To:</label>
+                                    <div class="col-sm-10">
+                                        <asp:DropDownList ID="dblPlant" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                    </div>
+                                    
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputCarrier" class="col-sm-2 col-form-label">Carrier:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtId_reg" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:DropDownList ID="dblCarrier" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputBL" class="col-sm-2 col-form-label">B/L:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtBL" runat="server" class="form-control" placeholder="Bill Of Lading"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputQTY" class="col-sm-2 col-form-label">Quantity:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtQTY" runat="server" class="form-control" placeholder="Quantity"></asp:TextBox>
+                                </div>
+                            </div>    
+                            <div class="form-group row">
+                                <label for="inputStatus" class="col-sm-2 col-form-label">Status:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtStatus" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:DropDownList ID="StatusDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                </div>
+                            </div>  
+                            <div class="form-group row">
+                                <label for="inputStatus" class="col-sm-2 col-form-label">Reason:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtReason" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:DropDownList ID="ReasonDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputComment" class="col-sm-2 col-form-label">Comment:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtComment" runat="server" class="form-control" placeholder="Additional Comments"></asp:TextBox>
+                                </div>
+                            </div>  
+                            </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <asp:Button ID="btnRegistrar" runat="server" Text="Save"  class="btn btn-block btn-info btn-lg" OnClick="btnRegistrar_Click"/>
                         </div>
-                        </div>
+                            <!-- /.card-footer -->                  
                     </div>
+                    <!-- /.card -->
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card card-outline card-info">
+                <!-- Main row -->
+                <div class="row">
+                    <div class="col-12">
+                        <!-- /.card -->
+                        <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">User list</h3>
+                            <h3 class="card-title">List</h3>
                         </div>
+                        <!-- /.card-header -->
                         <div class="card-body">
-                            <asp:GridView ID="gvUsuarios" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_user" class="table table-bordered table-striped" OnRowCommand="gvUsuarios_RowCommand" >
+                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
                                 <Columns>
-                                    <asp:BoundField HeaderText="ID" DataField="Id_user" />
-                                    <asp:BoundField HeaderText="Name" DataField="Nombre" />
-                                    <asp:BoundField HeaderText="Username" DataField="User" />    
-                                    <asp:BoundField HeaderText="Email" DataField="Email" />
-                                    <asp:BoundField HeaderText="Plant" DataField="DesPlanta" />
-                                    <asp:BoundField HeaderText="Department" DataField="DesDepto" />
-                                    <asp:BoundField HeaderText="Updated" DataField="Fec_mod" />
-                                    <asp:BoundField HeaderText="Status" DataField="Status" />
+                                    <asp:BoundField HeaderText="ID" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="DATE" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="TIME ASSIGNED" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="P/N" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
+                                    <asp:BoundField HeaderText="FROM" DataField="Entrada" />
+                                    <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
+                                    <asp:BoundField HeaderText="B/L" DataField="Caja" />
+                                    <asp:BoundField HeaderText="QTY" DataField="Placas" />
+                                    <asp:BoundField HeaderText="STATUS" DataField="NombreOperador" />
+                                    <asp:BoundField HeaderText="REASON" DataField="NombreOperador" />
+                                    <asp:BoundField HeaderText="COMMENT" DataField="NombreOperador" />
                                     <asp:TemplateField>
                                         <ItemTemplate>
                                             <asp:Button text="Edit" CommandName="Editar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-primary" />
@@ -365,10 +389,16 @@
                                 </Columns>
                             </asp:GridView>
                         </div>
+                    <!-- /.card-body -->
+                    </div>
+                        <!-- /.card -->
                     </div>
                 </div>
+                <!-- /.row (main row) -->
             </div>
+            <!-- /.container-fluid -->
         </section>
+        <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
@@ -391,10 +421,7 @@
 <script src="template/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="template/plugins/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
+
 <!-- Bootstrap 4 -->
 <script src="template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS -->
@@ -421,6 +448,143 @@
 <script src="template/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="template/dist/js/pages/dashboard.js"></script>
+<!-- bs-custom-file-input -->
+<script src="template/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<!-- Select2 -->
+<script src="template/plugins/select2/js/select2.full.min.js"></script>
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2()
 
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+
+        //Datemask dd/mm/yyyy
+        $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+        //Datemask2 mm/dd/yyyy
+        $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+        //Money Euro
+        $('[data-mask]').inputmask()
+
+        //Date picker
+        $('#reservationdate').datetimepicker({
+            format: 'L'
+        });
+
+        //Date and time picker
+        $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+
+        //Date range picker
+        $('#reservation').daterangepicker()
+        //Date range picker with time picker
+        $('#reservationtime').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 30,
+            locale: {
+                format: 'MM/DD/YYYY hh:mm A'
+            }
+        })
+        //Date range as a button
+        $('#daterange-btn').daterangepicker(
+            {
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                startDate: moment().subtract(29, 'days'),
+                endDate: moment()
+            },
+            function (start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+            }
+        )
+
+        //Timepicker
+        $('#timepicker').datetimepicker({
+            format: 'LT'
+        })
+
+        //Bootstrap Duallistbox
+        $('.duallistbox').bootstrapDualListbox()
+
+        //Colorpicker
+        $('.my-colorpicker1').colorpicker()
+        //color picker with addon
+        $('.my-colorpicker2').colorpicker()
+
+        $('.my-colorpicker2').on('colorpickerChange', function (event) {
+            $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+        })
+
+        $("input[data-bootstrap-switch]").each(function () {
+            $(this).bootstrapSwitch('state', $(this).prop('checked'));
+        })
+
+    })
+    // BS-Stepper Init
+    document.addEventListener('DOMContentLoaded', function () {
+        window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+    })
+
+    // DropzoneJS Demo Code Start
+    Dropzone.autoDiscover = false
+
+    // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+    var previewNode = document.querySelector("#template")
+    previewNode.id = ""
+    var previewTemplate = previewNode.parentNode.innerHTML
+    previewNode.parentNode.removeChild(previewNode)
+
+    var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+        url: "/target-url", // Set the url
+        thumbnailWidth: 80,
+        thumbnailHeight: 80,
+        parallelUploads: 20,
+        previewTemplate: previewTemplate,
+        autoQueue: false, // Make sure the files aren't queued until manually added
+        previewsContainer: "#previews", // Define the container to display the previews
+        clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+    })
+
+    myDropzone.on("addedfile", function (file) {
+        // Hookup the start button
+        file.previewElement.querySelector(".start").onclick = function () { myDropzone.enqueueFile(file) }
+    })
+
+    // Update the total progress bar
+    myDropzone.on("totaluploadprogress", function (progress) {
+        document.querySelector("#total-progress.progress-bar").style.width = progress + "%"
+    })
+
+    myDropzone.on("sending", function (file) {
+        // Show the total progress bar when upload starts
+        document.querySelector("#total-progress").style.opacity = "1"
+        // And disable the start button
+        file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+    })
+
+    // Hide the total progress bar when nothing's uploading anymore
+    myDropzone.on("queuecomplete", function (progress) {
+        document.querySelector("#total-progress").style.opacity = "0"
+    })
+
+    // Setup the buttons for all transfers
+    // The "add files" button doesn't need to be setup because the config
+    // `clickable` has already been specified.
+    document.querySelector("#actions .start").onclick = function () {
+        myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+    }
+    document.querySelector("#actions .cancel").onclick = function () {
+        myDropzone.removeAllFiles(true)
+    }
+    // DropzoneJS Demo Code End
+</script>
 </body>
 </html>

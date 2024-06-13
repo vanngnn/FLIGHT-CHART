@@ -1,13 +1,11 @@
 ﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RegistroSalida.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.RegistroSalida" %>
 
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="refresh" content="30" />
     <link rel="icon" type="image/png" href="Template/img/martinrea_logo.png"/>
     <title>Shipping Display</title>
     <!-- Google Font: Source Sans Pro -->
@@ -30,9 +28,21 @@
     <link rel="stylesheet" href="template/plugins/daterangepicker/daterangepicker.css" />
     <!-- summernote -->
     <link rel="stylesheet" href="template/plugins/summernote/summernote-bs4.min.css" />
+    <!-- Select2 -->
+    <link rel="stylesheet" href="template/plugins/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="template/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" />
+    <script type = "text/javascript">
+        function DisableButton() {
+            document.getElementById("<%=btnRegistrar.ClientID %>").disabled = true;
+        }
+        window.onbeforeunload = DisableButton;
+        function isDelete() {
+            var r = confirm("Are you sure you want to delete this record?");
+            return r;
+        }
+    </script>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
-    
 <div class="wrapper">
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
@@ -178,12 +188,12 @@
                         </asp:HyperLink>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="DAILYLOG_INPUT.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="RegistroEntrada.aspx" runat="server" Visible="true"  class="nav-link"> 
                                     <i class="far fa-circle nav-icon"></i><p>Inputs</p>
                                 </asp:HyperLink>
                             </li>
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="DAILYLOG_OUTPUT.aspx.aspx" runat="server" Visible="true"  class="nav-link" > 
+                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="RegistroSalida.aspx" runat="server" Visible="true"  class="nav-link" > 
                                     <i class="far fa-circle nav-icon"></i><p>Outputs</p>
                                 </asp:HyperLink>
                             </li>
@@ -219,7 +229,6 @@
         </div>
         <!-- /.sidebar -->
     </aside>
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -232,7 +241,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Checkout log</li>
+                            <li class="breadcrumb-item active">Daily entry</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -244,6 +253,7 @@
         <section class="content">
             <!-- container-fluid -->
             <div class="container-fluid">
+               
                 <!-- Small boxes (Stat box) -->
                 <div class="card card-default">
                     <!-- Horizontal Form -->
@@ -254,17 +264,98 @@
                         <!-- /.card-header -->
                         <!-- form start -->
                         <div class="card-body">
-                                <div class="form-group row">
-                                    <label for="inputTarjeta" class="col-sm-2 col-form-label">Access card:</label>
-                                    <div class="col-sm-10">
-                                        <asp:TextBox ID="txtId_reg" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
-                                        <asp:TextBox ID="txtAcceso" runat="server" class="form-control" placeholder="..." Rows="2" TextMode="MultiLine" OnTextChanged="txtAcceso_TextChanged"  autopostback="true"></asp:TextBox>
-                                    </div>
+
+                             <div class="form-group row">
+                                 <label for="inputTimePeriodAssigned" class="col-sm-2 col-form-label">Time period assigned:</label>
+                                 <div class="col-sm-3">
+                                     <label for="inpu4tEntryDate" class="col-form-label">Date:</label>
+                                        <input id="EntryDate" type="date" name="input-entry-date" value="2024-01-01" />
+                                 </div>
+                                 <div class="col-sm-3">
+                                     <label for="inputFromTime" class="col-form-label">From:</label>
+                                     <input id="fromTime" type="time" name="from-time" value="12:00" />
+                                 </div>
+                                 <div class="col-sm-3">
+                                     <label for="inputToTime" class="col-form-label">To:</label>
+                                     <input id="toTime" type="time" name="to-time" value="12:00" />
+                                 </div>
+                             </div>
+
+                            <div class="form-group row">
+                                <label for="inputPN" class="col-sm-2 col-form-label">P/N:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtPN" runat="server" class="form-control" placeholder="Part Number"></asp:TextBox>
                                 </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputCliente" class="col-sm-2 col-form-label">Project:</label>
+                                    <div class="col-sm-10">
+                                        <asp:DropDownList ID="dblCliente" runat="server"  class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputPlant" class="col-sm-2 col-form-label">To:</label>
+                                    <div class="col-sm-10">
+                                        <asp:DropDownList ID="dblPlant" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                    </div>
+                                    
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputCarrier" class="col-sm-2 col-form-label">Carrier:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtId_reg" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:DropDownList ID="dblCarrier" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputBL" class="col-sm-2 col-form-label">B/L:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtBL" runat="server" class="form-control" placeholder="Bill Of Landing"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputQTY" class="col-sm-2 col-form-label">Quantity:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtQTY" runat="server" class="form-control" placeholder="Quantity"></asp:TextBox>
+                                </div>
+                            </div> 
+
+                            <div class="form-group row">
+                                <label for="inputDock" class="col-sm-2 col-form-label">Dock:</label>
+                                <div class="col-sm-10">
+                                    <asp:Textbox ID="txtDock" runat="server" class="form-control" placeholder="- Dock -" Enable="false" Visible="false"></asp:Textbox>
+                                    <asp:DropDownList ID="DockDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputStatus" class="col-sm-2 col-form-label">Status:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtStatus" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:DropDownList ID="StatusDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                </div>
+                            </div>  
+                            <div class="form-group row">
+                                <label for="inputStatus" class="col-sm-2 col-form-label">Reason:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtReason" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:DropDownList ID="ReasonDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputComment" class="col-sm-2 col-form-label">Comment:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtComment" runat="server" class="form-control" placeholder="Additional Comments"></asp:TextBox>
+                                </div>
+                            </div>  
                             </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <asp:Button ID="btnRegistrar" runat="server" Text="Check out"  class="btn btn-block btn-info btn-lg" OnClick="btnRegistrar_Click"/>
+                            <asp:Button ID="btnRegistrar" runat="server" Text="Save"  class="btn btn-block btn-info btn-lg" OnClick="btnRegistrar_Click"/>
                         </div>
                             <!-- /.card-footer -->                  
                     </div>
@@ -276,25 +367,32 @@
                         <!-- /.card -->
                         <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Daily entry</h3>
+                            <h3 class="card-title">List</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
                                 <Columns>
                                     <asp:BoundField HeaderText="ID" DataField="Id_reg" />
-                                    <asp:BoundField HeaderText="Customer" DataField="ClienteName" />
-                                    <asp:BoundField HeaderText="Carrier" DataField="CarrierName" />
-                                    <asp:BoundField HeaderText="Input" DataField="Entrada" />
-                                    <asp:BoundField HeaderText="Output" DataField="Salida" />
-                                    <asp:BoundField HeaderText="Plates" DataField="Placas" />
-                                    <asp:BoundField HeaderText="Box" DataField="Caja" />
-                                    <asp:BoundField HeaderText="Operator name" DataField="NombreOperador" />
-                                    <asp:BoundField HeaderText="Phone" DataField="Telefono" />
-                                    <asp:BoundField HeaderText="Card" DataField="Tarjeta" />
+                                    <asp:BoundField HeaderText="DATE" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="TIME ASSIGNED" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="P/N" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
+                                    <asp:BoundField HeaderText="FROM" DataField="Entrada" />
+                                    <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
+                                    <asp:BoundField HeaderText="B/L" DataField="Caja" />
+                                    <asp:BoundField HeaderText="QTY" DataField="Placas" />
+                                    <asp:BoundField HeaderText="STATUS" DataField="NombreOperador" />
+                                    <asp:BoundField HeaderText="REASON" DataField="NombreOperador" />
+                                    <asp:BoundField HeaderText="COMMENT" DataField="NombreOperador" />
                                     <asp:TemplateField>
                                         <ItemTemplate>
-                                            <asp:Button text="Output" CommandName="Salida" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-primary" />
+                                            <asp:Button text="Edit" CommandName="Editar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-primary" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <asp:Button text="Delete" CommandName="Eliminar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-danger" OnClientClick="return isDelete();" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
@@ -471,7 +569,7 @@
 
     // Update the total progress bar
     myDropzone.on("totaluploadprogress", function (progress) {
-        document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
+        document.querySelector("#total-progress.progress-bar").style.width = progress + "%"
     })
 
     myDropzone.on("sending", function (file) {

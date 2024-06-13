@@ -173,7 +173,7 @@
                                         </asp:HyperLink>
                                     </li>
                                     <li class="nav-item">
-                                        <asp:HyperLink ID="dailyoutput_dock6" NavigateUrl="~/ShippingDisplay/DAILYOUTPUT_DOCK5.aspx" runat="server" Visible="true" class="nav-link">
+                                        <asp:HyperLink ID="dailyoutput_dock6" NavigateUrl="~/ShippingDisplay/DAILYOUTPUT_DOCK6.aspx" runat="server" Visible="true" class="nav-link">
                                             <p>DOCK 6</p>
                                         </asp:HyperLink>
                                     </li>
@@ -264,13 +264,30 @@
                         <!-- /.card-header -->
                         <!-- form start -->
                         <div class="card-body">
+
+                             <div class="form-group row">
+                                 <label for="inputTimePeriodAssigned" class="col-sm-2 col-form-label">Time period assigned:</label>
+                                 <div class="col-sm-3">
+                                     <label for="inpu4tEntryDate" class="col-form-label">Date:</label>
+                                        <input id="EntryDate" type="date" name="input-entry-date" value="2024-01-01" />
+                                 </div>
+                                 <div class="col-sm-3">
+                                     <label for="inputFromTime" class="col-form-label">From:</label>
+                                     <input id="fromTime" type="time" name="from-time" value="12:00" />
+                                 </div>
+                                 <div class="col-sm-3">
+                                     <label for="inputToTime" class="col-form-label">To:</label>
+                                     <input id="toTime" type="time" name="to-time" value="12:00" />
+                                 </div>
+                             </div>
+
                             <div class="form-group row">
-                                <label for="inputCarrier" class="col-sm-2 col-form-label">Carrier:</label>
+                                <label for="inputPN" class="col-sm-2 col-form-label">P/N:</label>
                                 <div class="col-sm-10">
-                                    <asp:TextBox ID="txtId_reg" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
-                                    <asp:DropDownList ID="dblCarrier" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                    <asp:TextBox ID="txtPN" runat="server" class="form-control" placeholder="Part Number"></asp:TextBox>
                                 </div>
                             </div>
+
                             <div class="form-group row">
                                 <label for="inputCliente" class="col-sm-2 col-form-label">Project:</label>
                                     <div class="col-sm-10">
@@ -279,35 +296,43 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="inputTimePeriodAssigned" class="col-sm-2 col-form-label">Time period assigned:</label>
-                                <div class="col-sm-5">
-                                    <label for="inputFromTime" class="col-form-label">From:</label>
-                                    <input id="fromTime" type="time" name="from-time" value="12:00" />
-                                </div>
-                                <div class="col-sm-5">
-                                    <label for="inputToTime" class="col-form-label">To:</label>
-                                    <input id="toTime" type="time" name="to-time" value="12:00" />
+                                <label for="inputPlant" class="col-sm-2 col-form-label">From:</label>
+                                    <div class="col-sm-10">
+                                        <asp:DropDownList ID="dblPlant" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                    </div>
+                                    
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputCarrier" class="col-sm-2 col-form-label">Carrier:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtId_reg" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:DropDownList ID="dblCarrier" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="inputPN" class="col-sm-2 col-form-label">P/N:</label>
-                                <div class="col-sm-10">
-                                    <asp:TextBox ID="txtPN" runat="server" class="form-control" placeholder="Part Number"></asp:TextBox>
-                                </div>
-                            </div>
-                            <div class="form-group row">
                                 <label for="inputBL" class="col-sm-2 col-form-label">B/L:</label>
                                 <div class="col-sm-10">
-                                    <asp:TextBox ID="txtBL" runat="server" class="form-control" placeholder="Bill Of Landing"></asp:TextBox>
+                                    <asp:TextBox ID="txtBL" runat="server" class="form-control" placeholder="Bill Of Lading"></asp:TextBox>
                                 </div>
                             </div>
+
                             <div class="form-group row">
                                 <label for="inputQTY" class="col-sm-2 col-form-label">Quantity:</label>
                                 <div class="col-sm-10">
                                     <asp:TextBox ID="txtQTY" runat="server" class="form-control" placeholder="Quantity"></asp:TextBox>
                                 </div>
-                            </div>    
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputDock" class="col-sm-2 col-form-label">Dock:</label>
+                                <div class="col-sm-10">
+                                    <asp:Textbox ID="txtDock" runat="server" class="form-control" placeholder="- Dock -" Enable="false" Visible="false"></asp:Textbox>
+                                    <asp:DropDownList ID="DockDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <label for="inputStatus" class="col-sm-2 col-form-label">Status:</label>
                                 <div class="col-sm-10">
@@ -350,13 +375,15 @@
                             <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
                                 <Columns>
                                     <asp:BoundField HeaderText="ID" DataField="Id_reg" />
-                                    <asp:BoundField HeaderText="TIME" DataField="timeHeader" />
-                                    <asp:BoundField HeaderText="P/N" DataField="pnHeader" />
+                                    <asp:BoundField HeaderText="DATE" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="TIME ASSIGNED" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="P/N" DataField="Id_reg" />
                                     <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
-                                    <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
                                     <asp:BoundField HeaderText="FROM" DataField="Entrada" />
+                                    <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
                                     <asp:BoundField HeaderText="B/L" DataField="Caja" />
                                     <asp:BoundField HeaderText="QTY" DataField="Placas" />
+                                    <asp:BoundField HeaderText="DOCK" DataField="NombreOperador" />
                                     <asp:BoundField HeaderText="STATUS" DataField="NombreOperador" />
                                     <asp:BoundField HeaderText="REASON" DataField="NombreOperador" />
                                     <asp:BoundField HeaderText="COMMENT" DataField="NombreOperador" />
@@ -364,7 +391,7 @@
                                         <ItemTemplate>
                                             <asp:Button text="Edit" CommandName="Editar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-primary" />
                                         </ItemTemplate>
-                                    </asp:TemplateField>
+                                    </asp:TemplateField> 
                                     <asp:TemplateField>
                                         <ItemTemplate>
                                             <asp:Button text="Delete" CommandName="Eliminar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-danger" OnClientClick="return isDelete();" />
