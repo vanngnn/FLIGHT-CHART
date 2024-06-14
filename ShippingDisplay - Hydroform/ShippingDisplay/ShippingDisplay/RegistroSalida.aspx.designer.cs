@@ -240,6 +240,15 @@ namespace ShippingDisplay.ShippingDisplay
         protected global::System.Web.UI.WebControls.LinkButton LinkSalir;
 
         /// <summary>
+        /// TextBox1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+
+        /// <summary>
         /// EntryDate control.
         /// </summary>
         /// <remarks>
@@ -292,15 +301,6 @@ namespace ShippingDisplay.ShippingDisplay
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList dblPlant;
-
-        /// <summary>
-        /// txtId_reg control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtId_reg;
 
         /// <summary>
         /// dblCarrier control.

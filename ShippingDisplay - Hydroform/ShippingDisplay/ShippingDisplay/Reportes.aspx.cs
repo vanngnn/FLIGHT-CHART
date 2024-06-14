@@ -49,13 +49,13 @@ namespace ShippingDisplay.ShippingDisplay
                 LinkRegEntry.Visible = false;
                 LinkRegOut.Visible = false;
                 LinkRegister.Visible = false;
-                LinkDashEmb.Visible = false;
+                //LinkDashEmb.Visible = false;
             }
             else if (Dept == 2)
             {
                 LinkShipper.Visible = false;
                 LinkRegister.Visible = false;
-                LinkDashEmb.Visible = false;
+                //LinkDashEmb.Visible = false;
             }
         }
         private void CargarPlanta()

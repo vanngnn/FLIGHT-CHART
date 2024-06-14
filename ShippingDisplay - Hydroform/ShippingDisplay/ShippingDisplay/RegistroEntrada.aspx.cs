@@ -49,13 +49,13 @@ namespace ShippingDisplay.ShippingDisplay
                 LinkRegEntry.Visible = false;
                 LinkRegOut.Visible = false;
                 LinkRegister.Visible = false;
-                LinkDashEmb.Visible = false;
+                //LinkDashEmb.Visible = false;
             }
             else if (Dept == 2)
             {
                 LinkShipper.Visible = false;
                 LinkRegister.Visible = false;
-                LinkDashEmb.Visible = false;
+                //LinkDashEmb.Visible = false;
             }
         }
         private void CargarCarrier()
@@ -109,11 +109,17 @@ namespace ShippingDisplay.ShippingDisplay
             string Username = HttpContext.Current.User.Identity.Name;
             CargarPerfil(Username);
             string ID;
+            //All the drop downs first
             ID = txtId_reg.Text;
+            string Project = dblCliente.SelectedItem.Text;
             string Carrier = dblCarrier.SelectedItem.Text;
+            string Dock = DockDropDown.SelectedItem.Text;
+            string Status = StatusDropDown.SelectedItem.Text;
+            string Reason = ReasonDropDown.SelectedItem.Text;
+
+
             if (ID == "")
             {
-
                 Registro Reg = new Registro();
                 {
                     Reg.Id_cliente = Convert.ToInt32(dblCliente.SelectedValue);
@@ -124,16 +130,13 @@ namespace ShippingDisplay.ShippingDisplay
                     Reg.assignedFromtime = Convert.ToDateTime(fromTime.Text);
                     Reg.assignedTotime = Convert.ToDateTime(toTime.Text);
                     Reg.partNumber = txtPN.Text;
-                    Reg.shipStatus = txtStatus.Text;
+                    Reg.Id_planta = Id_Planta; //FROM/TO: PLANT
+                    Reg.assignedBOL= Convert.ToInt32(txtBL.Text);
+                    Reg.assignedQTY = Convert.ToInt32(txtQTY.Text);
                     Reg.shipComment = txtComment.Text;
-                    
-                    Reg.partDescription = txtDesc.Text;
-
-                    Reg.sBL = txtBL.Text;
-                    Reg.partQuantity = Convert.ToInt32(txtQTY.Text);
                     Reg.shipReason = txtReason.Text;
                     Reg.shipComment = txtComment.Text;
-                    Reg.Id_planta = Id_Planta;
+                    
                 }
                 RegistroDAL.AgregarNuevo(Reg);
                 try

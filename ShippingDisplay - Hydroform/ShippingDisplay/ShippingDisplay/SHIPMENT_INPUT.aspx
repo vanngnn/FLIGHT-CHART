@@ -177,7 +177,7 @@
                         </asp:HyperLink>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="DAILYLOG_INPUT.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="RegistroEntrada.aspx" runat="server" Visible="true"  class="nav-link"> 
                                     <i class="far fa-circle nav-icon"></i><p>Inputs</p>
                                 </asp:HyperLink>
                             </li>

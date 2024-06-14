@@ -45,20 +45,20 @@ namespace ShippingDisplay.ShippingDisplay
             Id_Planta = perfil.Id_planta;
             //ACTIVAR PESTAÑAS DE ACUERDO AL NIVEL DE USUARIO
             int Dept = Convert.ToInt32(perfil.Id_depto);
-            if (Dept == 1)
-            {
-                LinkConfig.Visible = false;
-                LinkRegEntry.Visible = false;
-                LinkRegOut.Visible = false;
-                LinkRegister.Visible = false;
-                LinkDashEmb.Visible = false;
-            }
-            else if (Dept == 2)
-            {
-                LinkShipper.Visible = false;
-                LinkRegister.Visible = false;
-                LinkDashEmb.Visible = false;
-            }
+            //if (Dept == 1)
+            //{
+            //    LinkConfig.Visible = false;
+            //    LinkRegEntry.Visible = false;
+            //    LinkRegOut.Visible = false;
+            //    LinkRegister.Visible = false;
+            //    LinkDashEmb.Visible = false;
+            //}
+            //else if (Dept == 2)
+            //{
+            //    LinkShipper.Visible = false;
+            //    LinkRegister.Visible = false;
+            //    LinkDashEmb.Visible = false;
+            //}
         }
         protected void gvRegistros_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -72,27 +72,27 @@ namespace ShippingDisplay.ShippingDisplay
         private void CargarRegistro(int id_reg)
         {
             Registro Reg = RegistroDAL.ObtenerById(id_reg);
-            txtId_reg.Text = Convert.ToString(Reg.Id_reg);
-            txtAcceso.Text = Convert.ToString(Reg.Tarjeta);
+            //txtId_reg.Text = Convert.ToString(Reg.Id_reg);
+            //txtAcceso.Text = Convert.ToString(Reg.Tarjeta);
         }
         protected void btnRegistrar_Click(object sender, EventArgs e)
         {
-            if (txtAcceso.Text == "")
-            {
-                string script = @"<script type='text/javascript'> alert('Selects the card for output'); </script>";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
-                return;
-            }
+            //if (txtAcceso.Text == "")
+            //{
+            //    string script = @"<script type='text/javascript'> alert('Selects the card for output'); </script>";
+            //    ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
+            //    return;
+            //}
             
-            int Id_reg = Convert.ToInt32(txtId_reg.Text);
-            Registro Info = RegistroDAL.ObtenerById(Id_reg);
-            string Caja = Info.Caja;
-            string CarrierName = Info.CarrierName;
+            //int Id_reg = Convert.ToInt32(txtId_reg.Text);
+            //Registro Info = RegistroDAL.ObtenerById(Id_reg);
+            //string Caja = Info.Caja;
+            //string CarrierName = Info.CarrierName;
 
             Registro Reg = new Registro();
             {
-                Reg.Id_reg = Id_reg;
-                Reg.Tarjeta = Convert.ToInt32(txtAcceso.Text);
+                //Reg.Id_reg = Id_reg;
+               // Reg.Tarjeta = Convert.ToInt32(txtAcceso.Text);
                 Reg.Status = 3;
             }
             RegistroDAL.ActualizarSalida(Reg);
@@ -103,7 +103,7 @@ namespace ShippingDisplay.ShippingDisplay
 
                 string PlantaCorrepondiente = "Plant " + Id_Planta;
                 string Msj = "SHIPPING DISPLAY OUTPUT";
-                c.enviarCorreo("van.nguyen@martinrea.com", "Ali.Akhoondzadeh@martinrea.com", "Transport output", Msj, PlantaCorrepondiente, CarrierName, Caja);
+                //c.enviarCorreo("van.nguyen@martinrea.com", "Ali.Akhoondzadeh@martinrea.com", "Transport output", Msj, PlantaCorrepondiente, CarrierName, Caja);
                 string script = @"<script type='text/javascript'> alert('Notification sent successfully'); </script>";
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
             }
@@ -136,7 +136,7 @@ namespace ShippingDisplay.ShippingDisplay
                     //Así ningún control se quedará sin ser limpiado.
                     CleanControl(control.Controls);
             }
-            txtId_reg.Text = "";
+            //txtId_reg.Text = "";
         }
         protected void LinkSalir_Click(object sender, EventArgs e)
         {
@@ -147,8 +147,8 @@ namespace ShippingDisplay.ShippingDisplay
         {
             try
             {
-                int tarjeta = Convert.ToInt32(txtAcceso.Text);
-                CargarRegistro(tarjeta);
+                //int tarjeta = Convert.ToInt32(txtAcceso.Text);
+                //CargarRegistro(tarjeta);
             }
             catch
             {

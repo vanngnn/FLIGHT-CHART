@@ -1,4 +1,4 @@
-﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RegistroSalida.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.RegistroSalida" %>
+﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RegistroEntrada.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.RegistroEntrada" %>
 
 <!DOCTYPE html>
 
@@ -264,6 +264,12 @@
                         <!-- /.card-header -->
                         <!-- form start -->
                         <div class="card-body">
+                          
+                             <div class="form-group row">
+                                 <div class="col-sm-10">
+                                     <asp:TextBox ID="TextBox1" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
+                                 </div>
+                             </div>
 
                              <div class="form-group row">
                                  <label for="inputTimePeriodAssigned" class="col-sm-2 col-form-label">Time period assigned:</label>
@@ -284,6 +290,7 @@
                             <div class="form-group row">
                                 <label for="inputPN" class="col-sm-2 col-form-label">P/N:</label>
                                 <div class="col-sm-10">
+                                    <asp:TextBox ID="txtId_reg" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
                                     <asp:TextBox ID="txtPN" runat="server" class="form-control" placeholder="Part Number"></asp:TextBox>
                                 </div>
                             </div>
@@ -305,10 +312,9 @@
 
                             <div class="form-group row">
                                 <label for="inputCarrier" class="col-sm-2 col-form-label">Carrier:</label>
-                                <div class="col-sm-10">
-                                    <asp:TextBox ID="txtId_reg" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
-                                    <asp:DropDownList ID="dblCarrier" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
-                                </div>
+                                    <div class="col-sm-10">
+                                        <asp:DropDownList ID="dblCarrier" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                    </div>
                             </div>
 
                             <div class="form-group row">
@@ -317,12 +323,14 @@
                                     <asp:TextBox ID="txtBL" runat="server" class="form-control" placeholder="Bill Of Landing"></asp:TextBox>
                                 </div>
                             </div>
+
                             <div class="form-group row">
                                 <label for="inputQTY" class="col-sm-2 col-form-label">Quantity:</label>
                                 <div class="col-sm-10">
                                     <asp:TextBox ID="txtQTY" runat="server" class="form-control" placeholder="Quantity"></asp:TextBox>
                                 </div>
                             </div>    
+
                             <div class="form-group row">
                                 <label for="inputStatus" class="col-sm-2 col-form-label">Status:</label>
                                 <div class="col-sm-10">
@@ -330,13 +338,23 @@
                                     <asp:DropDownList ID="StatusDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
                                 </div>
                             </div>  
+
+                            <div class="form-group row">
+                                <label for="inputDock" class="col-sm-2 col-form-label">Dock:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtDock" runat="server" class="form-control" placeholder="-- DOCK --" Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:DropDownList ID="DockDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                </div>
+                            </div>  
+
                             <div class="form-group row">
                                 <label for="inputStatus" class="col-sm-2 col-form-label">Reason:</label>
                                 <div class="col-sm-10">
-                                    <asp:TextBox ID="txtReason" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:TextBox ID="txtReason" runat="server" class="form-control" placeholder="-- REASON --" Enable="false" Visible="false"></asp:TextBox>
                                     <asp:DropDownList ID="ReasonDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
                                 </div>
                             </div>
+
                             <div class="form-group row">
                                 <label for="inputComment" class="col-sm-2 col-form-label">Comment:</label>
                                 <div class="col-sm-10">
