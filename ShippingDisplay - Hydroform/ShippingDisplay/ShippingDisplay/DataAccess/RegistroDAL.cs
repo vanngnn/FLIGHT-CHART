@@ -20,12 +20,22 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 //OBTENER EL ID UNICO DEL ISSUE
                 int ID;
 
-                string query = @"INSERT INTO Shipreg (Id_cliente, Id_carrier, Entrada, Salida, Shipper, Id_ruta, Id_planta, Tarjeta, Estatus)
-                                 VALUES (@Id_cliente, @Id_carrier, GETDATE(), '', '', '',@Id_planta, @Tarjeta, @Estatus); SELECT SCOPE_IDENTITY()";
+                string query = @"INSERT INTO the_whole_table (assignedDate, assignedFromtime, assignedTotime, partNumber, Id_cliente,Id_planta,Id_carrier,assignedBOL, assignedQTY, assignedDock, shipStatus, shipReason, shipComment)
+                                 VALUES (@assignedDate, @assignedFromtime,@assignedTotime,@partNumber,@Id_cliente,@Id_planta,@Id_carrier,@assignedBOL,@assignedQTY,@assignedDock,@shipStatus,@shipReason,@shipComment); SELECT SCOPE_IDENTITY()";
                 SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@assignedDate", Reg.assignedDate);
+                cmd.Parameters.AddWithValue("@assignedFromtime", Reg.assignedFromtime);
+                cmd.Parameters.AddWithValue("@assignedTotime", Reg.assignedTotime);
+                cmd.Parameters.AddWithValue("@partNumber", Reg.partNumber);
                 cmd.Parameters.AddWithValue("@Id_cliente", Reg.Id_cliente);
-                cmd.Parameters.AddWithValue("@Id_carrier", Reg.Id_carrier);
                 cmd.Parameters.AddWithValue("@Id_planta", Reg.Id_planta);
+                cmd.Parameters.AddWithValue("@Id_carrier", Reg.Id_carrier);
+                cmd.Parameters.AddWithValue("@assignedBOL", Reg.assignedBOL);
+                cmd.Parameters.AddWithValue("@assignedQTY", Reg.assignedQTY);
+                cmd.Parameters.AddWithValue("@assignedDock", Reg.assignedDock);
+                cmd.Parameters.AddWithValue("@shipStatus", Reg.shipStatus);
+                cmd.Parameters.AddWithValue("@shipReason", Reg.shipReason);
+                cmd.Parameters.AddWithValue("@shipComment", Reg.shipComment);
                 cmd.Parameters.AddWithValue("@Tarjeta", Reg.Tarjeta);
                 cmd.Parameters.AddWithValue("@Estatus", Reg.Status);
                 //RECUPERAR ID GENERADO POR LA TAB

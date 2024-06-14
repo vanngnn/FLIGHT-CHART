@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RegistroEntrada.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.RegistroEntrada" %>
+﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RegistroSalida.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.RegistroSalida" %>
 
 <!DOCTYPE html>
 
@@ -173,7 +173,7 @@
                                         </asp:HyperLink>
                                     </li>
                                     <li class="nav-item">
-                                        <asp:HyperLink ID="dailyoutput_dock6" NavigateUrl="~/ShippingDisplay/DAILYOUTPUT_DOCK5.aspx" runat="server" Visible="true" class="nav-link">
+                                        <asp:HyperLink ID="dailyoutput_dock6" NavigateUrl="~/ShippingDisplay/DAILYOUTPUT_DOCK6.aspx" runat="server" Visible="true" class="nav-link">
                                             <p>DOCK 6</p>
                                         </asp:HyperLink>
                                     </li>
@@ -268,16 +268,16 @@
                              <div class="form-group row">
                                  <label for="inputTimePeriodAssigned" class="col-sm-2 col-form-label">Time period assigned:</label>
                                  <div class="col-sm-3">
-                                     <label for="inpu4tEntryDate" class="col-form-label">Date:</label>
-                                        <input id="EntryDate" type="date" name="input-entry-date" value="2024-01-01" />
+                                     <label for="inputEntryDate" class="col-form-label">Date:</label>
+                                        <asp:TextBox ID="EntryDate" TextMode="date" name="input-entry-date" value="2024-01-01" runat="server" />
                                  </div>
                                  <div class="col-sm-3">
                                      <label for="inputFromTime" class="col-form-label">From:</label>
-                                     <input id="fromTime" type="time" name="from-time" value="12:00" />
+                                     <asp:TextBox ID="fromTime" TextMode="time" name="from-time" value="12:00" runat="server" />
                                  </div>
                                  <div class="col-sm-3">
                                      <label for="inputToTime" class="col-form-label">To:</label>
-                                     <input id="toTime" type="time" name="to-time" value="12:00" />
+                                     <asp:TextBox ID="toTime" TextMode="time" name="to-time" value="12:00" runat="server" />
                                  </div>
                              </div>
 
@@ -296,7 +296,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="inputPlant" class="col-sm-2 col-form-label">From:</label>
+                                <label for="inputPlant" class="col-sm-2 col-form-label">To:</label>
                                     <div class="col-sm-10">
                                         <asp:DropDownList ID="dblPlant" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
                                     </div>
@@ -314,7 +314,7 @@
                             <div class="form-group row">
                                 <label for="inputBL" class="col-sm-2 col-form-label">B/L:</label>
                                 <div class="col-sm-10">
-                                    <asp:TextBox ID="txtBL" runat="server" class="form-control" placeholder="Bill Of Lading"></asp:TextBox>
+                                    <asp:TextBox ID="txtBL" runat="server" class="form-control" placeholder="Bill Of Landing"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -373,6 +373,7 @@
                                     <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
                                     <asp:BoundField HeaderText="B/L" DataField="Caja" />
                                     <asp:BoundField HeaderText="QTY" DataField="Placas" />
+                                    <asp:BoundField HeaderText="DOCK" DataField="NombreOperador" />
                                     <asp:BoundField HeaderText="STATUS" DataField="NombreOperador" />
                                     <asp:BoundField HeaderText="REASON" DataField="NombreOperador" />
                                     <asp:BoundField HeaderText="COMMENT" DataField="NombreOperador" />
@@ -560,12 +561,7 @@
 
     // Update the total progress bar
     myDropzone.on("totaluploadprogress", function (progress) {
-        document.querySelector("#total-progress.progress-bar").
-
-
-
-
-.width = progress + "%"
+        document.querySelector("#total-progress.progress-bar").style.width = progress + "%"
     })
 
     myDropzone.on("sending", function (file) {

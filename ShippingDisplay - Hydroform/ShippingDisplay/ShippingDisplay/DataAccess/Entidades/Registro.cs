@@ -10,16 +10,37 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         public Registro() { }
         //HEADER
         public int Id_reg { get; set; } //MAIN KEY
+        public int Id_all { get; set; } //ID ALL
+        public DateTime assignedDate { get; set; } //ASSIGNED DATE
+        public DateTime assignedFromtime { get; set; } //ASSIGNED FROM TIME
+        public DateTime assignedTotime  { get; set; } //ASSIGNED TO TIME
+        public string partNumber { get; set; } //PART NUMBER
         public int Id_cliente { get; set; } //PROJECT
+        public int Id_planta { get; set; } //ID PLANTS
         public int Id_carrier { get; set; } //CARRIER
+        public int assignedBOL { get; set; } //BILL OF LADING
+        public int assignedQTY { get; set; } //QUANTITY
+        public string assignedDock { get; set; } //DOCK
+        public string shipStatus { get; set; } //SHIP REASON
+        public string shipReason { get; set; } //SHIP REASON
+        public string shipComment { get; set; } //SHIP COMMENTS
+        
+        //ADICIONALES 
+
+        public string ClienteName { get; set; }
+        public string CarrierName { get; set; }
+        public string RutaName { get; set; }
+
+        //DONT NEED THESE
+
         public DateTime Entrada { get; set; } //THE DATE WHEN U ENTER THE SHIPMENT (not needed)
         public string Salida { get; set; } //THE DATE WHEN U OUTPUT THE SHIPMENT (not needed)
         public int Shipper { get; set; } //ID SHIPPER
         public int Id_ruta { get; set; } //ID ROUTE
-        public int Id_planta { get; set; } //ID PLANTS
+       
         public int Tarjeta { get; set; } //SHIPPER ACCESS CARD
         public int Status { get; set; } //STATUS
-        public int 
+        
 
         //DETALLE
         public int Id_det { get; set; }
@@ -28,11 +49,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         public string NombreOperador { get; set; }
         public string Telefono { get; set; }
 
-        //ADICIONALES 
 
-        public string ClienteName { get; set; }
-        public string CarrierName { get; set; }
-        public string RutaName { get; set; }
         //
         public string Ontime { get; set; }
         public string DELAYED { get; set; }

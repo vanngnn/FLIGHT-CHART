@@ -303,6 +303,24 @@ namespace ShippingDisplay.ShippingDisplay
         protected global::System.Web.UI.WebControls.TextBox txtQTY;
 
         /// <summary>
+        /// txtDock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDock;
+
+        /// <summary>
+        /// DockDropDown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DockDropDown;
+
+        /// <summary>
         /// txtStatus control.
         /// </summary>
         /// <remarks>

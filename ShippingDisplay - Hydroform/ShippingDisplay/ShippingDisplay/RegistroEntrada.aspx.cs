@@ -27,6 +27,7 @@ namespace ShippingDisplay.ShippingDisplay
                     CargarGrid();
                     setStatusDropdown();
                     setReasonDropDown();
+                    setDockDropDown();
                 }
                 else
                 {
@@ -91,6 +92,15 @@ namespace ShippingDisplay.ShippingDisplay
             ReasonDropDown.Items.Insert(6, "Delayed to Arrive");
             ReasonDropDown.Items.Insert(7, "Other (Please comment):");
         }
+        private void setDockDropDown()
+        {
+            DockDropDown.Items.Insert(0, "Dock 1");
+            DockDropDown.Items.Insert(1, "Dock 2");
+            DockDropDown.Items.Insert(2, "Dock 3");
+            DockDropDown.Items.Insert(3, "Dock 4");
+            DockDropDown.Items.Insert(4, "Dock 5");
+            DockDropDown.Items.Insert(5, "Dock 6");
+        }
 
         protected void btnRegistrar_Click(object sender, EventArgs e) //onclick for register button
         {
@@ -110,10 +120,15 @@ namespace ShippingDisplay.ShippingDisplay
                     Reg.Id_carrier = Convert.ToInt32(dblCarrier.SelectedValue);
                     //TODO: Check if there isin't bulshit input on the clientside first
                     Reg.Status = 1;
+                    Reg.assignedDate= Convert.ToDateTime(EntryDate.Text);
+                    Reg.assignedFromtime = Convert.ToDateTime(fromTime.Text);
+                    Reg.assignedTotime = Convert.ToDateTime(toTime.Text);
+                    Reg.partNumber = txtPN.Text;
                     Reg.shipStatus = txtStatus.Text;
                     Reg.shipComment = txtComment.Text;
-                    Reg.timeAssigned = Convert.ToDateTime(assignTime.Text);
-                    Reg.partNumber = txtPN.Text;
+                    
+                    Reg.partDescription = txtDesc.Text;
+
                     Reg.sBL = txtBL.Text;
                     Reg.partQuantity = Convert.ToInt32(txtQTY.Text);
                     Reg.shipReason = txtReason.Text;

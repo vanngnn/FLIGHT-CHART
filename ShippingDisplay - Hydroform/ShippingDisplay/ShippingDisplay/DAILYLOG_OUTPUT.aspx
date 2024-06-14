@@ -268,16 +268,16 @@
                              <div class="form-group row">
                                  <label for="inputTimePeriodAssigned" class="col-sm-2 col-form-label">Time period assigned:</label>
                                  <div class="col-sm-3">
-                                     <label for="inpu4tEntryDate" class="col-form-label">Date:</label>
-                                        <input id="EntryDate" type="date" name="input-entry-date" value="2024-01-01" />
+                                     <label for="inputEntryDate" class="col-form-label">Date:</label>
+                                        <asp:TextBox id="EntryDate" TextMode="date" name="input-entry-date" value="2024-01-01" runat="server" />
                                  </div>
                                  <div class="col-sm-3">
                                      <label for="inputFromTime" class="col-form-label">From:</label>
-                                     <input id="fromTime" type="time" name="from-time" value="12:00" />
+                                     <asp:TextBox id="fromTime" TextMode="time" name="from-time" value="12:00" runat="server" />
                                  </div>
                                  <div class="col-sm-3">
                                      <label for="inputToTime" class="col-form-label">To:</label>
-                                     <input id="toTime" type="time" name="to-time" value="12:00" />
+                                     <asp:TextBox id="toTime" TextMode="time" name="to-time" value="12:00" runat="server" />
                                  </div>
                              </div>
 
