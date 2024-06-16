@@ -306,7 +306,7 @@
                             <div class="form-group row">
                                 <label for="inputCarrier" class="col-sm-2 col-form-label">Carrier:</label>
                                 <div class="col-sm-10">
-                                    <asp:TextBox ID="txtId_reg" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:TextBox ID="txtId_all" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
                                     <asp:DropDownList ID="dblCarrier" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
                                 </div>
                             </div>
@@ -371,12 +371,12 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
+                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
                                 <Columns>
-                                    <asp:BoundField HeaderText="ID" DataField="Id_reg" />
-                                    <asp:BoundField HeaderText="DATE" DataField="Id_reg" />
-                                    <asp:BoundField HeaderText="TIME ASSIGNED" DataField="Id_reg" />
-                                    <asp:BoundField HeaderText="P/N" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="ID" DataField="Id_all" />
+                                    <asp:BoundField HeaderText="DATE" DataField="Id_all" />
+                                    <asp:BoundField HeaderText="TIME ASSIGNED" DataField="Id_all" />
+                                    <asp:BoundField HeaderText="P/N" DataField="Id_all" />
                                     <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
                                     <asp:BoundField HeaderText="FROM" DataField="Entrada" />
                                     <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />

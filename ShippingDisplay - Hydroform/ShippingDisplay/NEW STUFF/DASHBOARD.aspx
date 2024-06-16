@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DASHBOARD.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.DASHBOARD" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DASHBOARD.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.DASHBOARD" %>
 
 <!DOCTYPE html>
 
@@ -249,9 +249,9 @@
               <div class="card-body">
     
     
-                <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" OnRowDataBound="gvRegistros_RowDataBound" >
+                <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowDataBound="gvRegistros_RowDataBound" >
                                 <Columns>
-                                    <asp:BoundField HeaderText="TIME" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="TIME" DataField="Id_all" />
                                     <asp:BoundField HeaderText="CARRIER" DataField="ClienteName" />
                                     <asp:BoundField HeaderText="P/N" DataField="CarrierName" />
                                     <asp:BoundField HeaderText="PROJECT" DataField="Entrada" />

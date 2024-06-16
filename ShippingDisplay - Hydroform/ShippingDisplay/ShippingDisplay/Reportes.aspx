@@ -182,7 +182,7 @@
                                 </asp:HyperLink>
                             </li>
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="DAILYLOG_OUTPUT.aspx" runat="server" Visible="true"  class="nav-link" > 
+                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="RegistroSalida.aspx" runat="server" Visible="true"  class="nav-link" > 
                                     <i class="far fa-circle nav-icon"></i><p>Outputs</p>
                                 </asp:HyperLink>
                             </li>
@@ -311,9 +311,9 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" >
+                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" >
                                 <Columns>
-                                    <asp:BoundField HeaderText="ID" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="ID" DataField="Id_all" />
                                     <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
                                     <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
                                     <asp:BoundField HeaderText="FROM" DataField="Entrada" />

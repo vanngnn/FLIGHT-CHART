@@ -110,7 +110,7 @@ namespace ShippingDisplay.ShippingDisplay
             CargarPerfil(Username);
             string ID;
             //All the drop downs first
-            ID = txtId_reg.Text;
+            ID = txtId_all.Text;
             string Project = dblCliente.SelectedItem.Text;
             string Carrier = dblCarrier.SelectedItem.Text;
             string Dock = DockDropDown.SelectedItem.Text;
@@ -143,7 +143,7 @@ namespace ShippingDisplay.ShippingDisplay
                 {
                     string PlantaCorrepondiente = "Plant " + Id_Planta;
                     string Msj = "SHIPPING DISPLAY INPUT";
-                    // c.enviarCorreo("van.nguyen@martinrea.com", "Ali.Akhoondzadeh@martinrea.com", "Transport input", Msj, PlantaCorrepondiente, Carrier, Caja);
+                    //c.enviarCorreo("van.nguyen@martinrea.com", "Ali.Akhoondzadeh@martinrea.com", "Transport input", Msj, PlantaCorrepondiente, Carrier, Caja);
 
                     string script = @"<script type='text/javascript'> alert('Successfully sent data'); </script>";
                     ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
@@ -163,7 +163,7 @@ namespace ShippingDisplay.ShippingDisplay
                     //DEFINICIÓN DE VARIABLES LOCALES
                     Registro Reg = new Registro();
                     {
-                        Reg.Id_reg = Convert.ToInt32(txtId_reg.Text);
+                        Reg.Id_all = Convert.ToInt32(txtId_all.Text);
                         Reg.Id_cliente = Convert.ToInt32(dblCliente.SelectedValue);
                         Reg.Id_carrier = Convert.ToInt32(dblCarrier.SelectedValue);
                         // Reg.Placas = txtPlacas.Text;
@@ -193,8 +193,8 @@ namespace ShippingDisplay.ShippingDisplay
         }
         private void CargarGrid()
         {
-            int Estatus = 1;
-            gvRegistros.DataSource = RegistroDAL.ListadoRegistros(Estatus, Id_Planta);
+            int shipStatus = 1;
+            gvRegistros.DataSource = RegistroDAL.ListadoRegistros(shipStatus, Id_Planta);
             gvRegistros.DataBind();
         }
 
@@ -222,10 +222,10 @@ namespace ShippingDisplay.ShippingDisplay
                 }
             }
         }
-        private void CargarRegistro(int id_reg)
+        private void CargarRegistro(int Id_all)
         {
-            Registro Reg = RegistroDAL.ObtenerById(id_reg);
-            txtId_reg.Text = Convert.ToString(Reg.Id_reg);
+            Registro Reg = RegistroDAL.ObtenerById(Id_all);
+            txtId_all.Text = Convert.ToString(Reg.Id_all);
             dblCliente.SelectedValue = Convert.ToString(Reg.Id_cliente);
             dblCarrier.SelectedValue = Convert.ToString(Reg.Id_carrier);
             // txtPlacas.Text = Convert.ToString(Reg.Placas);
@@ -255,7 +255,7 @@ namespace ShippingDisplay.ShippingDisplay
                     //Así ningún control se quedará sin ser limpiado.
                     CleanControl(control.Controls);
             }
-            txtId_reg.Text = "";
+            txtId_all.Text = "";
         }
         protected void LinkSalir_Click(object sender, EventArgs e)
         {

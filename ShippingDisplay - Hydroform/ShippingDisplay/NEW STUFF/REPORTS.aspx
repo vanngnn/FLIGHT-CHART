@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Reportes.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.Reportes" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Reportes.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.Reportes" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -231,9 +231,9 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" >
+                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" >
                                 <Columns>
-                                    <asp:BoundField HeaderText="ID" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="ID" DataField="Id_all" />
                                     <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
                                     <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
                                     <asp:BoundField HeaderText="B/L" DataField="Salida" />

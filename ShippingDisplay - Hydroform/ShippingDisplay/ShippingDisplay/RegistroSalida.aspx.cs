@@ -69,10 +69,10 @@ namespace ShippingDisplay.ShippingDisplay
                 CargarRegistro(cod);
             }
         }
-        private void CargarRegistro(int id_reg)
+        private void CargarRegistro(int Id_all)
         {
-            Registro Reg = RegistroDAL.ObtenerById(id_reg);
-            //txtId_reg.Text = Convert.ToString(Reg.Id_reg);
+            Registro Reg = RegistroDAL.ObtenerById(Id_all);
+            //txtId_all.Text = Convert.ToString(Reg.Id_all);
             //txtAcceso.Text = Convert.ToString(Reg.Tarjeta);
         }
         protected void btnRegistrar_Click(object sender, EventArgs e)
@@ -84,14 +84,14 @@ namespace ShippingDisplay.ShippingDisplay
             //    return;
             //}
             
-            //int Id_reg = Convert.ToInt32(txtId_reg.Text);
-            //Registro Info = RegistroDAL.ObtenerById(Id_reg);
+            //int Id_all = Convert.ToInt32(txtId_all.Text);
+            //Registro Info = RegistroDAL.ObtenerById(Id_all);
             //string Caja = Info.Caja;
             //string CarrierName = Info.CarrierName;
 
             Registro Reg = new Registro();
             {
-                //Reg.Id_reg = Id_reg;
+                //Reg.Id_all = Id_all;
                // Reg.Tarjeta = Convert.ToInt32(txtAcceso.Text);
                 Reg.Status = 3;
             }
@@ -136,7 +136,7 @@ namespace ShippingDisplay.ShippingDisplay
                     //Así ningún control se quedará sin ser limpiado.
                     CleanControl(control.Controls);
             }
-            //txtId_reg.Text = "";
+            //txtId_all.Text = "";
         }
         protected void LinkSalir_Click(object sender, EventArgs e)
         {

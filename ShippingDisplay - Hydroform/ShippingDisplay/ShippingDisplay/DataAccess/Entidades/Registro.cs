@@ -9,8 +9,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
     {
         public Registro() { }
         //HEADER
-        public int Id_reg { get; set; } //MAIN KEY
-        public int Id_all { get; set; } //ID ALL
+        public int Id_all { get; set; } //MAIN KEY
         public DateTime assignedDate { get; set; } //ASSIGNED DATE
         public DateTime assignedFromtime { get; set; } //ASSIGNED FROM TIME
         public DateTime assignedTotime  { get; set; } //ASSIGNED TO TIME

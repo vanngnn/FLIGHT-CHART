@@ -240,13 +240,13 @@ namespace ShippingDisplay.ShippingDisplay
         protected global::System.Web.UI.WebControls.LinkButton LinkSalir;
 
         /// <summary>
-        /// txtId_reg control.
+        /// txtId_all control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtId_reg;
+        protected global::System.Web.UI.WebControls.TextBox txtId_all;
 
         /// <summary>
         /// txtShipper control.

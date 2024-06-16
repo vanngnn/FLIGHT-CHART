@@ -71,7 +71,7 @@ namespace ShippingDisplay.ShippingDisplay
         {
             Registro Reg = new Registro();
             {
-                Reg.Id_reg = Convert.ToInt32(txtId_reg.Text);
+                Reg.Id_all = Convert.ToInt32(txtId_all.Text);
                 Reg.Shipper = Convert.ToInt32(txtShipper.Text);
                 Reg.Id_ruta = Convert.ToInt32(dblRuta.SelectedValue);
                 Reg.Status = 2;
@@ -80,10 +80,10 @@ namespace ShippingDisplay.ShippingDisplay
             CleanControl(this.Controls);
             CargarGrid();
         }
-        private void CargarRegistro(int id_reg)
+        private void CargarRegistro(int Id_all)
         {
-            Registro Reg = RegistroDAL.ObtenerById(id_reg);
-            txtId_reg.Text = Convert.ToString(Reg.Id_reg);
+            Registro Reg = RegistroDAL.ObtenerById(Id_all);
+            txtId_all.Text = Convert.ToString(Reg.Id_all);
 
         }
 
@@ -129,7 +129,7 @@ namespace ShippingDisplay.ShippingDisplay
                     //Así ningún control se quedará sin ser limpiado.
                     CleanControl(control.Controls);
             }
-            txtId_reg.Text = "";
+            txtId_all.Text = "";
         }
     }
 }

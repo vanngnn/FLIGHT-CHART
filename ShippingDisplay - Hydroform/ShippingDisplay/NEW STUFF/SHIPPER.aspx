@@ -204,7 +204,7 @@
                                 <div class="form-group row">
                                     <label for="inputTarjeta" class="col-sm-2 col-form-label">ID:</label>
                                     <div class="col-sm-10">
-                                        <asp:TextBox ID="txtId_reg" runat="server" class="form-control" placeholder="ID" Enable="false"></asp:TextBox>
+                                        <asp:TextBox ID="txtId_all" runat="server" class="form-control" placeholder="ID" Enable="false"></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -238,9 +238,9 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
+                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
                                 <Columns>
-                                    <asp:BoundField HeaderText="ID" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="ID" DataField="Id_all" />
                                     <asp:BoundField HeaderText="Customer" DataField="ClienteName" />
                                     <asp:BoundField HeaderText="Carrier" DataField="CarrierName" />
                                     <asp:BoundField HeaderText="Input" DataField="Entrada" />

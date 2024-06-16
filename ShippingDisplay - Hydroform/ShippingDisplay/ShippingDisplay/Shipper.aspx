@@ -182,7 +182,7 @@
                                 </asp:HyperLink>
                             </li>
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="DAILYLOG_OUTPUT.aspx" runat="server" Visible="true"  class="nav-link" > 
+                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="RegistroSalida.aspx" runat="server" Visible="true"  class="nav-link" > 
                                     <i class="far fa-circle nav-icon"></i><p>Outputs</p>
                                 </asp:HyperLink>
                             </li>
@@ -256,7 +256,7 @@
                                 <div class="form-group row">
                                     <label for="inputTarjeta" class="col-sm-2 col-form-label">ID:</label>
                                     <div class="col-sm-10">
-                                        <asp:TextBox ID="txtId_reg" runat="server" class="form-control" placeholder="ID" Enable="false"></asp:TextBox>
+                                        <asp:TextBox ID="txtId_all" runat="server" class="form-control" placeholder="ID" Enable="false"></asp:TextBox>
                                     </div>
                                 </div>
 
@@ -296,9 +296,9 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
+                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
                                 <Columns>
-                                    <asp:BoundField HeaderText="TIME" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="TIME" DataField="Id_all" />
                                     <asp:BoundField HeaderText="P/N" DataField="CarrierName" />
                                     <asp:BoundField HeaderText="PROJECT" DataField="Entrada" />
                                     <asp:BoundField HeaderText="CARRIER" DataField="ClienteName" />

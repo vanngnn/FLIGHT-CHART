@@ -309,9 +309,9 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" OnRowDataBound="gvRegistros_RowDataBound" >
+                <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowDataBound="gvRegistros_RowDataBound" >
                                 <Columns>
-                                    <asp:BoundField HeaderText="ID" DataField="Id_reg" />
+                                    <asp:BoundField HeaderText="ID" DataField="Id_all" />
                                     <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
                                     <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
                                     <asp:BoundField HeaderText="FROM" DataField="Entrada" />
