@@ -7,6 +7,7 @@ using System.Transactions;
 using System.Data.SqlClient;
 using System.Configuration;
 using ShippingDisplay.ShippingDisplay.DataAccess.Entidades;
+using System.Net.NetworkInformation;
 
 namespace ShippingDisplay.ShippingDisplay.DataAccess
 {
@@ -21,7 +22,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 //OBTENER EL ID UNICO DEL ISSUE
                 int ID;
 
-                string query = @"INSERT INTO the_whole_table (EntryDate,From_time,To_time,Part_number,Id_cliente,Id_planta,Id_carrier,Bill_of_Lading,Quantity,Dock,shipStatus, shipReason, shipComment)
+                string query = @"INSERT INTO LogInput (EntryDate,From_time,To_time,Part_number,Id_cliente,Id_planta,Id_carrier,Bill_of_Lading,Quantity,Dock,shipStatus, shipReason, shipComment)
                                  VALUES (@assignedDate, @assignedFromtime,@assignedTotime,@partNumber,@Id_cliente,@Id_planta,@Id_carrier,@assignedBOL,@assignedQTY,@assignedDock,@shipStatus,@shipReason,@shipComment); SELECT SCOPE_IDENTITY()";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@assignedDate", Reg.assignedDate);
@@ -50,8 +51,8 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
             {
                 conn.Open();
-                // Update statement for the_whole_table
-                string query = @"UPDATE the_whole_table 
+                // Update statement for LogInput
+                string query = @"UPDATE LogInput 
                          SET EntryDate = @EntryDate, 
                              From_time = @From_time, 
                              To_time = @To_time, 
@@ -95,7 +96,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
                 {
                     conn.Open();
-                    string query = @"DELETE FROM the_whole_table WHERE Id_all = @Id_all";
+                    string query = @"DELETE FROM LogInput WHERE Id_all = @Id_all";
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@Id_all", Id_all);
                     cmd.ExecuteNonQuery();
@@ -113,7 +114,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 conn.Open();
                 string query = @"SELECT H.Id_all, H.Id_cliente, H.Id_carrier, H.From_time, H.Tarjeta, D.Placas,  D.Caja, D.NombreOperador, D.Telefono, 
                             C.description AS 'Cliente', L.description AS 'Carrier',  H.Id_planta
-                            FROM [dbo].[the_whole_table] H
+                            FROM [dbo].[LogInput] H
                             INNER JOIN [dbo].[Shipdet] D ON H.Id_all=D.Id_all 
                             INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
                             INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier WHERE  H.Id_all=@Id_all";
@@ -136,7 +137,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
              //   conn.Open();
                // string query = @"SELECT H.Id_all, H.Id_cliente, H.Id_carrier, H.Entrada, H.Salida, H.Tarjeta, D.Placas,  D.Caja, D.NombreOperador, D.Telefono, 
                  //           C.description AS 'Cliente', L.description AS 'Carrier',  H.Id_planta
-                   //         FROM [dbo].[the_whole_table] H
+                   //         FROM [dbo].[LogInput] H
                      //       INNER JOIN [dbo].[Shipdet] D ON H.Id_all=D.Id_all 
                        //     INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
                          //   INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier WHERE Tarjeta";
@@ -156,7 +157,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
           //  using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
             //{
               //  conn.Open();
-                //string query = @"UPDATE the_whole_table SET  Salida = GETDATE(), shipStatus=@shipStatus WHERE Id_all = @Id_all";
+                //string query = @"UPDATE LogInput SET  Salida = GETDATE(), shipStatus=@shipStatus WHERE Id_all = @Id_all";
                 //SqlCommand cmd = new SqlCommand(query, conn);
                 //cmd.Parameters.AddWithValue("@Id_all", Reg.Id_all);
                 //cmd.Parameters.AddWithValue("@shipStatus", Reg.Status);
@@ -166,29 +167,31 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         //}
 
         //LLENAR EL GRIDVIEW X shipStatus Y PLANTA  - NOT DONE
-        //public static List<Registro> ListadoRegistros(int Status, int Id_planta)
-        //{
-           // List<Registro> lista = new List<Registro>();
-            //using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
-            //{
-              //  conn.Open();
-                //string query = @"SELECT H.Id_all, H.Id_cliente, H.Id_carrier, H.Entrada, H.Salida, H.Tarjeta, D.Placas, D.Caja, D.NombreOperador, D.Telefono, 
-                  //          C.description AS 'Cliente', L.description AS 'Carrier',  H.Id_planta
-                    //        FROM [dbo].[the_whole_table] H
-                      //      INNER JOIN [dbo].[Shipdet] D ON H.Id_all=D.Id_all 
-                        //    INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
-                          //  INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier WHERE H.shipStatus=@shipStatus AND H.Id_planta=@Id_planta ORDER BY H.Entrada desc ";
-                //SqlCommand cmd = new SqlCommand(query, conn);
-                //cmd.Parameters.AddWithValue("@shipStatus", Status);
-                //cmd.Parameters.AddWithValue("@Id_planta", Id_planta);
-                //SqlDataReader reader = cmd.ExecuteReader();
-                //while (reader.Read())
-                //{
-                  //  lista.Add(ConvertirRegistro(reader));
-                //}
-            //}
-            //return lista;
-        //}
+        public static List<Registro> ListadoRegistros(int Status, int Id_planta)
+        {
+            List<Registro> lista = new List<Registro>();
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+               conn.Open();
+               string query = @"SELECT H.Id_all,H.EntryDate,H.From_time, H.To_time, H.Part_number, H.Id_cliente, H.Id_planta, H.Id_carrier, H.Bill_of_Lading, H.Quantity, H.Dock,H.shipStatus, H.shipReason, H.shipComment, 
+                            C.description AS 'Cliente', L.description AS 'Carrier',
+                            FROM [dbo].[LogInput] H
+                            INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
+                            INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier WHERE H.shipStatus=@shipStatus AND H.Id_planta=@Id_planta ORDER BY H.Entrada desc ";
+
+                //(EntryDate,From_time,To_time,Part_number,Id_cliente,Id_planta,Id_carrier,Bill_of_Lading,Quantity,Dock,shipStatus, shipReason, shipComment)
+                //VALUES(@assignedDate, @assignedFromtime, @assignedTotime, @partNumber, @Id_cliente, @Id_planta, @Id_carrier, @assignedBOL, @assignedQTY, @assignedDock, @shipStatus, @shipReason, @shipComment); SELECT SCOPE_IDENTITY()
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@shipStatus", Status);
+                cmd.Parameters.AddWithValue("@Id_planta", Id_planta);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    lista.Add(ConvertirRegistro(reader));
+                }
+            }
+            return lista;
+        }
         
         // CONVERTIR REGISTRO - NOT DONE
 
@@ -223,7 +226,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
 	          //               --WHEN shipStatus = 2 THEN 'ONTIME'
 	          //               WHEN shipStatus = 2 THEN 'ONTIME'
 	          //               WHEN shipStatus = 2 THEN 'DELAYED' END AS ESTADO 
-              //          FROM [dbo].[the_whole_table] H
+              //          FROM [dbo].[LogInput] H
                //         INNER JOIN [dbo].[Shipdet] D ON H.Id_all=D.Id_all 
                //         INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
                //         INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier 
@@ -262,7 +265,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
             {
                 conn.Open();
-                string query = @"UPDATE the_whole_table SET  Shipper = @Shipper,shipStatus=@shipStatus WHERE Id_all = @Id_all";
+                string query = @"UPDATE LogInput SET  Shipper = @Shipper,shipStatus=@shipStatus WHERE Id_all = @Id_all";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Id_all", Reg.Id_all);
                 cmd.Parameters.AddWithValue("@Shipper", Reg.Shipper);
@@ -280,17 +283,17 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 con.Open();
                 string query = @"
                         SELECT DISTINCT  
-                        (SELECT ISNULL((Count(H.shipStatus)),0) FROM the_whole_table H  WHERE H.shipStatus = 3 = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta ) AS 'SENT',
+                        (SELECT ISNULL((Count(H.shipStatus)),0) FROM LogInput H  WHERE H.shipStatus = 3 = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta ) AS 'SENT',
 
-                        (SELECT ISNULL((Count(H.shipStatus)),0) FROM the_whole_table H  WHERE H.shipStatus = 1 = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta) AS 'EARRING',
+                        (SELECT ISNULL((Count(H.shipStatus)),0) FROM LogInput H  WHERE H.shipStatus = 1 = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta) AS 'EARRING',
 
-                        (SELECT ISNULL((Count(H.shipStatus)),0) FROM the_whole_table H  
+                        (SELECT ISNULL((Count(H.shipStatus)),0) FROM LogInput H  
 
                         WHERE shipStatus = 2 = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta)AS 'ONTIME' ,
 
-                        (SELECT ISNULL((Count(H.shipStatus)),0) AS 'DELAYED' FROM the_whole_table H 
+                        (SELECT ISNULL((Count(H.shipStatus)),0) AS 'DELAYED' FROM LogInput H 
                         WHERE H.shipStatus = 2  = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta) AS 'DELAYED' 
-                        FROM the_whole_table ";
+                        FROM LogInput ";
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@Id_planta", Id_planta);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -328,7 +331,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                         H.Shipper, H.Id_planta, 
                         CASE WHEN shipStatus = 1 THEN 'NO SHIPPER ASSIGNMENT'
                         WHEN H.Salida ='1900-01-01 00:00:00.000' THEN 'DO NOT REGISTER OUT;
-                        FROM [dbo].[the_whole_table] H
+                        FROM [dbo].[LogInput] H
                         INNER JOIN [dbo].[Shipdet] D ON H.Id_all=D.Id_all 
                         INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
                         INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier 
