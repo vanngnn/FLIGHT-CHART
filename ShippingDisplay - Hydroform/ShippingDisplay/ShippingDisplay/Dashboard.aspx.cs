@@ -23,7 +23,7 @@ namespace ShippingDisplay.ShippingDisplay
                     string Username = HttpContext.Current.User.Identity.Name;
                     CargarPerfil(Username);
                     ObtenerWidgets();
-                    CargarGrid();
+                    //CargarGrid();
                 }
                 else
                 {
@@ -32,11 +32,11 @@ namespace ShippingDisplay.ShippingDisplay
                 }
             }
         }
-        private void CargarGrid()
-        {
-            gvRegistros.DataSource = RegistroDAL.ListadoDashboard(Id_Planta);
-            gvRegistros.DataBind();
-        }
+        //private void CargarGrid()
+        //{
+        //    gvRegistros.DataSource = RegistroDAL.ListadoDashboard(Id_Planta);
+         //   gvRegistros.DataBind();
+        //}
         public void ObtenerWidgets()
         {
             try

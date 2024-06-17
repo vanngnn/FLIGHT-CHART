@@ -35,7 +35,6 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         public DateTime Entrada { get; set; } //THE DATE WHEN U ENTER THE SHIPMENT (not needed)
         public string Salida { get; set; } //THE DATE WHEN U OUTPUT THE SHIPMENT (not needed)
         public int Shipper { get; set; } //ID SHIPPER
-        public int Id_ruta { get; set; } //ID ROUTE
        
         public int Tarjeta { get; set; } //SHIPPER ACCESS CARD
         public int Status { get; set; } //STATUS

@@ -24,10 +24,11 @@ namespace ShippingDisplay.ShippingDisplay
                     CargarPerfil(Username);
                     CargarCarrier();
                     CargarCliente();
-                    CargarGrid();
+                    //CargarGrid();
                     setStatusDropdown();
                     setReasonDropDown();
                     setDockDropDown();
+                    setPlantsDropDown();
                 }
                 else
                 {
@@ -65,6 +66,15 @@ namespace ShippingDisplay.ShippingDisplay
             dblCarrier.DataSource = CarrierDAL.ObtenerCarrier();
             dblCarrier.DataBind();
             dblCarrier.Items.Insert(0, " - Carrier - ");
+        }
+
+        private void setPlantsDropDown()
+        {
+            dblPlant.DataTextField = "description";
+            dblPlant.DataValueField = "id_planta";
+            dblPlant.DataSource = PlantaDAL.ObtenerPlantas();
+            dblPlant.DataBind();
+            dblPlant.Items.Insert(0, " - Plant - ");
         }
         private void CargarCliente()
         {
@@ -111,30 +121,23 @@ namespace ShippingDisplay.ShippingDisplay
             string ID;
             //All the drop downs first
             ID = txtId_all.Text;
-            string Project = dblCliente.SelectedItem.Text;
-            string Carrier = dblCarrier.SelectedItem.Text;
-            string Dock = DockDropDown.SelectedItem.Text;
-            string Status = StatusDropDown.SelectedItem.Text;
-            string Reason = ReasonDropDown.SelectedItem.Text;
-
-
             if (ID == "")
             {
                 Registro Reg = new Registro();
-                {
-                    Reg.Id_cliente = Convert.ToInt32(dblCliente.SelectedValue);
-                    Reg.Id_carrier = Convert.ToInt32(dblCarrier.SelectedValue);
-                    //TODO: Check if there isin't bulshit input on the clientside first
+                {           
                     Reg.Status = 1;
                     Reg.assignedDate= Convert.ToDateTime(EntryDate.Text);
                     Reg.assignedFromtime = Convert.ToDateTime(fromTime.Text);
                     Reg.assignedTotime = Convert.ToDateTime(toTime.Text);
                     Reg.partNumber = txtPN.Text;
+                    Reg.Id_cliente = Convert.ToInt32(dblCliente.SelectedValue);
                     Reg.Id_planta = Id_Planta; //FROM/TO: PLANT
+                    Reg.Id_carrier = Convert.ToInt32(dblCarrier.SelectedValue);
                     Reg.assignedBOL= Convert.ToInt32(txtBL.Text);
                     Reg.assignedQTY = Convert.ToInt32(txtQTY.Text);
-                    Reg.shipComment = txtComment.Text;
-                    Reg.shipReason = txtReason.Text;
+                    Reg.assignedDock = DockDropDown.SelectedItem.Text; 
+                    Reg.shipStatus = StatusDropDown.SelectedItem.Text;
+                    Reg.shipReason = ReasonDropDown.SelectedItem.Text;
                     Reg.shipComment = txtComment.Text;
                     
                 }
@@ -154,7 +157,7 @@ namespace ShippingDisplay.ShippingDisplay
                     ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
                 }
                 CleanControl(this.Controls);
-                CargarGrid();
+                //CargarGrid();
             }
             else
             {
@@ -174,7 +177,7 @@ namespace ShippingDisplay.ShippingDisplay
                     }
                     RegistroDAL.ActualizarRegistro(Reg);
                     CleanControl(this.Controls);
-                    CargarGrid();
+                    //CargarGrid();
                     string script = @"<script type='text/javascript'> alert('Updated successfully'); </script>";
                     ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
                 }
@@ -191,12 +194,12 @@ namespace ShippingDisplay.ShippingDisplay
             //    ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
             //}
         }
-        private void CargarGrid()
-        {
-            int shipStatus = 1;
-            gvRegistros.DataSource = RegistroDAL.ListadoRegistros(shipStatus, Id_Planta);
-            gvRegistros.DataBind();
-        }
+        //private void CargarGrid()
+        //{
+         //   int shipStatus = 1;
+          //  gvRegistros.DataSource = RegistroDAL.ListadoRegistros(shipStatus, Id_Planta);
+            //gvRegistros.DataBind();
+        //}
 
         protected void gvRegistros_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -214,7 +217,7 @@ namespace ShippingDisplay.ShippingDisplay
                 {
                     RegistroDAL.EliminarRegistro(cod);
                     CleanControl(this.Controls);
-                    CargarGrid();
+                    //CargarGrid();
                 }
                 catch (Exception)
                 {

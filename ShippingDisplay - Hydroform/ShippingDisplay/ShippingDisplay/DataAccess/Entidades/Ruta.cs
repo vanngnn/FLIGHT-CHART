@@ -8,7 +8,6 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
     public class Ruta
     {
         public Ruta() { }
-        public int Id_ruta { get; set; }
         public string Description { get; set; }
         public string Dia { get; set; }
         public DateTime Input { get; set; }

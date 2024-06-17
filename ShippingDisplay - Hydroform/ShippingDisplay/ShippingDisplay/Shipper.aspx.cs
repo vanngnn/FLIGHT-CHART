@@ -22,7 +22,7 @@ namespace ShippingDisplay.ShippingDisplay
                     string Username = HttpContext.Current.User.Identity.Name;
                     CargarPerfil(Username);
                     CargarRuta();
-                    CargarGrid();
+                    //CargarGrid();
                     TruckLocation();
                 }
                 else
@@ -32,16 +32,15 @@ namespace ShippingDisplay.ShippingDisplay
                 }
             }
         }
-        private void CargarGrid()
-        {
-            int Estatus = 1;
-            gvRegistros.DataSource = RegistroDAL.ListadoRegistros(Estatus, Id_Planta);
-            gvRegistros.DataBind();
-        }
+        //private void CargarGrid()
+        //{
+          //  int Estatus = 1;
+           // gvRegistros.DataSource = RegistroDAL.ListadoRegistros(Estatus, Id_Planta);
+           // gvRegistros.DataBind();
+        //}
         private void CargarRuta()
         {
             dblRuta.DataTextField = "description";
-            dblRuta.DataValueField = "id_ruta";
             dblRuta.DataSource = RutaDAL.ObtenerRutas(Id_Planta);
             dblRuta.DataBind();
             dblRuta.Items.Insert(0, " - Carrier - ");
@@ -73,12 +72,11 @@ namespace ShippingDisplay.ShippingDisplay
             {
                 Reg.Id_all = Convert.ToInt32(txtId_all.Text);
                 Reg.Shipper = Convert.ToInt32(txtShipper.Text);
-                Reg.Id_ruta = Convert.ToInt32(dblRuta.SelectedValue);
                 Reg.Status = 2;
             }
             RegistroDAL.ActualizarShipper(Reg);
             CleanControl(this.Controls);
-            CargarGrid();
+            //CargarGrid();
         }
         private void CargarRegistro(int Id_all)
         {

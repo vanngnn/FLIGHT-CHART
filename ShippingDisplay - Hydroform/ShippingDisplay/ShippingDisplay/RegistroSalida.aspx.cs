@@ -23,7 +23,7 @@ namespace ShippingDisplay.ShippingDisplay
                 {
                     string Username = HttpContext.Current.User.Identity.Name;
                     CargarPerfil(Username);
-                    CargarGrid();
+                    //CargarGrid();
                 }
                 else
                 {
@@ -32,12 +32,12 @@ namespace ShippingDisplay.ShippingDisplay
                 }
             }
         }
-        private void CargarGrid()
-        {
-            int Estatus = 2;
-            gvRegistros.DataSource = RegistroDAL.ListadoRegistros(Estatus, Id_Planta);
-            gvRegistros.DataBind();
-        }
+        //private void CargarGrid()
+        //{
+         //   int Estatus = 2;
+          //  gvRegistros.DataSource = RegistroDAL.ListadoRegistros(Estatus, Id_Planta);
+           // gvRegistros.DataBind();
+        //}
         private void CargarPerfil(string username)
         {
             Usuario perfil = UsuarioDAL.ObtenerUser(username);
@@ -95,7 +95,7 @@ namespace ShippingDisplay.ShippingDisplay
                // Reg.Tarjeta = Convert.ToInt32(txtAcceso.Text);
                 Reg.Status = 3;
             }
-            RegistroDAL.ActualizarSalida(Reg);
+            //RegistroDAL.ActualizarSalida(Reg);
             try
             {
                 string Username = HttpContext.Current.User.Identity.Name;
@@ -113,7 +113,7 @@ namespace ShippingDisplay.ShippingDisplay
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
             }
             CleanControl(this.Controls);
-            CargarGrid();
+            //CargarGrid();
         }
         public void CleanControl(ControlCollection controles)
         {
