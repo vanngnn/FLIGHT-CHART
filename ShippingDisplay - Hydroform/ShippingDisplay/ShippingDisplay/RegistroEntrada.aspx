@@ -382,19 +382,18 @@
                         <div class="card-body">
                             <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
                                 <Columns>
-                                    <asp:BoundField HeaderText="ID" DataField="Id_all" />
-                                    <asp:BoundField HeaderText="DATE" DataField="Id_all" />
-                                    <asp:BoundField HeaderText="TIME ASSIGNED" DataField="Id_all" />
-                                    <asp:BoundField HeaderText="P/N" DataField="Id_all" />
+                                    <asp:BoundField HeaderText="DATE" DataField="assignedDate" />
+                                    <asp:BoundField HeaderText="ASSIGNED TIME" DataField="TimePeriodAssigned" />
+                                    <asp:BoundField HeaderText="P/N" DataField="partNumber" />
                                     <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
-                                    <asp:BoundField HeaderText="FROM" DataField="Entrada" />
+                                    <asp:BoundField HeaderText="FROM" DataField="PlantName" />
                                     <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
-                                    <asp:BoundField HeaderText="B/L" DataField="Caja" />
-                                    <asp:BoundField HeaderText="QTY" DataField="Placas" />
-                                    <asp:BoundField HeaderText="DOCK" DataField="NombreOperador" />
-                                    <asp:BoundField HeaderText="STATUS" DataField="NombreOperador" />
-                                    <asp:BoundField HeaderText="REASON" DataField="NombreOperador" />
-                                    <asp:BoundField HeaderText="COMMENT" DataField="NombreOperador" />
+                                    <asp:BoundField HeaderText="B/L" DataField="assignedBOL" />
+                                    <asp:BoundField HeaderText="QTY" DataField="assignedQTY" />
+                                    <asp:BoundField HeaderText="DOCK" DataField="assignedDock" />
+                                    <asp:BoundField HeaderText="STATUS" DataField="shipStatus" />
+                                    <asp:BoundField HeaderText="REASON" DataField="shipReason" />
+                                    <asp:BoundField HeaderText="COMMENT" DataField="shipComment" />
                                     <asp:TemplateField>
                                         <ItemTemplate>
                                             <asp:Button text="Edit" CommandName="Editar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-primary" />

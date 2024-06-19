@@ -24,7 +24,7 @@ namespace ShippingDisplay.ShippingDisplay
                     CargarPerfil(Username);
                     CargarCarrier();
                     CargarCliente();
-                    //CargarGrid();
+                    CargarGrid();
                     setStatusDropdown();
                     setReasonDropDown();
                     setDockDropDown();
@@ -112,6 +112,7 @@ namespace ShippingDisplay.ShippingDisplay
             DockDropDown.Items.Insert(5, "Dock 6");
         }
 
+        // DONE
         protected void btnRegistrar_Click(object sender, EventArgs e) //onclick for register button
         {
             //try
@@ -119,7 +120,6 @@ namespace ShippingDisplay.ShippingDisplay
             string Username = HttpContext.Current.User.Identity.Name;
             CargarPerfil(Username);
             string ID;
-            //All the drop downs first
             ID = txtId_all.Text;
             if (ID == "")
             {
@@ -127,8 +127,8 @@ namespace ShippingDisplay.ShippingDisplay
                 {           
                     Reg.Status = 1;
                     Reg.assignedDate= Convert.ToDateTime(EntryDate.Text);
-                    Reg.assignedFromtime = Convert.ToDateTime(fromTime.Text);
-                    Reg.assignedTotime = Convert.ToDateTime(toTime.Text);
+                    Reg.assignedFromtime = Convert.ToString(fromTime.Text);
+                    Reg.assignedTotime = Convert.ToString(toTime.Text);
                     Reg.partNumber = txtPN.Text;
                     Reg.Id_cliente = Convert.ToInt32(dblCliente.SelectedValue);
                     Reg.Id_planta = Id_Planta; //FROM/TO: PLANT
@@ -157,7 +157,7 @@ namespace ShippingDisplay.ShippingDisplay
                     ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
                 }
                 CleanControl(this.Controls);
-                //CargarGrid();
+                CargarGrid();
             }
             else
             {
@@ -177,7 +177,7 @@ namespace ShippingDisplay.ShippingDisplay
                     }
                     RegistroDAL.ActualizarRegistro(Reg);
                     CleanControl(this.Controls);
-                    //CargarGrid();
+                    CargarGrid();
                     string script = @"<script type='text/javascript'> alert('Updated successfully'); </script>";
                     ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
                 }
@@ -194,12 +194,12 @@ namespace ShippingDisplay.ShippingDisplay
             //    ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
             //}
         }
-        //private void CargarGrid()
-        //{
-         //   int shipStatus = 1;
-          //  gvRegistros.DataSource = RegistroDAL.ListadoRegistros(shipStatus, Id_Planta);
-            //gvRegistros.DataBind();
-        //}
+        private void CargarGrid()
+        {
+            int shipStatus = 1;
+            gvRegistros.DataSource = RegistroDAL.ListadoRegistros(shipStatus, Id_Planta);
+            gvRegistros.DataBind();
+        }
 
         protected void gvRegistros_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -217,7 +217,7 @@ namespace ShippingDisplay.ShippingDisplay
                 {
                     RegistroDAL.EliminarRegistro(cod);
                     CleanControl(this.Controls);
-                    //CargarGrid();
+                    CargarGrid();
                 }
                 catch (Exception)
                 {
@@ -225,18 +225,33 @@ namespace ShippingDisplay.ShippingDisplay
                 }
             }
         }
+
+        //DONE
         private void CargarRegistro(int Id_all)
         {
             Registro Reg = RegistroDAL.ObtenerById(Id_all);
             txtId_all.Text = Convert.ToString(Reg.Id_all);
-            dblCliente.SelectedValue = Convert.ToString(Reg.Id_cliente);
-            dblCarrier.SelectedValue = Convert.ToString(Reg.Id_carrier);
+            EntryDate.Text = Convert.ToString(Reg.assignedDate);
+            fromTime.Text = Convert.ToString(Reg.assignedFromtime);
+            toTime.Text = Convert.ToString(Reg.assignedTotime);
+            txtPN.Text = Convert.ToString(Reg.partNumber);
+            dblCliente.SelectedValue = Convert.ToString(Reg.Id_cliente); //PROJECT - DROPDOWN
+            dblPlant.SelectedValue = Convert.ToString(Reg.Id_planta); //ID PLANTS - DROPDOWN
+            dblCarrier.SelectedValue = Convert.ToString(Reg.Id_carrier); //CARRIER - DROPDOWN
+            txtBL.Text = Convert.ToString(Reg.assignedBOL);
+            txtQTY.Text = Convert.ToString(Reg.assignedQTY);
+            DockDropDown.SelectedValue = Convert.ToString(Reg.assignedDock);
+            StatusDropDown.SelectedValue = Convert.ToString(Reg.shipStatus);
+            ReasonDropDown.SelectedValue = Convert.ToString(Reg.shipReason);
+            txtComment.Text = Convert.ToString(Reg.shipComment);
             // txtPlacas.Text = Convert.ToString(Reg.Placas);
             // txtCaja.Text = Convert.ToString(Reg.Caja);
             // txtOperador.Text = Convert.ToString(Reg.NombreOperador);
             // txtTelefono.Text = Convert.ToString(Reg.Telefono);
             // txtAcceso.Text = Convert.ToString(Reg.Tarjeta);
         }
+
+        //DONT KNOW BUT SEEMS DONE
         public void CleanControl(ControlCollection controles)
         {
             foreach (Control control in controles)

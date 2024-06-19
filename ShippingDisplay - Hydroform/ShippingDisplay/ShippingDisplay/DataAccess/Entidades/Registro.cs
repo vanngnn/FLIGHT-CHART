@@ -11,8 +11,8 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         //HEADER
         public int Id_all { get; set; } //MAIN KEY
         public DateTime assignedDate { get; set; } //ASSIGNED DATE
-        public DateTime assignedFromtime { get; set; } //ASSIGNED FROM TIME
-        public DateTime assignedTotime  { get; set; } //ASSIGNED TO TIME
+        public string assignedFromtime { get; set; } //ASSIGNED FROM TIME
+        public string assignedTotime { get; set; } //ASSIGNED TO TIME
         public string partNumber { get; set; } //PART NUMBER
         public int Id_cliente { get; set; } //PROJECT
         public int Id_planta { get; set; } //ID PLANTS
@@ -23,22 +23,26 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         public string shipStatus { get; set; } //SHIP REASON
         public string shipReason { get; set; } //SHIP REASON
         public string shipComment { get; set; } //SHIP COMMENTS
-        
+
         //ADICIONALES 
 
-        public string ClienteName { get; set; }
-        public string CarrierName { get; set; }
-        public string RutaName { get; set; }
+        public string ClienteName { get; set; } //PROJECT NAME
+        public string CarrierName { get; set; } //CARRIER NAME
+        public string RutaName { get; set; } //ROUTE NAME (DONT NEED THIS)
+
+        public string PlantName { get; set; } //PLANT NAME
+
+
 
         //DONT NEED THESE
 
         public DateTime Entrada { get; set; } //THE DATE WHEN U ENTER THE SHIPMENT (not needed)
         public string Salida { get; set; } //THE DATE WHEN U OUTPUT THE SHIPMENT (not needed)
         public int Shipper { get; set; } //ID SHIPPER
-       
+
         public int Tarjeta { get; set; } //SHIPPER ACCESS CARD
         public int Status { get; set; } //STATUS
-        
+
 
         //DETALLE
         public int Id_det { get; set; }
@@ -56,5 +60,12 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         public string Estado { get; set; }
         public string Input { get; set; }
         public string Output { get; set; }
+        public string TimePeriodAssigned //CONCATENATE FROM TIME AND TO TIME
+        {
+            get
+            {
+                return $"{assignedFromtime} - {assignedTotime}";
+            }
+        }
     }
 }
