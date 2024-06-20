@@ -67,5 +67,33 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
                 return $"{assignedFromtime} - {assignedTotime}";
             }
         }
+
+        public int Id_all_output  { get; set; }
+        public DateTime assignedDate_output { get; set; }
+        public string assignedFromtime_output { get; set; }
+        public string assignedTotime_output { get; set; }
+        public string partNumber_output { get; set; }
+        public int Id_cliente_output { get; set; }
+        public int Id_planta_output { get; set; }
+        public int Id_carrier_output { get; set; }
+        public int assignedBOL_output { get; set; }
+        public int assignedQTY_output { get; set; }
+        public string assignedDock_output { get; set; }
+        public string shipStatus_output { get; set; }
+        public string shipReason_output { get; set; }
+        public string shipComment_output { get; set; }
+        public string ClienteName_output { get; set; }
+        public string CarrierName_output { get; set; }
+        public string RutaName_output { get; set; }
+        public string PlantName_output { get; set; }
+
+        public string TimePeriodAssigned_output //CONCATENATE FROM TIME AND TO TIME
+        {
+            get
+            {
+                return $"{assignedFromtime_output} - {assignedTotime_output}";
+            }
+        }
+
     }
 }
