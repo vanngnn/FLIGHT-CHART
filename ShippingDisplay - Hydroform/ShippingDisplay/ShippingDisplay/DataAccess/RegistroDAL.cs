@@ -787,6 +787,24 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             return Reg;
         }
 
+        public static List<Registro> dockQueryInput(string dockName)
+        {
+            List<Registro> regList = new List<Registro>();
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                conn.Open();
+                string query = @"SELECT * FROM your_table_name WHERE dock_name = @dockName";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@dockName", dockName);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    regList = // handle your data here
+                }
+            }
+            return regList;
+        }
+
 
     }
 }
