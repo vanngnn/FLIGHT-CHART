@@ -51,7 +51,6 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         public string NombreOperador { get; set; }
         public string Telefono { get; set; }
 
-
         //
         public string Ontime { get; set; }
         public string DELAYED { get; set; }

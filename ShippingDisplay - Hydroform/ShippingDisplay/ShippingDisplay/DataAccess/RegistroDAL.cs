@@ -179,9 +179,8 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                             FROM [dbo].[LogInput] H
                             INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
                             INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier
-                            INNER JOIN [dbo].[Planta]  P ON H.Id_planta  = P.id_planta";
-
-                            //WHERE H.shipStatus=@shipStatus AND H.Id_planta=@Id_planta ORDER BY H.Entrada desc (belong in query)
+                            INNER JOIN [dbo].[Planta]  P ON H.Id_planta  = P.id_planta
+                            ORDER BY H.EntryDate desc";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
