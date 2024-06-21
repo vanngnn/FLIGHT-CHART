@@ -1,4 +1,4 @@
-﻿﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DashboardV1.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.DashboardV1" %>
+﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DAILYINPUT_DOCK6.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.DAILYINPUT_DOCK6" %>
 
 <!DOCTYPE html>
 
@@ -177,12 +177,12 @@
                         </asp:HyperLink>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="DAILYLOG_INPUT.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="RegistroEntrada.aspx" runat="server" Visible="true"  class="nav-link"> 
                                     <i class="far fa-circle nav-icon"></i><p>Inputs</p>
                                 </asp:HyperLink>
                             </li>
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="DAILYLOG_OUTPUT.aspx.aspx" runat="server" Visible="true"  class="nav-link" > 
+                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="RegistroSalida.aspx" runat="server" Visible="true"  class="nav-link" > 
                                     <i class="far fa-circle nav-icon"></i><p>Outputs</p>
                                 </asp:HyperLink>
                             </li>
@@ -218,6 +218,7 @@
         </div>
         <!-- /.sidebar -->
     </aside>
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -308,16 +309,20 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" OnRowDataBound="gvRegistros_RowDataBound" >
+                <asp:GridView ID="DAILYINPUT_DOCK6_REGISTER" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowDataBound="DAILYINPUT_DOCK6_REGISTER_RowDataBound" >
                                 <Columns>
-                                    <asp:BoundField HeaderText="TIME" DataField="Id_reg" />
-                                    <asp:BoundField HeaderText="CARRIER" DataField="ClienteName" />
-                                    <asp:BoundField HeaderText="P/N" DataField="CarrierName" />
-                                    <asp:BoundField HeaderText="PROJECT" DataField="Entrada" />
-                                    <asp:BoundField HeaderText="FROM" DataField="Caja" />
-                                    <asp:BoundField HeaderText="B/L" DataField="RutaName" />
-                                    <asp:BoundField HeaderText="QUANITTY" DataField="Shipper" />
-                                    <asp:BoundField HeaderText="STATUS" DataField="Estado" />
+                                    <asp:BoundField HeaderText="DATE" DataField="assignedDate" />
+                                    <asp:BoundField HeaderText="ASSIGNED TIME" DataField="TimePeriodAssigned" />
+                                    <asp:BoundField HeaderText="P/N" DataField="partNumber" />
+                                    <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
+                                    <asp:BoundField HeaderText="FROM" DataField="PlantName" />
+                                    <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
+                                    <asp:BoundField HeaderText="B/L" DataField="assignedBOL" />
+                                    <asp:BoundField HeaderText="QTY" DataField="assignedQTY" />
+                                    <asp:BoundField HeaderText="DOCK" DataField="assignedDock" />
+                                    <asp:BoundField HeaderText="STATUS" DataField="shipStatus" />
+                                    <asp:BoundField HeaderText="REASON" DataField="shipReason" />
+                                    <asp:BoundField HeaderText="COMMENT" DataField="shipComment" />
                                     <%--<asp:BoundField HeaderText="ASN Sent" DataField="ASN_Sent" />
                                     <asp:BoundField HeaderText="ASN Ack" DataField="ASN_Ack" />--%>
                                 </Columns>

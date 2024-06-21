@@ -35,7 +35,8 @@ namespace ShippingDisplay.ShippingDisplay
         }
         private void CargarGrid()
         {
-            DAILYINPUT_DOCK1_REGISTER.DataSource = RegistroDAL.ListadoDashboard(Id_Planta);
+            string dockName = "Dock 1";  // Specify the dock name here
+            DAILYINPUT_DOCK1_REGISTER.DataSource = RegistroDAL.dockQueryInput(dockName);
             DAILYINPUT_DOCK1_REGISTER.DataBind();
         }
         public void ObtenerWidgets()
@@ -82,13 +83,13 @@ namespace ShippingDisplay.ShippingDisplay
                 LinkRegEntry.Visible = false;
                 LinkRegOut.Visible = false;
                 LinkRegister.Visible = false;
-                LinkDashEmb.Visible = false;
+                //LinkDashEmb.Visible = false;
             }
             else if (Dept == 2)
             {
                 LinkShipper.Visible = false;
                 LinkRegister.Visible = false;
-                LinkDashEmb.Visible = false;
+                //LinkDashEmb.Visible = false;
             }
         }
         protected void LinkSalir_Click(object sender, EventArgs e)
@@ -96,7 +97,7 @@ namespace ShippingDisplay.ShippingDisplay
             FormsAuthentication.SignOut();
             FormsAuthentication.RedirectToLoginPage();
         }
-        protected void gvRegistros_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void DAILYINPUT_DOCK1_REGISTER_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
@@ -112,6 +113,7 @@ namespace ShippingDisplay.ShippingDisplay
                 else if (Estado == "DELAYED")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#dc3545");
+                    e.Row.CssClass = "blink";
                 }
                 else
                 {

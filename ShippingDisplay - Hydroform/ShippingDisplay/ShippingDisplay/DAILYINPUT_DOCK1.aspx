@@ -1,4 +1,4 @@
-﻿﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DAILYINPUT_DOCK1.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.DAILYINPUT_DOCK1" %>
+﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DAILYINPUT_DOCK1.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.DAILYINPUT_DOCK1" %>
 
 <!DOCTYPE html>
 
@@ -309,7 +309,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <asp:GridView ID="DAILYINPUT_DOCK1_REGISTER" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" OnRowDataBound="gvRegistros_RowDataBound" >
+                <asp:GridView ID="DAILYINPUT_DOCK1_REGISTER" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowDataBound="DAILYINPUT_DOCK1_REGISTER_RowDataBound" >
                                 <Columns>
                                     <asp:BoundField HeaderText="DATE" DataField="assignedDate" />
                                     <asp:BoundField HeaderText="ASSIGNED TIME" DataField="TimePeriodAssigned" />

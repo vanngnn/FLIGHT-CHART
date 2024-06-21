@@ -782,28 +782,103 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             Reg.ClienteName = Convert.ToString(reader["Cliente"]);
             Reg.CarrierName = Convert.ToString(reader["Carrier"]);
 
-            Reg.PlantName = Convert.ToString(reader["Plant"]);
-
             return Reg;
         }
 
+        //                                                                     DOCK FILTER - INPUT
         public static List<Registro> dockQueryInput(string dockName)
         {
             List<Registro> regList = new List<Registro>();
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
             {
                 conn.Open();
-                string query = @"SELECT * FROM your_table_name WHERE dock_name = @dockName";
+                string query = @"SELECT H.Id_all,H.EntryDate,H.From_time, H.To_time, H.Part_number, H.Id_cliente, H.Id_planta, H.Id_carrier, H.Bill_of_Lading, H.Quantity, H.Dock,H.shipStatus, H.shipReason, H.shipComment, 
+                            C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant'
+                            FROM [dbo].[LogInput] H
+                            INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
+                            INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier
+                            INNER JOIN [dbo].[Planta]  P ON H.Id_planta  = P.id_planta
+                            WHERE H.Dock = @dockName  
+                            ORDER BY H.EntryDate ASC";
+
+
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@dockName", dockName);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    regList = // handle your data here
+                    Registro Reg = new Registro();
+                    Reg.Id_all = Convert.ToInt32(reader["Id_all"]);
+                    Reg.assignedDate = Convert.ToDateTime(reader["EntryDate"]);
+                    Reg.assignedFromtime = Convert.ToString(reader["From_time"]);
+                    Reg.assignedTotime = Convert.ToString(reader["To_time"]);
+                    Reg.partNumber = Convert.ToString(reader["Part_number"]);
+                    Reg.Id_cliente = Convert.ToInt32(reader["Id_cliente"]);
+                    Reg.Id_planta = Convert.ToInt32(reader["Id_planta"]);
+                    Reg.Id_carrier = Convert.ToInt32(reader["Id_carrier"]);
+                    //Reg.PlantName = Convert.ToString(reader["Id_planta"]);
+                    Reg.assignedBOL = Convert.ToInt32(reader["Bill_of_Lading"]);
+                    Reg.assignedQTY = Convert.ToInt32(reader["Quantity"]);
+                    Reg.assignedDock = Convert.ToString(reader["Dock"]);
+                    Reg.shipStatus = Convert.ToString(reader["shipStatus"]);
+                    Reg.shipReason = Convert.ToString(reader["shipReason"]);
+                    Reg.shipComment = Convert.ToString(reader["shipComment"]);
+                    //Reg.ClienteName = Convert.ToString(reader["Cliente"]);
+                    //Reg.CarrierName = Convert.ToString(reader["Carrier"]);
+                    regList.Add(Reg);
                 }
             }
             return regList;
         }
+
+        //                                                                    DOCK FILTER - OUTPUT
+
+
+        public static List<Registro> dockQueryOutput(string dockName)
+        {
+            List<Registro> regList = new List<Registro>();
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                conn.Open();
+                string query = @"SELECT H.Id_all_output,H.EntryDate_output,H.From_time_output, H.To_time_output, H.Part_number_output, H.Id_cliente_output, H.Id_planta_output, H.Id_carrier_output, H.Bill_of_Lading_output, H.Quantity_output, H.Dock_output,H.shipStatus_output, H.shipReason_output, H.shipComment_output, 
+                            C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant'
+                            FROM [dbo].[LogOutput] H
+                            INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_output = C.id_cliente
+                            INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_output = L.id_carrier
+                            INNER JOIN [dbo].[Planta]  P ON H.Id_planta_output  = P.id_planta
+                            WHERE H.Dock_output = @dockName  
+                            ORDER BY H.EntryDate_output ASC";
+
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@dockName", dockName);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Registro Reg = new Registro();
+                    Reg.Id_all = Convert.ToInt32(reader["Id_all_output"]);
+                    Reg.assignedDate = Convert.ToDateTime(reader["EntryDate_output"]);
+                    Reg.assignedFromtime = Convert.ToString(reader["From_time_output"]);
+                    Reg.assignedTotime = Convert.ToString(reader["To_time_output"]);
+                    Reg.partNumber = Convert.ToString(reader["Part_number_output"]);
+                    Reg.Id_cliente = Convert.ToInt32(reader["Id_cliente_output"]);
+                    Reg.Id_planta = Convert.ToInt32(reader["Id_planta_output"]);
+                    Reg.Id_carrier = Convert.ToInt32(reader["Id_carrier_output"]);
+                    //Reg.PlantName = Convert.ToString(reader["Id_planta"]);
+                    Reg.assignedBOL = Convert.ToInt32(reader["Bill_of_Lading_output"]);
+                    Reg.assignedQTY = Convert.ToInt32(reader["Quantity_output"]);
+                    Reg.assignedDock = Convert.ToString(reader["Dock_output"]);
+                    Reg.shipStatus = Convert.ToString(reader["shipStatus_output"]);
+                    Reg.shipReason = Convert.ToString(reader["shipReason_output"]);
+                    Reg.shipComment = Convert.ToString(reader["shipComment_output"]);
+                    //Reg.ClienteName = Convert.ToString(reader["Cliente"]);
+                    //Reg.CarrierName = Convert.ToString(reader["Carrier"]);
+                    regList.Add(Reg);
+                }
+            }
+            return regList;
+        }
+
 
 
     }
