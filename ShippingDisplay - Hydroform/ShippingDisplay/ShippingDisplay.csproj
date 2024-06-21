@@ -156,30 +156,35 @@
     </Compile>
     <Compile Include="ShippingDisplay\DAILYOUTPUT_DOCK2.aspx.cs">
       <DependentUpon>DAILYOUTPUT_DOCK2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ShippingDisplay\DAILYOUTPUT_DOCK2.aspx.designer.cs">
       <DependentUpon>DAILYOUTPUT_DOCK2.aspx</DependentUpon>
     </Compile>
     <Compile Include="ShippingDisplay\DAILYOUTPUT_DOCK3.aspx.cs">
       <DependentUpon>DAILYOUTPUT_DOCK3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ShippingDisplay\DAILYOUTPUT_DOCK3.aspx.designer.cs">
       <DependentUpon>DAILYOUTPUT_DOCK3.aspx</DependentUpon>
     </Compile>
     <Compile Include="ShippingDisplay\DAILYOUTPUT_DOCK4.aspx.cs">
       <DependentUpon>DAILYOUTPUT_DOCK4.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ShippingDisplay\DAILYOUTPUT_DOCK4.aspx.designer.cs">
       <DependentUpon>DAILYOUTPUT_DOCK4.aspx</DependentUpon>
     </Compile>
     <Compile Include="ShippingDisplay\DAILYOUTPUT_DOCK5.aspx.cs">
       <DependentUpon>DAILYOUTPUT_DOCK5.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ShippingDisplay\DAILYOUTPUT_DOCK5.aspx.designer.cs">
       <DependentUpon>DAILYOUTPUT_DOCK5.aspx</DependentUpon>
     </Compile>
     <Compile Include="ShippingDisplay\DAILYOUTPUT_DOCK6.aspx.cs">
       <DependentUpon>DAILYOUTPUT_DOCK6.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ShippingDisplay\DAILYOUTPUT_DOCK6.aspx.designer.cs">
       <DependentUpon>DAILYOUTPUT_DOCK6.aspx</DependentUpon>

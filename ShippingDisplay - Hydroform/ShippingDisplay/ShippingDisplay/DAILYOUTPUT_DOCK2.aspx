@@ -1,4 +1,4 @@
-﻿﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DashboardV1.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.DashboardV1" %>
+﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DAILYOUTPUT_DOCK2.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.DAILYOUTPUT_DOCK2" %>
 
 <!DOCTYPE html>
 
@@ -189,12 +189,12 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkShipper" NavigateUrl="Shipper.aspx" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkShipper" NavigateUrl="SHIPPER.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-book"></i><p>Shipper</p>
                         </asp:HyperLink>
                     </li>
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkReport" NavigateUrl="Reportes.aspx" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkReport" NavigateUrl="REPORTS.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon far fa-calendar-alt"></i><p>Reports</p>
                         </asp:HyperLink>
                     </li>
@@ -202,7 +202,7 @@
                         <a href="#" class="nav-link"><i class="nav-icon fa fa-cog"></i><p>Configuration<i class="fas fa-angle-left right"></i></p></a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegister" NavigateUrl="RegistroUsuarios.aspx" runat="server" Visible="true" class="nav-link">
+                                <asp:HyperLink ID="LinkRegister" NavigateUrl="REGISTERUSER.aspx" runat="server" Visible="true" class="nav-link">
                                     <i class="nav-icon fa fa-user-plus"></i><p>Users profiles</p>
                                 </asp:HyperLink>
                             </li>
@@ -218,6 +218,7 @@
         </div>
         <!-- /.sidebar -->
     </aside>
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -308,16 +309,20 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_reg" class="table table-bordered table-striped" OnRowDataBound="gvRegistros_RowDataBound" >
+                <asp:GridView ID="DAILYOUTPUT_DOCK2_REGISTER" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all_output" class="table table-bordered table-striped" OnRowDataBound="DAILYOUTPUT_DOCK2_REGISTER_RowDataBound" >
                                 <Columns>
-                                    <asp:BoundField HeaderText="TIME" DataField="Id_reg" />
-                                    <asp:BoundField HeaderText="CARRIER" DataField="ClienteName" />
-                                    <asp:BoundField HeaderText="P/N" DataField="CarrierName" />
-                                    <asp:BoundField HeaderText="PROJECT" DataField="Entrada" />
-                                    <asp:BoundField HeaderText="FROM" DataField="Caja" />
-                                    <asp:BoundField HeaderText="B/L" DataField="RutaName" />
-                                    <asp:BoundField HeaderText="QUANITTY" DataField="Shipper" />
-                                    <asp:BoundField HeaderText="STATUS" DataField="Estado" />
+                                    <asp:BoundField HeaderText="DATE" DataField="assignedDate_output" />
+                                    <asp:BoundField HeaderText="ASSIGNED TIME" DataField="TimePeriodAssigned_output" />
+                                    <asp:BoundField HeaderText="P/N" DataField="partNumber_output" />
+                                    <asp:BoundField HeaderText="PROJECT" DataField="ClienteName_output" />
+                                    <asp:BoundField HeaderText="FROM" DataField="PlantName_output" />
+                                    <asp:BoundField HeaderText="CARRIER" DataField="CarrierName_output" />
+                                    <asp:BoundField HeaderText="B/L" DataField="assignedBOL_output" />
+                                    <asp:BoundField HeaderText="QTY" DataField="assignedQTY_output" />
+                                    <asp:BoundField HeaderText="DOCK" DataField="assignedDock_output" />
+                                    <asp:BoundField HeaderText="STATUS" DataField="shipStatus_output" />
+                                    <asp:BoundField HeaderText="REASON" DataField="shipReason_output" />
+                                    <asp:BoundField HeaderText="COMMENT" DataField="shipComment_output" />
                                     <%--<asp:BoundField HeaderText="ASN Sent" DataField="ASN_Sent" />
                                     <asp:BoundField HeaderText="ASN Ack" DataField="ASN_Ack" />--%>
                                 </Columns>

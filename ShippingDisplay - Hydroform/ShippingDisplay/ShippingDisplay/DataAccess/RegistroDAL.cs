@@ -180,7 +180,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                             INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
                             INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier
                             INNER JOIN [dbo].[Planta]  P ON H.Id_planta  = P.id_planta
-                            ORDER BY H.EntryDate desc";
+                            ORDER BY H.EntryDate ASC";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -816,15 +816,15 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     Reg.Id_cliente = Convert.ToInt32(reader["Id_cliente"]);
                     Reg.Id_planta = Convert.ToInt32(reader["Id_planta"]);
                     Reg.Id_carrier = Convert.ToInt32(reader["Id_carrier"]);
-                    //Reg.PlantName = Convert.ToString(reader["Id_planta"]);
+                    Reg.PlantName = Convert.ToString(reader["Plant"]);
                     Reg.assignedBOL = Convert.ToInt32(reader["Bill_of_Lading"]);
                     Reg.assignedQTY = Convert.ToInt32(reader["Quantity"]);
                     Reg.assignedDock = Convert.ToString(reader["Dock"]);
                     Reg.shipStatus = Convert.ToString(reader["shipStatus"]);
                     Reg.shipReason = Convert.ToString(reader["shipReason"]);
                     Reg.shipComment = Convert.ToString(reader["shipComment"]);
-                    //Reg.ClienteName = Convert.ToString(reader["Cliente"]);
-                    //Reg.CarrierName = Convert.ToString(reader["Carrier"]);
+                    Reg.ClienteName = Convert.ToString(reader["Cliente"]);
+                    Reg.CarrierName = Convert.ToString(reader["Carrier"]);
                     regList.Add(Reg);
                 }
             }
@@ -841,7 +841,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             {
                 conn.Open();
                 string query = @"SELECT H.Id_all_output,H.EntryDate_output,H.From_time_output, H.To_time_output, H.Part_number_output, H.Id_cliente_output, H.Id_planta_output, H.Id_carrier_output, H.Bill_of_Lading_output, H.Quantity_output, H.Dock_output,H.shipStatus_output, H.shipReason_output, H.shipComment_output, 
-                            C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant'
+                            C.description AS 'Cliente_output', L.description AS 'Carrier_output', P.description AS 'Plant_output'
                             FROM [dbo].[LogOutput] H
                             INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_output = C.id_cliente
                             INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_output = L.id_carrier
@@ -856,23 +856,23 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 while (reader.Read())
                 {
                     Registro Reg = new Registro();
-                    Reg.Id_all = Convert.ToInt32(reader["Id_all_output"]);
-                    Reg.assignedDate = Convert.ToDateTime(reader["EntryDate_output"]);
-                    Reg.assignedFromtime = Convert.ToString(reader["From_time_output"]);
-                    Reg.assignedTotime = Convert.ToString(reader["To_time_output"]);
-                    Reg.partNumber = Convert.ToString(reader["Part_number_output"]);
-                    Reg.Id_cliente = Convert.ToInt32(reader["Id_cliente_output"]);
-                    Reg.Id_planta = Convert.ToInt32(reader["Id_planta_output"]);
-                    Reg.Id_carrier = Convert.ToInt32(reader["Id_carrier_output"]);
-                    //Reg.PlantName = Convert.ToString(reader["Id_planta"]);
-                    Reg.assignedBOL = Convert.ToInt32(reader["Bill_of_Lading_output"]);
-                    Reg.assignedQTY = Convert.ToInt32(reader["Quantity_output"]);
-                    Reg.assignedDock = Convert.ToString(reader["Dock_output"]);
-                    Reg.shipStatus = Convert.ToString(reader["shipStatus_output"]);
-                    Reg.shipReason = Convert.ToString(reader["shipReason_output"]);
-                    Reg.shipComment = Convert.ToString(reader["shipComment_output"]);
-                    //Reg.ClienteName = Convert.ToString(reader["Cliente"]);
-                    //Reg.CarrierName = Convert.ToString(reader["Carrier"]);
+                    Reg.Id_all_output = Convert.ToInt32(reader["Id_all_output"]);
+                    Reg.assignedDate_output = Convert.ToDateTime(reader["EntryDate_output"]);
+                    Reg.assignedFromtime_output = Convert.ToString(reader["From_time_output"]);
+                    Reg.assignedTotime_output = Convert.ToString(reader["To_time_output"]);
+                    Reg.partNumber_output = Convert.ToString(reader["Part_number_output"]);
+                    Reg.Id_cliente_output = Convert.ToInt32(reader["Id_cliente_output"]);
+                    Reg.Id_planta_output = Convert.ToInt32(reader["Id_planta_output"]);
+                    Reg.Id_carrier_output = Convert.ToInt32(reader["Id_carrier_output"]);
+                    Reg.PlantName_output = Convert.ToString(reader["Plant_output"]);
+                    Reg.assignedBOL_output = Convert.ToInt32(reader["Bill_of_Lading_output"]);
+                    Reg.assignedQTY_output = Convert.ToInt32(reader["Quantity_output"]);
+                    Reg.assignedDock_output = Convert.ToString(reader["Dock_output"]);
+                    Reg.shipStatus_output = Convert.ToString(reader["shipStatus_output"]);
+                    Reg.shipReason_output = Convert.ToString(reader["shipReason_output"]);
+                    Reg.shipComment_output = Convert.ToString(reader["shipComment_output"]);
+                    Reg.ClienteName_output = Convert.ToString(reader["Cliente_output"]);
+                    Reg.CarrierName_output = Convert.ToString(reader["Carrier_output"]);
                     regList.Add(Reg);
                 }
             }
