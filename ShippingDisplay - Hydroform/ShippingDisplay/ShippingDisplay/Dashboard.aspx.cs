@@ -8,6 +8,7 @@ using System.Web.Security;
 using ShippingDisplay.ShippingDisplay.DataAccess;
 using ShippingDisplay.ShippingDisplay.DataAccess.Entidades;
 using System.Drawing;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ShippingDisplay.ShippingDisplay
 {
@@ -23,7 +24,7 @@ namespace ShippingDisplay.ShippingDisplay
                     string Username = HttpContext.Current.User.Identity.Name;
                     CargarPerfil(Username);
                     ObtenerWidgets();
-                    //CargarGrid();
+                    CargarGrid(1);
                 }
                 else
                 {
@@ -32,11 +33,11 @@ namespace ShippingDisplay.ShippingDisplay
                 }
             }
         }
-        //private void CargarGrid()
-        //{
-        //    gvRegistros.DataSource = RegistroDAL.ListadoDashboard(Id_Planta);
-         //   gvRegistros.DataBind();
-        //}
+        private void CargarGrid(int Id_planta)
+        {
+            gvRegistros.DataSource = RegistroDAL.ListDashboard(Id_planta);
+            gvRegistros.DataBind();
+        }
         public void ObtenerWidgets()
         {
             try
@@ -64,7 +65,7 @@ namespace ShippingDisplay.ShippingDisplay
             }
             catch
             {
-                ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "Alert", "window.onload = function(){ alert('Oops! Something went wrong.'); };", true);
+                //ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "Alert", "window.onload = function(){ alert('Oops! Something went wrong.'); };", true);
             }
         }
 

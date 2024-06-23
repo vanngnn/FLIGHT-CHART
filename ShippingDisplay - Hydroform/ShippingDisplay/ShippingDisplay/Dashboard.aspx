@@ -309,20 +309,20 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                 
-
-    
                 <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowDataBound="gvRegistros_RowDataBound" >
                                 <Columns>
-                                    <asp:BoundField HeaderText="ID" DataField="Id_all" />
-                                    <asp:BoundField HeaderText="Customer" DataField="ClienteName" />
-                                    <asp:BoundField HeaderText="Carrier" DataField="CarrierName" />
-                                    <asp:BoundField HeaderText="Input" DataField="Entrada" />
-                                    <asp:BoundField HeaderText="Output" DataField="Salida" />
-                                    <asp:BoundField HeaderText="Box" DataField="Caja" />
-                                    <asp:BoundField HeaderText="Route" DataField="RutaName" />
-                                    <asp:BoundField HeaderText="Shipper" DataField="Shipper" />
-                                    <asp:BoundField HeaderText="Status" DataField="Estado" />
+                                     <asp:BoundField HeaderText="DATE" DataField="assignedDate" />
+                                     <asp:BoundField HeaderText="ASSIGNED TIME" DataField="TimePeriodAssigned" />
+                                     <asp:BoundField HeaderText="P/N" DataField="partNumber" />
+                                     <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
+                                     <asp:BoundField HeaderText="FROM" DataField="PlantName" />
+                                     <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
+                                     <asp:BoundField HeaderText="B/L" DataField="assignedBOL" />
+                                     <asp:BoundField HeaderText="QTY" DataField="assignedQTY" />
+                                     <asp:BoundField HeaderText="DOCK" DataField="assignedDock" />
+                                     <asp:BoundField HeaderText="STATUS" DataField="shipStatus" />
+                                     <asp:BoundField HeaderText="REASON" DataField="shipReason" />
+                                     <asp:BoundField HeaderText="COMMENT" DataField="shipComment" />
                                     <%--<asp:BoundField HeaderText="ASN Sent" DataField="ASN_Sent" />
                                     <asp:BoundField HeaderText="ASN Ack" DataField="ASN_Ack" />--%>
                                 </Columns>
