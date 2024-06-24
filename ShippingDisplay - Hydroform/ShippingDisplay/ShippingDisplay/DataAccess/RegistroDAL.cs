@@ -883,7 +883,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         //                                                              MUTUAL LIST (TO DISPLAY ON DASHBOARD)
         public static List<Registro> ListDashboard(int Id_planta)
         {
-            List<Registro> lista = new List<Registro>();
+            List<Registro> list_dashboard = new List<Registro>();
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
             {
                 conn.Open();
@@ -929,16 +929,17 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     [dbo].[Carrier] L ON H.Id_carrier_output = L.id_carrier
                 INNER JOIN 
                     [dbo].[Planta] P ON H.Id_planta_output = P.id_planta
+                WHERE 
+                    H.Id_planta_output = @Id_planta
                 ORDER BY 
                     EntryDate ASC";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 //cmd.Parameters.AddWithValue("@Status", Status);
                 cmd.Parameters.AddWithValue("@Id_planta", Id_planta);
-
                 SqlDataReader reader = cmd.ExecuteReader();
-
                 while (reader.Read())
+
                 {
                     Registro Reg = new Registro();
                     {
@@ -959,24 +960,12 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                         Reg.shipComment = Convert.ToString(reader["shipComment"]);
                         Reg.ClienteName = Convert.ToString(reader["Cliente"]);
                         Reg.CarrierName = Convert.ToString(reader["Carrier"]);
+                        list_dashboard.Add(Reg);
                     }
-                    lista.Add(Reg);
+                    
                 }
             }
-            return lista;
+            return list_dashboard;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
