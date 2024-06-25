@@ -175,13 +175,19 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
             {
                conn.Open();
-               string query = @"SELECT H.Id_all,H.EntryDate,H.From_time, H.To_time, H.Part_number, H.Id_cliente, H.Id_planta, H.Id_carrier, H.Bill_of_Lading, H.Quantity, H.Dock,H.shipStatus, H.shipReason, H.shipComment, 
-                            C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant'
-                            FROM [dbo].[LogInput] H
-                            INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
-                            INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier
-                            INNER JOIN [dbo].[Planta]  P ON H.Id_planta  = P.id_planta
-                            ORDER BY H.EntryDate ASC";
+               string query = @"SELECT H.Id_all,H.EntryDate,H.From_time, H.To_time, H.Part_number, H.Id_cliente, H.Id_planta, H.Id_carrier, H.Bill_of_Lading, H.Quantity, H.Dock,
+                    CASE 
+                    WHEN GETDATE() < H.EntryDate THEN 'ONTIME'
+                    WHEN GETDATE() >= H.EntryDate AND CAST(GETDATE() AS TIME) < CAST(H.From_time AS TIME) THEN 'ON TIME'
+                    WHEN GETDATE() >= H.EntryDate AND CAST(GETDATE() AS TIME) BETWEEN CAST(H.From_time AS TIME) AND CAST(H.To_time AS TIME) THEN 'ONTIME'
+                    ELSE 'DELAYED' END AS shipStatus,
+                    H.shipReason, H.shipComment, 
+                    C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant'
+                    FROM [dbo].[LogInput] H
+                    INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
+                    INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier
+                    INNER JOIN [dbo].[Planta]  P ON H.Id_planta  = P.id_planta
+                    ORDER BY H.EntryDate ASC";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -234,7 +240,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             //{
             //    conn.Open();
              //   string query = @"SELECT H.Id_all,H.EntryDate,H.From_time,H.To_time AS TimeRange,H.Part_number, H.Id_cliente, H.Id_planta,H.Id_carrier,H.Bill_of_Lading, H.Quantity,H.Dock,H.shipStatus, H.shipReason,H.shipComment, C.description AS 'Cliente',L.description AS 'Carrier',
-              //          CASE WHEN shipStatus = 3 THEN 'SENT' WHEN shipStatus = 1 THEN 'EARRING'
+              //          CASE WHEN shipStatus = 3 THEN 'SHIPPED' WHEN shipStatus = 1 THEN 'EARRING'
 	          //               --WHEN shipStatus = 2 THEN 'ONTIME'
 	          //               WHEN shipStatus = 2 THEN 'ONTIME'
 	          //               WHEN shipStatus = 2 THEN 'DELAYED' END AS ESTADO 
@@ -308,7 +314,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 con.Open();
                 string query = @"
                         SELECT DISTINCT  
-                        (SELECT ISNULL((Count(H.shipStatus)),0) FROM LogInput H  WHERE H.shipStatus = 3 = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta ) AS 'SENT',
+                        (SELECT ISNULL((Count(H.shipStatus)),0) FROM LogInput H  WHERE H.shipStatus = 3 = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta ) AS 'SHIPPED',
 
                         (SELECT ISNULL((Count(H.shipStatus)),0) FROM LogInput H  WHERE H.shipStatus = 1 = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta) AS 'EARRING',
 
@@ -335,7 +341,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         private static Registro Convertir(IDataReader reader)
         {
             Registro list = new Registro();
-            list.Completed = Convert.ToString(reader["SENT"]);
+            list.Completed = Convert.ToString(reader["SHIPPED"]);
             list.Pendiente = Convert.ToString(reader["EARRING"]);
             list.Ontime =    Convert.ToString(reader["ONTIME"]);
             list.DELAYED =   Convert.ToString(reader["DELAYED"]);
@@ -563,13 +569,19 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
             {
                 conn.Open();
-                string query = @"SELECT H.Id_all_output,H.EntryDate_output,H.From_time_output, H.To_time_output, H.Part_number_output, H.Id_cliente_output, H.Id_planta_output, H.Id_carrier_output, H.Bill_of_Lading_output, H.Quantity_output, H.Dock_output,H.shipStatus_output, H.shipReason_output, H.shipComment_output, 
-                            C.description AS 'Cliente_output', L.description AS 'Carrier_output', P.description AS 'Plant_output'
-                            FROM [dbo].[LogOutput] H
-                            INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_output = C.id_cliente
-                            INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_output = L.id_carrier
-                            INNER JOIN [dbo].[Planta]  P ON H.Id_planta_output  = P.id_planta";
-
+                string query = @"SELECT H.Id_all_output,H.EntryDate_output,H.From_time_output, H.To_time_output, H.Part_number_output, H.Id_cliente_output, H.Id_planta_output, H.Id_carrier_output, H.Bill_of_Lading_output, H.Quantity_output, H.Dock_output,
+                    CASE 
+                    WHEN GETDATE() < H.EntryDate_output THEN 'ONTIME'
+                    WHEN GETDATE() >= H.EntryDate_output AND CAST(GETDATE() AS TIME) < CAST(H.From_time_output AS TIME) THEN 'ON TIME'
+                    WHEN GETDATE() >= H.EntryDate_output AND CAST(GETDATE() AS TIME) BETWEEN CAST(H.From_time_output AS TIME) AND CAST(H.To_time_output AS TIME) THEN 'ONTIME'
+                    ELSE 'DELAYED' END AS shipStatus_output,
+                    H.shipReason_output, H.shipComment_output, 
+                    C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant'
+                    FROM [dbo].[LogOutput] H
+                    INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_output = C.id_cliente
+                    INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_output = L.id_carrier
+                    INNER JOIN [dbo].[Planta]  P ON H.Id_planta_output  = P.id_planta
+                    ORDER BY H.EntryDate_output ASC";
                 //WHERE H.shipStatus=@shipStatus AND H.Id_planta=@Id_planta ORDER BY H.Entrada desc (belong in query)
 
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -623,7 +635,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         //{
         //    conn.Open();
         //   string query = @"SELECT H.Id_all,H.EntryDate,H.From_time,H.To_time AS TimeRange,H.Part_number, H.Id_cliente, H.Id_planta,H.Id_carrier,H.Bill_of_Lading, H.Quantity,H.Dock,H.shipStatus, H.shipReason,H.shipComment, C.description AS 'Cliente',L.description AS 'Carrier',
-        //          CASE WHEN shipStatus = 3 THEN 'SENT' WHEN shipStatus = 1 THEN 'EARRING'
+        //          CASE WHEN shipStatus = 3 THEN 'SHIPPED' WHEN shipStatus = 1 THEN 'EARRING'
         //               --WHEN shipStatus = 2 THEN 'ONTIME'
         //               WHEN shipStatus = 2 THEN 'ONTIME'
         //               WHEN shipStatus = 2 THEN 'DELAYED' END AS ESTADO 
@@ -697,7 +709,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 con.Open();
                 string query = @"
                         SELECT DISTINCT  
-                        (SELECT ISNULL((Count(H.shipStatus)),0) FROM LogInput H  WHERE H.shipStatus = 3 = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta ) AS 'SENT',
+                        (SELECT ISNULL((Count(H.shipStatus)),0) FROM LogInput H  WHERE H.shipStatus = 3 = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta ) AS 'SHIPPED',
 
                         (SELECT ISNULL((Count(H.shipStatus)),0) FROM LogInput H  WHERE H.shipStatus = 1 = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta) AS 'EARRING',
 
@@ -724,7 +736,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         private static Registro Convertir_output(IDataReader reader)
         {
             Registro list = new Registro();
-            list.Completed = Convert.ToString(reader["SENT"]);
+            list.Completed = Convert.ToString(reader["SHIPPED"]);
             list.Pendiente = Convert.ToString(reader["EARRING"]);
             list.Ontime = Convert.ToString(reader["ONTIME"]);
             list.DELAYED = Convert.ToString(reader["DELAYED"]);

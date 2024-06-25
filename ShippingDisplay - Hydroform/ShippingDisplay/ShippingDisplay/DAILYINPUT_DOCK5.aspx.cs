@@ -105,7 +105,7 @@ namespace ShippingDisplay.ShippingDisplay
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#28a745");
                 }
-                else if (Estado == "SENT")
+                else if (Estado == "SHIPPED")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#17a2b8");
                 }
