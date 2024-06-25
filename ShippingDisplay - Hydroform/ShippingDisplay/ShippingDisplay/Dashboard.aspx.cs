@@ -24,7 +24,7 @@ namespace ShippingDisplay.ShippingDisplay
                     string Username = HttpContext.Current.User.Identity.Name;
                     CargarPerfil(Username);
                     ObtenerWidgets();
-                    CargarGrid(1);
+                    CargarGrid();
                 }
                 else
                 {
@@ -33,9 +33,10 @@ namespace ShippingDisplay.ShippingDisplay
                 }
             }
         }
-        private void CargarGrid(int Id_planta)
+        private void CargarGrid()
         {
-            gvRegistros.DataSource = RegistroDAL.ListDashboard(Id_planta);
+            int shipStatus = 1;
+            gvRegistros.DataSource = RegistroDAL.ListDashboard(shipStatus, Id_Planta);
             gvRegistros.DataBind();
         }
         public void ObtenerWidgets()
@@ -94,7 +95,7 @@ namespace ShippingDisplay.ShippingDisplay
                 LinkRegister.Visible = false;
                 LinkShipIn.Visible = false;
                 LinkShipOut.Visible = false;
-                // LinkDashEmb.Visible = false;
+                //LinkDashEmb.Visible = false;
             }
             else if (Dept == 2)
             {
