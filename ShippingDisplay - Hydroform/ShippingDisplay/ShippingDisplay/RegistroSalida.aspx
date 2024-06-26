@@ -91,11 +91,63 @@
             </div>
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkDash" NavigateUrl="Dashboard.aspx" runat="server" Visible="true"  class="nav-link active"> 
-                            <i class="nav-icon fas fa-tachometer-alt"></i><p>Dashboard</p>
+                        <asp:HyperLink ID="LinkControlPanel" NavigateUrl="CONTROLPANEL.aspx" runat="server" Visible="true"  class="nav-link active">
+                            <i class="nav-icon fas fa-solar-panel"></i><p>Control Panel</p>
                         </asp:HyperLink>
                     </li>
+
+                    <li class="nav-item">
+                        <asp:HyperLink ID="HyperLink1" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
+                            <i class="nav-icon fas fa-tachometer-alt"></i><p>Dashboard<i class="fas fa-angle-left right"></i></p>
+                        </asp:HyperLink>
+
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <asp:HyperLink ID="LinkDash" NavigateUrl="Dashboard.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                    <p>All</p>
+                                </asp:HyperLink>
+                            </li>
+
+                            <li class="nav-item">
+                                <asp:HyperLink ID="dashboard_dock1" NavigateUrl="DASHBOARD_DOCK1.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                    <p>DOCK 1</p>
+                                </asp:HyperLink>
+                            </li>
+
+                            <li class="nav-item">
+                                <asp:HyperLink ID="dashboard_dock2" NavigateUrl="DASHBOARD_DOCK2.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                    <p>DOCK 2</p>
+                                </asp:HyperLink>
+                            </li>
+
+                            <li class="nav-item">
+                                <asp:HyperLink ID="dashboard_dock3" NavigateUrl="DASHBOARD_DOCK3.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                    <p>DOCK 3</p>
+                                </asp:HyperLink>
+                            </li>
+
+                            <li class="nav-item">
+                                <asp:HyperLink ID="dashboard_dock4" NavigateUrl="DASHBOARD_DOCK4.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                    <p>DOCK 4</p>
+                                </asp:HyperLink>
+                            </li>
+
+                            <li class="nav-item">
+                                <asp:HyperLink ID="dashboard_dock5" NavigateUrl="DASHBOARD_DOCK5.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                    <p>DOCK 5</p>
+                                </asp:HyperLink>
+                            </li>
+
+                            <li class="nav-item">
+                                <asp:HyperLink ID="dashboard_dock6" NavigateUrl="DASHBOARD_DOCK6.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                    <p>DOCK 6</p>
+                                </asp:HyperLink>
+                            </li>
+                        </ul>
+                    </li>
+
                     <li class="nav-item">
                         <asp:HyperLink ID="HyperLink4" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-ellipsis-h"></i><p>Shipments<i class="fas fa-angle-left right"></i></p>

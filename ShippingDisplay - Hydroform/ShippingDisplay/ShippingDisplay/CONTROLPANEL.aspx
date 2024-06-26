@@ -6,7 +6,7 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="refresh" content="30" />
+    <meta http-equiv="refresh" content="60" />
     <link rel="icon" type="image/png" href="Template/img/martinrea_logo.png"/>
     <title>Shipping Display</title>
     <!-- Google Font: Source Sans Pro -->
@@ -88,9 +88,53 @@
                     </li>
 
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkDash" NavigateUrl="Dashboard.aspx" runat="server" Visible="true"  class="nav-link"> 
-                            <i class="nav-icon fas fa-tachometer-alt"></i><p>Dashboard</p>
+                        <asp:HyperLink ID="HyperLink1" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
+                            <i class="nav-icon fas fa-tachometer-alt"></i><p>Dashboard<i class="fas fa-angle-left right"></i></p>
                         </asp:HyperLink>
+
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <asp:HyperLink ID="LinkDash" NavigateUrl="Dashboard.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                    <p>All</p>
+                                </asp:HyperLink>
+                            </li>
+
+                            <li class="nav-item">
+                                <asp:HyperLink ID="dashboard_dock1" NavigateUrl="DASHBOARD_DOCK1.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                    <p>DOCK 1</p>
+                                </asp:HyperLink>
+                            </li>
+
+                            <li class="nav-item">
+                                <asp:HyperLink ID="dashboard_dock2" NavigateUrl="DASHBOARD_DOCK2.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                    <p>DOCK 2</p>
+                                </asp:HyperLink>
+                            </li>
+
+                            <li class="nav-item">
+                                <asp:HyperLink ID="dashboard_dock3" NavigateUrl="DASHBOARD_DOCK3.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                    <p>DOCK 3</p>
+                                </asp:HyperLink>
+                            </li>
+
+                            <li class="nav-item">
+                                <asp:HyperLink ID="dashboard_dock4" NavigateUrl="DASHBOARD_DOCK4.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                    <p>DOCK 4</p>
+                                </asp:HyperLink>
+                            </li>
+
+                            <li class="nav-item">
+                                <asp:HyperLink ID="dashboard_dock5" NavigateUrl="DASHBOARD_DOCK5.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                    <p>DOCK 5</p>
+                                </asp:HyperLink>
+                            </li>
+
+                            <li class="nav-item">
+                                <asp:HyperLink ID="dashboard_dock6" NavigateUrl="DASHBOARD_DOCK6.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                    <p>DOCK 6</p>
+                                </asp:HyperLink>
+                            </li>
+                        </ul>
                     </li>
 
                     <li class="nav-item">
@@ -232,122 +276,146 @@
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
-                <%--<div class="row mb-2">
+                <!-- Commented out for now
+                <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0">Dashboard</h1>
-                    </div><!-- /.col -->
+                    </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->--%>
+                    </div>
+                </div>
+                -->
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
 
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
-                <div class="row">
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                        <div class="small-box bg-success">
-                            <div class="inner">
-                                <h3><asp:Label ID="lblEntiempo" runat="server" Text="0"></asp:Label></h3>
-                                <p><h3>On time</h3></p>
-                            </div>
-                            <div class="icon"> 
-                                <i class="ion ion-ios-clock"></i>                 
-                            </div>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- First row -->
+            <div class="row justify-content-center">
+                <!-- Column 1: Dock 1 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            Dock 1
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li>Part 1</li>
+                                <li>Part 2</li>
+                                <li>Part 3</li>
+                                <li>Part 4</li>
+                                <li>Part 5</li>
+                            </ul>
                         </div>
                     </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-danger">
-                            <div class="inner">
-                                <h3><asp:Label ID="lblAtrasado" runat="server" Text="0"></asp:Label></h3>
-                                <p><h3>DELAYED</h3></p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-android-warning"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-warning">
-                            <div class="inner">
-                                <h3><asp:Label ID="lblSinShipper" runat="server" Text="0"></asp:Label></h3>
-                                <p><h3>WITHOUT SHIPPER</h3></p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-android-checkmark-circle"></i>
-                            </div>
-                        </div>
-                    </div>     
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3><asp:Label ID="lblEnviado" runat="server" Text="0"></asp:Label></h3>
-                                <p><h3>SHIPPED</h3></p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-checkmark-round"></i>
-                            </div>
-                        </div>
-                    </div>            
                 </div>
-                <!-- /.row -->
 
-                <!-- Main row -->
-                <div class="row">
-                    <div class="col-12">
-                        <!-- /.card -->
+                <!-- Column 2: Dock 2 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            Dock 2
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li>Part 1</li>
+                                <li>Part 2</li>
+                                <li>Part 3</li>
+                                <li>Part 4</li>
+                                <li>Part 5</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Daily entry</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowDataBound="gvRegistros_RowDataBound" >
-                                <Columns>
-                                     <asp:BoundField HeaderText="DATE" DataField="assignedDate" />
-                                     <asp:BoundField HeaderText="ASSIGNED TIME" DataField="TimePeriodAssigned" />
-                                     <asp:BoundField HeaderText="P/N" DataField="partNumber" />
-                                     <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
-                                     <asp:BoundField HeaderText="FROM" DataField="PlantName" />
-                                     <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
-                                     <asp:BoundField HeaderText="B/L" DataField="assignedBOL" />
-                                     <asp:BoundField HeaderText="QTY" DataField="assignedQTY" />
-                                     <asp:BoundField HeaderText="DOCK" DataField="assignedDock" />
-                                     <asp:BoundField HeaderText="STATUS" DataField="shipStatus" />
-                                     <asp:BoundField HeaderText="REASON" DataField="shipReason" />
-                                     <asp:BoundField HeaderText="COMMENT" DataField="shipComment" />
-                                    <%--<asp:BoundField HeaderText="ASN Sent" DataField="ASN_Sent" />
-                                    <asp:BoundField HeaderText="ASN Ack" DataField="ASN_Ack" />--%>
-                                </Columns>
-                </asp:GridView>
-                      
-              </div>
-              <!-- /.card-body -->
+                <!-- Column 3: Dock 3 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            Dock 3
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li>Part 1</li>
+                                <li>Part 2</li>
+                                <li>Part 3</li>
+                                <li>Part 4</li>
+                                <li>Part 5</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- /.card -->
+            <!-- /.row -->
+
+            <!-- Second row -->
+            <div class="row justify-content-center">
+                <!-- Column 4: Dock 4 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            Dock 4
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li>Part 1</li>
+                                <li>Part 2</li>
+                                <li>Part 3</li>
+                                <li>Part 4</li>
+                                <li>Part 5</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            <!-- /.row (main row) -->
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
+
+                <!-- Column 5: Dock 5 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            Dock 5
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li>Part 1</li>
+                                <li>Part 2</li>
+                                <li>Part 3</li>
+                                <li>Part 4</li>
+                                <li>Part 5</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 6: Dock 6 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            Dock 6
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li>Part 1</li>
+                                <li>Part 2</li>
+                                <li>Part 3</li>
+                                <li>Part 4</li>
+                                <li>Part 5</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
     <footer class="main-footer">
         <strong>Copyright &copy; 2021 Martinrea.</strong>
         All rights reserved.

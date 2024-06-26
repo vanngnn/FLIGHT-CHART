@@ -76,6 +76,7 @@
     <Content Include="NEW STUFF\REGISTERUSER.aspx" />
     <Content Include="NEW STUFF\REPORTS.aspx" />
     <Content Include="NEW STUFF\SHIPMENT.aspx" />
+    <Content Include="ShippingDisplay\CONTROLPANEL.aspx" />
     <Content Include="ShippingDisplay\DAILYINPUT_DOCK1.aspx" />
     <Content Include="ShippingDisplay\DAILYINPUT_DOCK2.aspx" />
     <Content Include="ShippingDisplay\DAILYINPUT_DOCK3.aspx" />
@@ -88,6 +89,12 @@
     <Content Include="ShippingDisplay\DAILYOUTPUT_DOCK4.aspx" />
     <Content Include="ShippingDisplay\DAILYOUTPUT_DOCK5.aspx" />
     <Content Include="ShippingDisplay\DAILYOUTPUT_DOCK6.aspx" />
+    <Content Include="ShippingDisplay\DASHBOARD_DOCK1.aspx" />
+    <Content Include="ShippingDisplay\DASHBOARD_DOCK2.aspx" />
+    <Content Include="ShippingDisplay\DASHBOARD_DOCK3.aspx" />
+    <Content Include="ShippingDisplay\DASHBOARD_DOCK4.aspx" />
+    <Content Include="ShippingDisplay\DASHBOARD_DOCK5.aspx" />
+    <Content Include="ShippingDisplay\DASHBOARD_DOCK6.aspx" />
     <Content Include="ShippingDisplay\SHIPMENT_INPUT.aspx" />
     <Content Include="ShippingDisplay\SHIPMENT_OUTPUT.aspx" />
     <Content Include="NEW STUFF\SHIPPER.aspx" />
@@ -105,6 +112,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShippingDisplay\CONTROLPANEL.aspx.cs">
+      <DependentUpon>CONTROLPANEL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShippingDisplay\CONTROLPANEL.aspx.designer.cs">
+      <DependentUpon>CONTROLPANEL.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ShippingDisplay\DAILYINPUT_DOCK1.aspx.cs">
       <DependentUpon>DAILYINPUT_DOCK1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -202,6 +216,42 @@
     </Compile>
     <Compile Include="ShippingDisplay\DashboardV1.aspx.designer.cs">
       <DependentUpon>DashboardV1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK1.aspx.cs">
+      <DependentUpon>DASHBOARD_DOCK1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK1.aspx.designer.cs">
+      <DependentUpon>DASHBOARD_DOCK1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK2.aspx.cs">
+      <DependentUpon>DASHBOARD_DOCK2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK2.aspx.designer.cs">
+      <DependentUpon>DASHBOARD_DOCK2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK3.aspx.cs">
+      <DependentUpon>DASHBOARD_DOCK3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK3.aspx.designer.cs">
+      <DependentUpon>DASHBOARD_DOCK3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK4.aspx.cs">
+      <DependentUpon>DASHBOARD_DOCK4.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK4.aspx.designer.cs">
+      <DependentUpon>DASHBOARD_DOCK4.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK5.aspx.cs">
+      <DependentUpon>DASHBOARD_DOCK5.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK5.aspx.designer.cs">
+      <DependentUpon>DASHBOARD_DOCK5.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK6.aspx.cs">
+      <DependentUpon>DASHBOARD_DOCK6.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK6.aspx.designer.cs">
+      <DependentUpon>DASHBOARD_DOCK6.aspx</DependentUpon>
     </Compile>
     <Compile Include="ShippingDisplay\DataAccess\CarrierDAL.cs" />
     <Compile Include="ShippingDisplay\DataAccess\ClienteDAL.cs" />
