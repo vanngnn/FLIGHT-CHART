@@ -94,5 +94,23 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
             }
         }
 
+        public string Dashboard_dock_plant_input
+        {
+            get
+            {
+                return $"From: {PlantName}";
+            }
+        }
+
+        public string Dashboard_dock_plant_output
+        {
+            get
+            {
+                return $"To: {PlantName}";
+            }
+        }
+
+        public bool IsInput { get; set; }
+
     }
 }

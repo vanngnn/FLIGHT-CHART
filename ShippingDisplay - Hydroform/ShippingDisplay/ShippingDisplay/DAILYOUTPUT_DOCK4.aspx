@@ -367,7 +367,7 @@
                                     <asp:BoundField HeaderText="ASSIGNED TIME" DataField="TimePeriodAssigned_output" />
                                     <asp:BoundField HeaderText="P/N" DataField="partNumber_output" />
                                     <asp:BoundField HeaderText="PROJECT" DataField="ClienteName_output" />
-                                    <asp:BoundField HeaderText="FROM" DataField="PlantName_output" />
+                                    <asp:BoundField HeaderText="TO" DataField="PlantName_output" />
                                     <asp:BoundField HeaderText="CARRIER" DataField="CarrierName_output" />
                                     <asp:BoundField HeaderText="B/L" DataField="assignedBOL_output" />
                                     <asp:BoundField HeaderText="QTY" DataField="assignedQTY_output" />

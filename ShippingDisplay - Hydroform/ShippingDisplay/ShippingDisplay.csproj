@@ -219,6 +219,7 @@
     </Compile>
     <Compile Include="ShippingDisplay\DASHBOARD_DOCK1.aspx.cs">
       <DependentUpon>DASHBOARD_DOCK1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ShippingDisplay\DASHBOARD_DOCK1.aspx.designer.cs">
       <DependentUpon>DASHBOARD_DOCK1.aspx</DependentUpon>
