@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.Dashboard" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CONTROLPANEL.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.CONTROLPANEL" %>
 
 <!DOCTYPE html>
 
