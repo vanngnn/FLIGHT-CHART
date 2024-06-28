@@ -121,6 +121,7 @@ namespace ShippingDisplay.ShippingDisplay
             CargarPerfil(Username);
             string ID;
             ID = txtId_all.Text;
+            Id_Planta = dblPlant.SelectedIndex;
             if (ID == "")
             {
                 Registro Reg = new Registro();
@@ -166,14 +167,19 @@ namespace ShippingDisplay.ShippingDisplay
                     //DEFINICIÓN DE VARIABLES LOCALES
                     Registro Reg = new Registro();
                     {
-                        Reg.Id_all = Convert.ToInt32(txtId_all.Text);
+                        Reg.assignedDate = Convert.ToDateTime(EntryDate.Text);
+                        Reg.assignedFromtime = Convert.ToString(fromTime.Text);
+                        Reg.assignedTotime = Convert.ToString(toTime.Text);
+                        Reg.partNumber = txtPN.Text;
                         Reg.Id_cliente = Convert.ToInt32(dblCliente.SelectedValue);
+                        Reg.Id_planta = Convert.ToInt32(Id_Planta); //FROM/TO: PLANT
                         Reg.Id_carrier = Convert.ToInt32(dblCarrier.SelectedValue);
-                        // Reg.Placas = txtPlacas.Text;
-                        // Reg.Caja = txtCaja.Text;
-                        // Reg.NombreOperador = txtOperador.Text;
-                        // Reg.Telefono = txtTelefono.Text;
-                        // Reg.Tarjeta = Convert.ToInt32(txtAcceso.Text);
+                        Reg.assignedBOL = Convert.ToInt32(txtBL.Text);
+                        Reg.assignedQTY = Convert.ToInt32(txtQTY.Text);
+                        Reg.assignedDock = DockDropDown.SelectedItem.Text;
+                        Reg.shipStatus = StatusDropDown.SelectedItem.Text;
+                        Reg.shipReason = ReasonDropDown.SelectedItem.Text;
+                        Reg.shipComment = txtComment.Text;
                     }
                     RegistroDAL.ActualizarRegistro(Reg);
                     CleanControl(this.Controls);
@@ -196,8 +202,8 @@ namespace ShippingDisplay.ShippingDisplay
         }
         private void CargarGrid()
         {
-            int shipStatus = 1;
-            gvRegistros.DataSource = RegistroDAL.ListadoRegistros(shipStatus, Id_Planta);
+            int shipStatus = 2;
+            gvRegistros.DataSource = RegistroDAL.ListadoRegistros(shipStatus);
             gvRegistros.DataBind();
         }
 

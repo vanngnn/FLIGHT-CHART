@@ -482,7 +482,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <asp:GridView ID="DASHBOARD_DOCK1_REGISTER" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowDataBound="DASHBOARD_DOCK1_REGISTER_RowDataBound" >
+                <asp:GridView ID="DASHBOARD_DOCK1_COATINGS_REGISTER" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowDataBound="DASHBOARD_DOCK1_COATINGS_REGISTER_RowDataBound" >
                                 <Columns>
                                     <asp:BoundField HeaderText="DATE" DataField="assignedDate" />
                                     <asp:BoundField HeaderText="ASSIGNED TIME" DataField="TimePeriodAssigned" />

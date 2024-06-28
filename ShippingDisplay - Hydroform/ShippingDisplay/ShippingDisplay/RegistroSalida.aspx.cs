@@ -121,6 +121,7 @@ namespace ShippingDisplay.ShippingDisplay
             CargarPerfil(Username);
             string ID;
             ID = txtId_all.Text;
+            Id_Planta = dblPlant.SelectedIndex;
             if (ID == "")
             {
                 Registro Reg = new Registro();
@@ -166,14 +167,19 @@ namespace ShippingDisplay.ShippingDisplay
                     //DEFINICIÓN DE VARIABLES LOCALES
                     Registro Reg = new Registro();
                     {
-                        Reg.Id_all_output = Convert.ToInt32(txtId_all.Text);
+                        Reg.assignedDate_output = Convert.ToDateTime(EntryDate.Text);
+                        Reg.assignedFromtime_output = Convert.ToString(fromTime.Text);
+                        Reg.assignedTotime_output = Convert.ToString(toTime.Text);
+                        Reg.partNumber_output = txtPN.Text;
                         Reg.Id_cliente_output = Convert.ToInt32(dblCliente.SelectedValue);
+                        Reg.Id_planta_output = Convert.ToInt32(Id_Planta); //FROM/TO: PLANT
                         Reg.Id_carrier_output = Convert.ToInt32(dblCarrier.SelectedValue);
-                        // Reg.Placas = txtPlacas.Text;
-                        // Reg.Caja = txtCaja.Text;
-                        // Reg.NombreOperador = txtOperador.Text;
-                        // Reg.Telefono = txtTelefono.Text;
-                        // Reg.Tarjeta = Convert.ToInt32(txtAcceso.Text);
+                        Reg.assignedBOL_output = Convert.ToInt32(txtBL.Text);
+                        Reg.assignedQTY_output = Convert.ToInt32(txtQTY.Text);
+                        Reg.assignedDock_output = DockDropDown.SelectedItem.Text;
+                        Reg.shipStatus_output = StatusDropDown.SelectedItem.Text;
+                        Reg.shipReason_output = ReasonDropDown.SelectedItem.Text;
+                        Reg.shipComment_output = txtComment.Text;
                     }
                     RegistroDAL.ActualizarRegistro(Reg);
                     CleanControl(this.Controls);
@@ -197,7 +203,7 @@ namespace ShippingDisplay.ShippingDisplay
         private void CargarGrid()
         {
             int shipStatus = 1;
-            gvRegistros.DataSource = RegistroDAL.ListadoRegistros_output(shipStatus, Id_Planta);
+            gvRegistros.DataSource = RegistroDAL.ListadoRegistros_output(shipStatus);
             gvRegistros.DataBind();
         }
 

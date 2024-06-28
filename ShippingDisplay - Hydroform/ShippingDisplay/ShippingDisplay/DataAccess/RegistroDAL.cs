@@ -22,7 +22,6 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 conn.Open();
                 //OBTENER EL ID UNICO DEL ISSUE
                 int ID;
-
                 string query = @"INSERT INTO LogInput (EntryDate,From_time,To_time,Part_number,Id_cliente,Id_planta,Id_carrier,Bill_of_Lading,Quantity,Dock,shipStatus, shipReason, shipComment)
                                  VALUES (@assignedDate, @assignedFromtime,@assignedTotime,@partNumber,@Id_cliente,@Id_planta,@Id_carrier,@assignedBOL,@assignedQTY,@assignedDock,@shipStatus,@shipReason,@shipComment); SELECT SCOPE_IDENTITY()";
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -169,7 +168,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         //}
 
         //RETURN LIST TO DIPSLAY IN DAILY LOG INPUT
-        public static List<Registro> ListadoRegistros(int Status, int Id_planta)
+        public static List<Registro> ListadoRegistros(int Status)
         {
             List<Registro> lista = new List<Registro>();
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
@@ -563,7 +562,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         //}
 
         //RETURN LIST TO DIPSLAY IN DAILY LOG INPUT
-        public static List<Registro> ListadoRegistros_output(int Status, int Id_planta)
+        public static List<Registro> ListadoRegistros_output(int Status)
         {
             List<Registro> lista = new List<Registro>();
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
