@@ -31,6 +31,8 @@
     <link rel="stylesheet" href="template/plugins/summernote/summernote-bs4.min.css" />
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
+    
+<body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">

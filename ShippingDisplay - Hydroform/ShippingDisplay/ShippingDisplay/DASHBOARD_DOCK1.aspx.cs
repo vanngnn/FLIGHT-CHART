@@ -115,7 +115,7 @@ namespace ShippingDisplay.ShippingDisplay
                     lblToFrom.Text = registro.Dashboard_dock_plant_output;
                 }
 
-                string shipStatus = e.Row.Cells[11].Text;
+                string shipStatus = e.Row.Cells[9].Text;
                 if (shipStatus == "On Time")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#28a745");

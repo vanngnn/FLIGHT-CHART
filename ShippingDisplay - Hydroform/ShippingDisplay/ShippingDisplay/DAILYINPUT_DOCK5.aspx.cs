@@ -35,7 +35,7 @@ namespace ShippingDisplay.ShippingDisplay
         private void CargarGrid()
         {
             string dockName = "Dock 5";  // Specify the dock name here
-            DAILYINPUT_DOCK5_REGISTER.DataSource = RegistroDAL.dockQueryInput(dockName);
+            DAILYINPUT_DOCK5_REGISTER.DataSource = RegistroDAL.dockQueryInput(dockName, 1);
             DAILYINPUT_DOCK5_REGISTER.DataBind();
         }
         public void ObtenerWidgets()

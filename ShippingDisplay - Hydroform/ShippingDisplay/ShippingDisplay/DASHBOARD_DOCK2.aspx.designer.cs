@@ -519,12 +519,12 @@ namespace ShippingDisplay.ShippingDisplay
         protected global::System.Web.UI.WebControls.Label lblEnviado;
 
         /// <summary>
-        /// DASHBOARD_DOCK1_REGISTER control.
+        /// DASHBOARD_DOCK2_REGISTER control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView DASHBOARD_DOCK1_REGISTER;
+        protected global::System.Web.UI.WebControls.GridView DASHBOARD_DOCK2_REGISTER;
     }
 }

@@ -36,7 +36,7 @@ namespace ShippingDisplay.ShippingDisplay
         private void CargarGrid()
         {
             int shipStatus = 1;
-            gvRegistros.DataSource = RegistroDAL.ListDashboard(shipStatus, Id_Planta);
+            gvRegistros.DataSource = RegistroDAL.ListDashboard(shipStatus);
             gvRegistros.DataBind();
         }
         public void ObtenerWidgets()
@@ -111,18 +111,35 @@ namespace ShippingDisplay.ShippingDisplay
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                string Estado = e.Row.Cells[8].Text;
-                if (Estado == "ONTIME")
+                Registro registro = (Registro)e.Row.DataItem;
+                Label lblFromTo = (Label)e.Row.FindControl("lblFromTo");
+                Label lblToFrom = (Label)e.Row.FindControl("lblToFrom");
+
+                if (registro.IsInput)
+                {
+                    lblFromTo.Text = registro.Dashboard_dock_plant_input;
+                    lblToFrom.Visible = false; // Hide lblToFrom when IsInput is true
+                }
+                else
+                {
+                    lblFromTo.Visible = false; // Hide lblFromTo when IsInput is false
+                    lblToFrom.Text = registro.Dashboard_dock_plant_output;
+                }
+
+
+                string shipStatus = e.Row.Cells[9].Text;
+                if (shipStatus == "On Time")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#28a745");
                 }
-                else if (Estado == "SHIPPED")
+                else if (shipStatus == "Shipped")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#17a2b8");
                 }
-                else if (Estado == "DELAYED")
+                else if (shipStatus == "Delayed")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#dc3545");
+                    e.Row.CssClass = "blink";
                 }
                 else
                 {

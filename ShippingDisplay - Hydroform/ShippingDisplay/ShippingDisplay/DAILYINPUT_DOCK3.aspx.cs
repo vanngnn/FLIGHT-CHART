@@ -35,7 +35,8 @@ namespace ShippingDisplay.ShippingDisplay
         private void CargarGrid()
         {
             string dockName = "Dock 3";  // Specify the dock name here
-            DAILYINPUT_DOCK3_REGISTER.DataSource = RegistroDAL.dockQueryInput(dockName);
+            DAILYINPUT_DOCK3_REGISTER.DataSource = RegistroDAL.dockQueryInput(dockName, 1);
+
             DAILYINPUT_DOCK3_REGISTER.DataBind();
         }
         public void ObtenerWidgets()
@@ -100,16 +101,16 @@ namespace ShippingDisplay.ShippingDisplay
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                string Estado = e.Row.Cells[8].Text;
-                if (Estado == "ONTIME")
+                string shipStatus = e.Row.Cells[9].Text;
+                if (shipStatus == "On Time")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#28a745");
                 }
-                else if (Estado == "SHIPPED")
+                else if (shipStatus == "Shipped")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#17a2b8");
                 }
-                else if (Estado == "DELAYED")
+                else if (shipStatus == "Delayed")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#dc3545");
                     e.Row.CssClass = "blink";
