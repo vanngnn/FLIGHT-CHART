@@ -114,13 +114,13 @@ namespace ShippingDisplay.ShippingDisplay
         protected global::System.Web.UI.WebControls.HyperLink dashboard_dock5;
 
         /// <summary>
-        /// dashboard_dock6 control.
+        /// HyperLink11 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink dashboard_dock6;
+        protected global::System.Web.UI.WebControls.HyperLink HyperLink11;
 
         /// <summary>
         /// HyperLink3 control.

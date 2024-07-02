@@ -9,16 +9,43 @@ using ShippingDisplay.ShippingDisplay.DataAccess;
 using ShippingDisplay.ShippingDisplay.DataAccess.Entidades;
 using System.Drawing;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Web.UI.WebControls.WebParts;
 
 namespace ShippingDisplay.ShippingDisplay
 {
     public partial class CONTROLPANEL : System.Web.UI.Page
     {
         int Id_Planta;
+        protected List<Registro> Dock1Parts { get; set; }
+        protected List<Registro> Dock2Parts { get; set; }
+        protected List<Registro> Dock3Parts { get; set; }
+        protected List<Registro> Dock4Parts { get; set; }
+        protected List<Registro> Dock5Parts { get; set; }
+        protected List<Registro> Dock6Parts { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                string dockName1 = "Dock 1";  // Specify the dock name here
+                Dock1Parts = RegistroDAL.control_panel_dock(dockName1);
+
+                string dockName2 = "Dock 2";  // Specify the dock name here
+                Dock2Parts = RegistroDAL.control_panel_dock(dockName2);
+
+                string dockName3 = "Dock 3";  // Specify the dock name here
+                Dock3Parts = RegistroDAL.control_panel_dock(dockName3);
+
+                string dockName4 = "Dock 4";  // Specify the dock name here
+                Dock4Parts = RegistroDAL.control_panel_dock(dockName4);
+
+                string dockName5 = "Dock 5";  // Specify the dock name here
+                Dock5Parts = RegistroDAL.control_panel_dock(dockName5);
+
+                string dockName6 = "Dock 6";  // Specify the dock name here
+                Dock6Parts = RegistroDAL.control_panel_dock(dockName6);
+
+
                 if (Context.User.Identity.IsAuthenticated)
                 {
                     string Username = HttpContext.Current.User.Identity.Name;

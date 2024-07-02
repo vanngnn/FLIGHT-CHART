@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CONTROLPANEL.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.CONTROLPANEL" %>
+﻿:<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CONTROLPANEL.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.CONTROLPANEL" %>
 
 <!DOCTYPE html>
 
@@ -138,7 +138,7 @@
                                     </li>
 
                                     <li class="nav-item">
-                                        <asp:HyperLink ID="dashboard_dock6" NavigateUrl="DASHBOARD_DOCK6.aspx" runat="server" Visible="true" class="nav-link">
+                                        <asp:HyperLink ID="HyperLink11" NavigateUrl="DASHBOARD_DOCK6.aspx" runat="server" Visible="true" class="nav-link">
                                             <p>DOCK 6</p>
                                         </asp:HyperLink>
                                     </li>
@@ -428,107 +428,234 @@
             <div class="row justify-content-center">
                 <!-- Column 1: Dock 1 -->
                 <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
-                    <div class="card">
-                        <div class="card-header bg-primary text-white">
-                            Dock 1
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled">
-                                <li>Part 1</li>
-                                <li>Part 2</li>
-                                <li>Part 3</li>
-                                <li>Part 4</li>
-                                <li>Part 5</li>
-                            </ul>
-                        </div>
+                    <div class="card"> 
+                        <a href="DASHBOARD_DOCK1.aspx" class="card-link">
+                            <div class="card-header bg-primary text-white">
+                                Dock 1
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <% foreach (var part in Dock1Parts) { %>
+                                        <li style="border-radius: 10px; padding: 8px; margin-bottom: 4px;
+                                            <% switch (part.shipStatus) {
+                                                case "On Time":
+                                                    Response.Write("background-color: #28a745; color: black;");  // Green
+                                                    break;
+                                                case "Shipped":
+                                                    Response.Write("background-color: #17a2b8; color: black;");  // Blue
+                                                    break;
+                                                case "Delayed":
+                                                    Response.Write("background-color: #dc3545; color: black;");  // Red
+                                                    break;
+                                                default:
+                                                    Response.Write("background-color: #ffc107; color: black;");  // Yellow
+                                                    break;
+                                            } %>
+                                            ">
+                                            <%= part.partNumber %>
+                                            <div style="font-size: smaller;">
+                                                <%= part.assignedFromtime %> - <%= part.assignedTotime %>
+                                            </div>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <!-- Column 2: Dock 2 -->
                 <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
                     <div class="card">
-                        <div class="card-header bg-primary text-white">
-                            Dock 2
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled">
-                                <li>Part 1</li>
-                                <li>Part 2</li>
-                                <li>Part 3</li>
-                                <li>Part 4</li>
-                                <li>Part 5</li>
-                            </ul>
-                        </div>
+                        <a href="DASHBOARD_DOCK2.aspx" class="card-link">
+                            <div class="card-header bg-primary text-white">
+                                Dock 2
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <% foreach (var part in Dock2Parts) { %>
+                                        <li style="border-radius: 10px; padding: 8px; margin-bottom: 4px;
+                                            <% switch (part.shipStatus) {
+                                                case "On Time":
+                                                    Response.Write("background-color: #28a745; color: black;");  // Green
+                                                    break;
+                                                case "Shipped":
+                                                    Response.Write("background-color: #17a2b8; color: black;");  // Blue
+                                                    break;
+                                                case "Delayed":
+                                                    Response.Write("background-color: #dc3545; color: black;");  // Red
+                                                    break;
+                                                default:
+                                                    Response.Write("background-color: #ffc107; color: black;");  // Yellow
+                                                    break;
+                                            } %>
+                                            ">
+                                            <%= part.partNumber %>
+                                            <div style="font-size: smaller;">
+                                                <%= part.assignedFromtime %> - <%= part.assignedTotime %>
+                                            </div>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <!-- Column 3: Dock 3 -->
                 <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
                     <div class="card">
-                        <div class="card-header bg-primary text-white">
-                            Dock 3
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled">
-                                <li>Part 1</li>
-                                <li>Part 2</li>
-                                <li>Part 3</li>
-                                <li>Part 4</li>
-                                <li>Part 5</li>
-                            </ul>
-                        </div>
+                        <a href="DASHBOARD_DOCK3.aspx" class="card-link">
+                            <div class="card-header bg-primary text-white">
+                                Dock 3
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <% foreach (var part in Dock3Parts) { %>
+                                        <li style="border-radius: 10px; padding: 8px; margin-bottom: 4px;
+                                            <% switch (part.shipStatus) {
+                                                case "On Time":
+                                                    Response.Write("background-color: #28a745; color: black;");  // Green
+                                                    break;
+                                                case "Shipped":
+                                                    Response.Write("background-color: #17a2b8; color: black;");  // Blue
+                                                    break;
+                                                case "Delayed":
+                                                    Response.Write("background-color: #dc3545; color: black;");  // Red
+                                                    break;
+                                                default:
+                                                    Response.Write("background-color: #ffc107; color: black;");  // Yellow
+                                                    break;
+                                            } %>
+                                            ">
+                                            <%= part.partNumber %>
+                                            <div style="font-size: smaller;">
+                                                <%= part.assignedFromtime %> - <%= part.assignedTotime %>
+                                            </div>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <!-- Column 4: Dock 4 -->
                 <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
                     <div class="card">
-                        <div class="card-header bg-primary text-white">
-                            Dock 4
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled">
-                                <li>Part 1</li>
-                                <li>Part 2</li>
-                                <li>Part 3</li>
-                                <li>Part 4</li>
-                                <li>Part 5</li>
-                            </ul>
-                        </div>
+                        <a href="DASHBOARD_DOCK4.aspx" class="card-link">
+                            <div class="card-header bg-primary text-white">
+                                Dock 4
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <% foreach (var part in Dock4Parts) { %>
+                                        <li style="border-radius: 10px; padding: 8px; margin-bottom: 4px;
+                                            <% switch (part.shipStatus) {
+                                                case "On Time":
+                                                    Response.Write("background-color: #28a745; color: black;");  // Green
+                                                    break;
+                                                case "Shipped":
+                                                    Response.Write("background-color: #17a2b8; color: black;");  // Blue
+                                                    break;
+                                                case "Delayed":
+                                                    Response.Write("background-color: #dc3545; color: black;");  // Red
+                                                    break;
+                                                default:
+                                                    Response.Write("background-color: #ffc107; color: black;");  // Yellow
+                                                    break;
+                                            } %>
+                                            ">
+                                            <%= part.partNumber %>
+                                            <div style="font-size: smaller;">
+                                                <%= part.assignedFromtime %> - <%= part.assignedTotime %>
+                                            </div>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <!-- Column 5: Dock 5 -->
                 <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
                     <div class="card">
-                        <div class="card-header bg-primary text-white">
-                            Dock 5
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled">
-                                <li>Part 1</li>
-                                <li>Part 2</li>
-                                <li>Part 3</li>
-                                <li>Part 4</li>
-                                <li>Part 5</li>
-                            </ul>
-                        </div>
+                        <a href="DASHBOARD_DOCK5.aspx" class="card-link">
+                            <div class="card-header bg-primary text-white">
+                                Dock 5
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <% foreach (var part in Dock5Parts) { %>
+                                        <li style="border-radius: 10px; padding: 8px; margin-bottom: 4px;
+                                            <% switch (part.shipStatus) {
+                                                case "On Time":
+                                                    Response.Write("background-color: #28a745; color: black;");  
+                                                    break;
+                                                case "Shipped":
+                                                    Response.Write("background-color: #17a2b8; color: black;");  
+                                                    break;
+                                                case "Delayed":
+                                                    Response.Write("background-color: #dc3545; color: black;");  
+                                                    break;
+                                                default:
+                                                    Response.Write("background-color: #ffc107; color: black;");  
+                                                    break;
+                                            } %>
+                                            ">
+                                            <%= part.partNumber %>
+                                            <div style="font-size: smaller;">
+                                                <%= part.assignedFromtime %> - <%= part.assignedTotime %>
+                                            </div>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <!-- Column 6: Dock 6 -->
                 <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
                     <div class="card">
-                        <div class="card-header bg-primary text-white">
-                            Dock 6
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled">
-                                <li>Part 1</li>
-                                <li>Part 2</li>
-                                <li>Part 3</li>
-                                <li>Part 4</li>
-                                <li>Part 5</li>
-                            </ul>
-                        </div>
+                        <a href="DASHBOARD_DOCK6.aspx" class="card-link">
+                            <div class="card-header bg-primary text-white">
+                                Dock 6
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <% foreach (var part in Dock6Parts) { %>
+                                        <li style="border-radius: 10px; padding: 8px; margin-bottom: 4px;
+                                            <% switch (part.shipStatus) {
+                                                case "On Time":
+                                                    Response.Write("background-color: #28a745; color: black;");  
+                                                    break;
+                                                case "Shipped":
+                                                    Response.Write("background-color: #17a2b8; color: black;");  
+                                                    break;
+                                                case "Delayed":
+                                                    Response.Write("background-color: #dc3545; color: black;");  
+                                                    break;
+                                                default:
+                                                    Response.Write("background-color: #ffc107; color: black;"); 
+                                                    break;
+                                            } %>
+                                            ">
+                                            <%= part.partNumber %>
+                                            <div style="font-size: smaller;">
+                                                <%= part.assignedFromtime %> - <%= part.assignedTotime %>
+                                            </div>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
+
+            <style>
+                .card-header.bg-primary.text-white:hover {
+                    filter: brightness(90%);
+                }
+            </style>
+
             <!-- /.row -->
             <!-- Additional Heading -->
             <div class="row" style="background-color: #083c5d; color: white; padding: 2px 5px; margin-bottom: 10px;border-radius: 8px;">
@@ -541,69 +668,77 @@
             <!-- Column 1: Coating 1 -->
                 <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
                     <div class="card">
-                        <div class="card-header bg-secondary text-white">
-                            Dock 1
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled">
-                                <li>Part 1</li>
-                                <li>Part 2</li>
-                                <li>Part 3</li>
-                                <li>Part 4</li>
-                                <li>Part 5</li>
-                            </ul>
-                        </div>
+                        <a href="DASHBOARD_DOCK1_COATINGS.aspx" class="card-link">
+                            <div class="card-header bg-secondary text-white">
+                                Dock 1
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <li>Part 1</li>
+                                    <li>Part 2</li>
+                                    <li>Part 3</li>
+                                    <li>Part 4</li>
+                                    <li>Part 5</li>
+                                </ul>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <!-- Column 2: Coating 2 -->
                 <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
                     <div class="card">
-                        <div class="card-header bg-secondary text-white">
-                            Dock 2
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled">
-                                <li>Part 1</li>
-                                <li>Part 2</li>
-                                <li>Part 3</li>
-                                <li>Part 4</li>
-                                <li>Part 5</li>
-                            </ul>
-                        </div>
+                        <a href="DASHBOARD_DOCK2_COATINGS.aspx" class="card-link">
+                            <div class="card-header bg-secondary text-white">
+                                Dock 2
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <li>Part 1</li>
+                                    <li>Part 2</li>
+                                    <li>Part 3</li>
+                                    <li>Part 4</li>
+                                    <li>Part 5</li>
+                                </ul>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <!-- Column 3: Coating 3 -->
                 <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
                     <div class="card">
-                        <div class="card-header bg-secondary text-white">
-                            Dock 3
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled">
-                                <li>Part 1</li>
-                                <li>Part 2</li>
-                                <li>Part 3</li>
-                                <li>Part 4</li>
-                                <li>Part 5</li>
-                            </ul>
-                        </div>
+                        <a href="DASHBOARD_DOCK3_COATINGS.aspx" class="card-link">
+                            <div class="card-header bg-secondary text-white">
+                                Dock 3
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <li>Part 1</li>
+                                    <li>Part 2</li>
+                                    <li>Part 3</li>
+                                    <li>Part 4</li>
+                                    <li>Part 5</li>
+                                </ul>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <!-- Column 4: Coating 4 -->
                 <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
                     <div class="card">
-                        <div class="card-header bg-secondary text-white">
-                            Dock 4
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled">
-                                <li>Part 1</li>
-                                <li>Part 2</li>
-                                <li>Part 3</li>
-                                <li>Part 4</li>
-                                <li>Part 5</li>
-                            </ul>
-                        </div>
+                        <a href="DASHBOARD_DOCK4_COATINGS.aspx" class="card-link">
+                            <div class="card-header bg-secondary text-white">
+                                Dock 4
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <li>Part 1</li>
+                                    <li>Part 2</li>
+                                    <li>Part 3</li>
+                                    <li>Part 4</li>
+                                    <li>Part 5</li>
+                                </ul>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>

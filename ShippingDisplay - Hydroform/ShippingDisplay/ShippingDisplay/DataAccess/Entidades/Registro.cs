@@ -56,9 +56,6 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         public string DELAYED { get; set; }
         public string Completed { get; set; }
         public string Pendiente { get; set; }
-        public string Estado { get; set; }
-        public string Input { get; set; }
-        public string Output { get; set; }
         public string TimePeriodAssigned //CONCATENATE FROM TIME AND TO TIME
         {
             get

@@ -1157,5 +1157,88 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             }
             return list_dashboard_dock;
         }
+
+        public static List<Registro> control_panel_dock(string dockName)
+        {
+            List<Registro> list_control_panel_dock = new List<Registro>();
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                conn.Open();
+                string query = @"WITH CombinedLogs AS (
+                SELECT 
+                    'LogInput' AS SourceTable,
+                    Id_all AS Id_all,
+                    EntryDate,
+                    From_time,
+                    To_time,
+                    Part_number,
+                    shipStatus
+                FROM 
+                    [dbo].[LogInput] H
+                WHERE 
+                    H.Dock = @dockName
+    
+                UNION ALL
+    
+                SELECT 
+                    'LogOutput' AS SourceTable,
+                    Id_all_output AS Id_all,
+                    EntryDate_output AS EntryDate,
+                    From_time_output AS From_time,
+                    To_time_output AS To_time,
+                    Part_number_output AS Part_number,
+                    shipStatus_output AS shipStatus
+                FROM 
+                    [dbo].[LogOutput] H
+                WHERE 
+                    H.Dock_output = @dockName
+            )
+
+            SELECT TOP 5
+                SourceTable,
+                Id_all,
+                EntryDate,
+                From_time,
+                To_time,
+                Part_number,
+                shipStatus
+            FROM 
+                CombinedLogs
+            ORDER BY 
+                From_time ASC";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@dockName", dockName);
+                //cmd.Parameters.AddWithValue("@Id_planta", Id_Planta);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Registro Reg = new Registro()
+                    {
+                        Id_all = Convert.ToInt32(reader["Id_all"]),
+                        assignedDate = Convert.ToDateTime(reader["EntryDate"]),
+                        assignedFromtime = Convert.ToString(reader["From_time"]),
+                        assignedTotime = Convert.ToString(reader["To_time"]),
+                        partNumber = Convert.ToString(reader["Part_number"]),
+                        shipStatus = Convert.ToString(reader["shipStatus"]),
+                    };
+                    list_control_panel_dock.Add(Reg);
+                }
+            }
+            return list_control_panel_dock;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
