@@ -505,7 +505,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="inputPlant" class="col-sm-2 col-form-label">To:</label>
+                                <label for="inputPlant" class="col-sm-2 col-form-label">From:</label>
                                     <div class="col-sm-10">
                                         <asp:DropDownList ID="dblPlant" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
                                     </div>

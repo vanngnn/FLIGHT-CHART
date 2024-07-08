@@ -23,6 +23,12 @@ namespace ShippingDisplay.ShippingDisplay
         protected List<Registro> Dock5Parts { get; set; }
         protected List<Registro> Dock6Parts { get; set; }
 
+        protected List<Registro> Dock1Parts_coatings { get; set; }
+        protected List<Registro> Dock2Parts_coatings { get; set; }
+        protected List<Registro> Dock3Parts_coatings { get; set; }
+        protected List<Registro> Dock4Parts_coatings { get; set; }
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -44,6 +50,18 @@ namespace ShippingDisplay.ShippingDisplay
 
                 string dockName6 = "Dock 6";  // Specify the dock name here
                 Dock6Parts = RegistroDAL.control_panel_dock(dockName6);
+
+                string dockName1_coatings = "Dock 1";  // Specify the dock name here
+                Dock1Parts_coatings = RegistroDAL.control_panel_dock_coatings(dockName1_coatings);
+
+                string dockName2_coatings = "Dock 2";  // Specify the dock name here
+                Dock2Parts_coatings = RegistroDAL.control_panel_dock_coatings(dockName2_coatings);
+
+                string dockName3_coatings = "Dock 3";  // Specify the dock name here
+                Dock3Parts_coatings = RegistroDAL.control_panel_dock_coatings(dockName3_coatings);
+
+                string dockName4_coatings = "Dock 4";  // Specify the dock name here
+                Dock4Parts_coatings = RegistroDAL.control_panel_dock_coatings(dockName4_coatings);
 
 
                 if (Context.User.Identity.IsAuthenticated)

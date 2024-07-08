@@ -99,9 +99,13 @@
     <Content Include="ShippingDisplay\DAILYOUTPUT_DOCK6.aspx" />
     <Content Include="ShippingDisplay\Dashboard_COATINGS.aspx" />
     <Content Include="ShippingDisplay\DASHBOARD_DOCK1.aspx" />
+    <Content Include="ShippingDisplay\DASHBOARD_DOCK1_COATINGS.aspx" />
     <Content Include="ShippingDisplay\DASHBOARD_DOCK2.aspx" />
+    <Content Include="ShippingDisplay\DASHBOARD_DOCK2_COATINGS.aspx" />
     <Content Include="ShippingDisplay\DASHBOARD_DOCK3.aspx" />
+    <Content Include="ShippingDisplay\DASHBOARD_DOCK3_COATINGS.aspx" />
     <Content Include="ShippingDisplay\DASHBOARD_DOCK4.aspx" />
+    <Content Include="ShippingDisplay\DASHBOARD_DOCK4_COATINGS.aspx" />
     <Content Include="ShippingDisplay\DASHBOARD_DOCK5.aspx" />
     <Content Include="ShippingDisplay\DASHBOARD_DOCK6.aspx" />
     <Content Include="NEW STUFF\SHIPPER.aspx" />
@@ -288,12 +292,26 @@
     <Compile Include="ShippingDisplay\DASHBOARD_DOCK1.aspx.designer.cs">
       <DependentUpon>DASHBOARD_DOCK1.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK1_COATINGS.aspx.cs">
+      <DependentUpon>DASHBOARD_DOCK1_COATINGS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK1_COATINGS.aspx.designer.cs">
+      <DependentUpon>DASHBOARD_DOCK1_COATINGS.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ShippingDisplay\DASHBOARD_DOCK2.aspx.cs">
       <DependentUpon>DASHBOARD_DOCK2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ShippingDisplay\DASHBOARD_DOCK2.aspx.designer.cs">
       <DependentUpon>DASHBOARD_DOCK2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK2_COATINGS.aspx.cs">
+      <DependentUpon>DASHBOARD_DOCK2_COATINGS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK2_COATINGS.aspx.designer.cs">
+      <DependentUpon>DASHBOARD_DOCK2_COATINGS.aspx</DependentUpon>
     </Compile>
     <Compile Include="ShippingDisplay\DASHBOARD_DOCK3.aspx.cs">
       <DependentUpon>DASHBOARD_DOCK3.aspx</DependentUpon>
@@ -302,12 +320,26 @@
     <Compile Include="ShippingDisplay\DASHBOARD_DOCK3.aspx.designer.cs">
       <DependentUpon>DASHBOARD_DOCK3.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK3_COATINGS.aspx.cs">
+      <DependentUpon>DASHBOARD_DOCK3_COATINGS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK3_COATINGS.aspx.designer.cs">
+      <DependentUpon>DASHBOARD_DOCK3_COATINGS.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ShippingDisplay\DASHBOARD_DOCK4.aspx.cs">
       <DependentUpon>DASHBOARD_DOCK4.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ShippingDisplay\DASHBOARD_DOCK4.aspx.designer.cs">
       <DependentUpon>DASHBOARD_DOCK4.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK4_COATINGS.aspx.cs">
+      <DependentUpon>DASHBOARD_DOCK4_COATINGS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShippingDisplay\DASHBOARD_DOCK4_COATINGS.aspx.designer.cs">
+      <DependentUpon>DASHBOARD_DOCK4_COATINGS.aspx</DependentUpon>
     </Compile>
     <Compile Include="ShippingDisplay\DASHBOARD_DOCK5.aspx.cs">
       <DependentUpon>DASHBOARD_DOCK5.aspx</DependentUpon>
