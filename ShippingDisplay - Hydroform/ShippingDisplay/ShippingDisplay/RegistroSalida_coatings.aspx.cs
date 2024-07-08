@@ -10,7 +10,7 @@ using ShippingDisplay.ShippingDisplay.DataAccess.Entidades;
 
 namespace ShippingDisplay.ShippingDisplay
 {
-    public partial class RegistroSalida : System.Web.UI.Page
+    public partial class RegistroSalida_coatings : System.Web.UI.Page
     {
         Correo c = new Correo();
         int Id_Planta;
@@ -127,22 +127,22 @@ namespace ShippingDisplay.ShippingDisplay
                 Registro Reg = new Registro();
                 {
                     Reg.Status = 1;
-                    Reg.assignedDate_output = Convert.ToDateTime(EntryDate.Text);
-                    Reg.assignedFromtime_output = Convert.ToString(fromTime.Text);
-                    Reg.assignedTotime_output = Convert.ToString(toTime.Text);
-                    Reg.partNumber_output = txtPN.Text;
-                    Reg.Id_cliente_output = Convert.ToInt32(dblCliente.SelectedValue);
-                    Reg.Id_planta_output = Id_Planta; //FROM/TO: PLANT
-                    Reg.Id_carrier_output = Convert.ToInt32(dblCarrier.SelectedValue);
-                    Reg.assignedBOL_output = Convert.ToInt32(txtBL.Text);
-                    Reg.assignedQTY_output = Convert.ToInt32(txtQTY.Text);
-                    Reg.assignedDock_output = DockDropDown.SelectedItem.Text;
-                    Reg.shipStatus_output = StatusDropDown.SelectedItem.Text;
-                    Reg.shipReason_output = ReasonDropDown.SelectedItem.Text;
-                    Reg.shipComment_output = txtComment.Text;
+                    Reg.assignedDate_output_coatings = Convert.ToDateTime(EntryDate.Text);
+                    Reg.assignedFromtime_output_coatings = Convert.ToString(fromTime.Text);
+                    Reg.assignedTotime_output_coatings = Convert.ToString(toTime.Text);
+                    Reg.partNumber_output_coatings = txtPN.Text;
+                    Reg.Id_cliente_output_coatings = Convert.ToInt32(dblCliente.SelectedValue);
+                    Reg.Id_planta_output_coatings = Id_Planta; //FROM/TO: PLANT
+                    Reg.Id_carrier_output_coatings = Convert.ToInt32(dblCarrier.SelectedValue);
+                    Reg.assignedBOL_output_coatings = Convert.ToInt32(txtBL.Text);
+                    Reg.assignedQTY_output_coatings = Convert.ToInt32(txtQTY.Text);
+                    Reg.assignedDock_output_coatings = DockDropDown.SelectedItem.Text;
+                    Reg.shipStatus_output_coatings = StatusDropDown.SelectedItem.Text;
+                    Reg.shipReason_output_coatings = ReasonDropDown.SelectedItem.Text;
+                    Reg.shipComment_output_coatings = txtComment.Text;
 
                 }
-                RegistroDAL.AgregarNuevo_output(Reg);
+                RegistroDAL.AgregarNuevo_output_coatings(Reg);
                 try
                 {
                     string PlantaCorrepondiente = "Plant " + Id_Planta;
@@ -167,19 +167,19 @@ namespace ShippingDisplay.ShippingDisplay
                     //DEFINICIÓN DE VARIABLES LOCALES
                     Registro Reg = new Registro();
                     {
-                        Reg.assignedDate_output = Convert.ToDateTime(EntryDate.Text);
-                        Reg.assignedFromtime_output = Convert.ToString(fromTime.Text);
-                        Reg.assignedTotime_output = Convert.ToString(toTime.Text);
-                        Reg.partNumber_output = txtPN.Text;
-                        Reg.Id_cliente_output = Convert.ToInt32(dblCliente.SelectedValue);
-                        Reg.Id_planta_output = Convert.ToInt32(Id_Planta); //FROM/TO: PLANT
-                        Reg.Id_carrier_output = Convert.ToInt32(dblCarrier.SelectedValue);
-                        Reg.assignedBOL_output = Convert.ToInt32(txtBL.Text);
-                        Reg.assignedQTY_output = Convert.ToInt32(txtQTY.Text);
-                        Reg.assignedDock_output = DockDropDown.SelectedItem.Text;
-                        Reg.shipStatus_output = StatusDropDown.SelectedItem.Text;
-                        Reg.shipReason_output = ReasonDropDown.SelectedItem.Text;
-                        Reg.shipComment_output = txtComment.Text;
+                        Reg.assignedDate_output_coatings = Convert.ToDateTime(EntryDate.Text);
+                        Reg.assignedFromtime_output_coatings = Convert.ToString(fromTime.Text);
+                        Reg.assignedTotime_output_coatings = Convert.ToString(toTime.Text);
+                        Reg.partNumber_output_coatings = txtPN.Text;
+                        Reg.Id_cliente_output_coatings = Convert.ToInt32(dblCliente.SelectedValue);
+                        Reg.Id_planta_output_coatings = Convert.ToInt32(Id_Planta); //FROM/TO: PLANT
+                        Reg.Id_carrier_output_coatings = Convert.ToInt32(dblCarrier.SelectedValue);
+                        Reg.assignedBOL_output_coatings = Convert.ToInt32(txtBL.Text);
+                        Reg.assignedQTY_output_coatings = Convert.ToInt32(txtQTY.Text);
+                        Reg.assignedDock_output_coatings = DockDropDown.SelectedItem.Text;
+                        Reg.shipStatus_output_coatings = StatusDropDown.SelectedItem.Text;
+                        Reg.shipReason_output_coatings = ReasonDropDown.SelectedItem.Text;
+                        Reg.shipComment_output_coatings = txtComment.Text;
                     }
                     RegistroDAL.ActualizarRegistro(Reg);
                     CleanControl(this.Controls);
@@ -203,7 +203,7 @@ namespace ShippingDisplay.ShippingDisplay
         private void CargarGrid()
         {
             int shipStatus = 1;
-            gvRegistros.DataSource = RegistroDAL.ListadoRegistros_output(shipStatus);
+            gvRegistros.DataSource = RegistroDAL.ListadoRegistros_output_coatings(shipStatus);
             gvRegistros.DataBind();
         }
 
@@ -233,23 +233,23 @@ namespace ShippingDisplay.ShippingDisplay
         }
 
         //DONE
-        private void CargarRegistro(int Id_all_output)
+        private void CargarRegistro(int Id_all_output_coatings)
         {
-            Registro Reg = RegistroDAL.ObtenerById(Id_all_output);
-            txtId_all.Text = Convert.ToString(Reg.Id_all_output);
-            EntryDate.Text = Convert.ToString(Reg.assignedDate_output);
-            fromTime.Text = Convert.ToString(Reg.assignedFromtime_output);
-            toTime.Text = Convert.ToString(Reg.assignedTotime_output);
-            txtPN.Text = Convert.ToString(Reg.partNumber_output);
-            dblCliente.SelectedValue = Convert.ToString(Reg.Id_cliente_output); //PROJECT - DROPDOWN
-            dblPlant.SelectedValue = Convert.ToString(Reg.Id_planta_output); //ID PLANTS - DROPDOWN
-            dblCarrier.SelectedValue = Convert.ToString(Reg.Id_carrier_output); //CARRIER - DROPDOWN
-            txtBL.Text = Convert.ToString(Reg.assignedBOL_output);
-            txtQTY.Text = Convert.ToString(Reg.assignedQTY_output);
-            DockDropDown.SelectedValue = Convert.ToString(Reg.assignedDock_output);
-            StatusDropDown.SelectedValue = Convert.ToString(Reg.shipStatus_output);
-            ReasonDropDown.SelectedValue = Convert.ToString(Reg.shipReason_output);
-            txtComment.Text = Convert.ToString(Reg.shipComment_output);
+            Registro Reg = RegistroDAL.ObtenerById(Id_all_output_coatings);
+            txtId_all.Text = Convert.ToString(Reg.Id_all_output_coatings);
+            EntryDate.Text = Convert.ToString(Reg.assignedDate_output_coatings);
+            fromTime.Text = Convert.ToString(Reg.assignedFromtime_output_coatings);
+            toTime.Text = Convert.ToString(Reg.assignedTotime_output_coatings);
+            txtPN.Text = Convert.ToString(Reg.partNumber_output_coatings);
+            dblCliente.SelectedValue = Convert.ToString(Reg.Id_cliente_output_coatings); //PROJECT - DROPDOWN
+            dblPlant.SelectedValue = Convert.ToString(Reg.Id_planta_output_coatings); //ID PLANTS - DROPDOWN
+            dblCarrier.SelectedValue = Convert.ToString(Reg.Id_carrier_output_coatings); //CARRIER - DROPDOWN
+            txtBL.Text = Convert.ToString(Reg.assignedBOL_output_coatings);
+            txtQTY.Text = Convert.ToString(Reg.assignedQTY_output_coatings);
+            DockDropDown.SelectedValue = Convert.ToString(Reg.assignedDock_output_coatings);
+            StatusDropDown.SelectedValue = Convert.ToString(Reg.shipStatus_output_coatings);
+            ReasonDropDown.SelectedValue = Convert.ToString(Reg.shipReason_output_coatings);
+            txtComment.Text = Convert.ToString(Reg.shipComment_output_coatings);
         }
 
         //DONT KNOW BUT SEEMS DONE

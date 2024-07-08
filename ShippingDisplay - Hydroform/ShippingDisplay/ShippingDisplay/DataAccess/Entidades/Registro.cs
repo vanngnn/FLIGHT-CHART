@@ -8,7 +8,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
     public class Registro
     {
         public Registro() { }
-        //HEADER
+        //HYDROFROM INPUT
         public int Id_all { get; set; } //MAIN KEY
         public DateTime assignedDate { get; set; } //ASSIGNED DATE
         public string assignedFromtime { get; set; } //ASSIGNED FROM TIME
@@ -24,32 +24,16 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         public string shipReason { get; set; } //SHIP REASON
         public string shipComment { get; set; } //SHIP COMMENTS
 
-        //ADICIONALES 
-
         public string ClienteName { get; set; } //PROJECT NAME
         public string CarrierName { get; set; } //CARRIER NAME
-        public string RutaName { get; set; } //ROUTE NAME (DONT NEED THIS)
-
         public string PlantName { get; set; } //PLANT NAME
 
 
 
         //DONT NEED THESE
 
-        public DateTime Entrada { get; set; } //THE DATE WHEN U ENTER THE SHIPMENT (not needed)
-        public string Salida { get; set; } //THE DATE WHEN U OUTPUT THE SHIPMENT (not needed)
         public int Shipper { get; set; } //ID SHIPPER
-
-        public int Tarjeta { get; set; } //SHIPPER ACCESS CARD
         public int Status { get; set; } //STATUS
-
-
-        //DETALLE
-        public int Id_det { get; set; }
-        public string Placas { get; set; }
-        public string Caja { get; set; }
-        public string NombreOperador { get; set; }
-        public string Telefono { get; set; }
 
         //
         public string Ontime { get; set; }
@@ -63,7 +47,8 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
                 return $"{assignedFromtime} - {assignedTotime}";
             }
         }
-
+        
+        //HYDROFROM OUTPUT
         public int Id_all_output  { get; set; }
         public DateTime assignedDate_output { get; set; }
         public string assignedFromtime_output { get; set; }
@@ -108,6 +93,109 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         }
 
         public bool IsInput { get; set; }
+
+        //                                                               COATINGS STUFF
+        //COATINGS INPUTS
+        public int Id_all_coatings { get; set; } //MAIN KEY
+        public DateTime assignedDate_coatings { get; set; } //ASSIGNED DATE
+        public string assignedFromtime_coatings { get; set; } //ASSIGNED FROM TIME
+        public string assignedTotime_coatings { get; set; } //ASSIGNED TO TIME
+        public string partNumber_coatings { get; set; } //PART NUMBER
+        public int Id_cliente_coatings { get; set; } //PROJECT
+        public int Id_planta_coatings { get; set; } //ID PLANTS
+        public int Id_carrier_coatings { get; set; } //CARRIER
+        public int assignedBOL_coatings { get; set; } //BILL OF LADING
+        public int assignedQTY_coatings { get; set; } //QUANTITY
+        public string assignedDock_coatings { get; set; } //DOCK
+        public string shipStatus_coatings { get; set; } //SHIP REASON
+        public string shipReason_coatings { get; set; } //SHIP REASON
+        public string shipComment_coatings { get; set; } //SHIP COMMENTS
+        public string ClienteName_coatings { get; set; } //PROJECT NAME
+        public string CarrierName_coatings { get; set; } //CARRIER NAME
+        public string PlantName_coatings { get; set; } //PLANT NAME
+
+        public string TimePeriodAssigned_coatings //CONCATENATE FROM TIME AND TO TIME
+        {
+            get
+            {
+                return $"{assignedFromtime_coatings} - {assignedTotime_coatings}";
+            }
+        }
+
+        //COATINGS OUTPUT
+        public int Id_all_output_coatings { get; set; }
+        public DateTime assignedDate_output_coatings { get; set; }
+        public string assignedFromtime_output_coatings { get; set; }
+        public string assignedTotime_output_coatings { get; set; }
+        public string partNumber_output_coatings { get; set; }
+        public int Id_cliente_output_coatings { get; set; }
+        public int Id_planta_output_coatings { get; set; }
+        public int Id_carrier_output_coatings { get; set; }
+        public int assignedBOL_output_coatings { get; set; }
+        public int assignedQTY_output_coatings { get; set; }
+        public string assignedDock_output_coatings { get; set; }
+        public string shipStatus_output_coatings { get; set; }
+        public string shipReason_output_coatings { get; set; }
+        public string shipComment_output_coatings { get; set; }
+        public string ClienteName_output_coatings { get; set; }
+        public string CarrierName_output_coatings { get; set; }
+        public string RutaName_output_coatings { get; set; }
+        public string PlantName_output_coatings { get; set; }
+
+        public string TimePeriodAssigned_output_coatings //CONCATENATE FROM TIME AND TO TIME
+        {
+            get
+            {
+                return $"{assignedFromtime_output_coatings} - {assignedTotime_output_coatings}";
+            }
+        }
+
+        public string Dashboard_dock_plant_input_coatings
+        {
+            get
+            {
+                return $"From: {PlantName_coatings}";
+            }
+        }
+
+        public string Dashboard_dock_plant_output_coatings
+        {
+            get
+            {
+                return $"To: {PlantName_coatings}";
+            }
+        }
+
+        public bool IsInput_coatings { get; set; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }

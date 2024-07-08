@@ -14,7 +14,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
 {
     public class RegistroDAL
     {
-        //ADDING NEW DATA TO THE TABLE - DONE
+        //ADDING NEW DATA TO THE TABLE - HYDROFORM INPUT - DONE
         public static Registro AgregarNuevo(Registro Reg)
         {
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
@@ -39,13 +39,12 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 cmd.Parameters.AddWithValue("@shipReason", Reg.shipReason);
                 cmd.Parameters.AddWithValue("@shipComment", Reg.shipComment);
 
-                //RECUPERAR ID GENERADO POR LA TAB
                 Reg.Id_all = Convert.ToInt32(cmd.ExecuteScalar());
                 ID = Reg.Id_all;
             }
             return Reg;
         }
-        //UPDATE TABLE (THE WHOLE TABLE) - DONE
+        //UPDATE TABLE (THE WHOLE TABLE) -  NOT DONE
         public static Registro ActualizarRegistro(Registro Reg)
         {
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
@@ -87,7 +86,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             }
             return Reg;
         }
-        //DELETE RECORDS FROM THE TABLE - DONE
+        //DELETE RECORDS FROM THE TABLE - HYDROFORM - DONE
         public static void EliminarRegistro(int Id_all)
         {
             using (TransactionScope scope = new TransactionScope())
@@ -105,7 +104,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             }
         }
 
-        //OBTENER REGISTRO BY ID - DONE
+        //OBTENER REGISTRO BY ID - NOT DONE
         public static Registro ObtenerById(int Id_all)
         {
             Registro Reg = null;
@@ -167,25 +166,20 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         //return Reg;
         //}
 
-        //RETURN LIST TO DIPSLAY IN DAILY LOG INPUT
+        //RETURN LIST TO DIPSLAY IN DAILY LOG INPUT - HYDROFORM - DONE
         public static List<Registro> ListadoRegistros(int Status)
         {
             List<Registro> lista = new List<Registro>();
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
             {
                 conn.Open();
-                string query = @"SELECT H.Id_all,H.EntryDate,H.From_time, H.To_time, H.Part_number, H.Id_cliente, H.Id_planta, H.Id_carrier, H.Bill_of_Lading, H.Quantity, H.Dock,
-                    CASE 
-                    WHEN GETDATE() < H.EntryDate THEN 'ONTIME'
-                    WHEN GETDATE() >= H.EntryDate AND CAST(GETDATE() AS TIME) < CAST(H.From_time AS TIME) THEN 'ON TIME'
-                    WHEN GETDATE() >= H.EntryDate AND CAST(GETDATE() AS TIME) BETWEEN CAST(H.From_time AS TIME) AND CAST(H.To_time AS TIME) THEN 'ONTIME'
-                    ELSE 'DELAYED' END AS shipStatus,
-                    H.shipReason, H.shipComment, 
-                    C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant'
+                string query = @"SELECT H.Id_all, H.EntryDate, H.From_time, H.To_time, H.Part_number, H.Id_cliente, H.Id_planta, H.Id_carrier, H.Bill_of_Lading, H.Quantity, H.Dock, H.shipStatus,
+                            H.shipReason, H.shipComment, 
+                            C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant'
                     FROM [dbo].[LogInput] H
                     INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
                     INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier
-                    INNER JOIN [dbo].[Planta]  P ON H.Id_planta  = P.id_planta
+                    INNER JOIN [dbo].[Planta] P ON H.Id_planta = P.id_planta
                     ORDER BY H.EntryDate ASC";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -280,13 +274,6 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             Reg.shipComment = Convert.ToString(reader["shipComment"]);
             Reg.ClienteName = Convert.ToString(reader["Cliente"]);
             Reg.CarrierName = Convert.ToString(reader["Carrier"]);
-
-            //Reg.Salida = Convert.ToString(reader["Salida"]);
-            //Reg.Caja = Convert.ToString(reader["Caja"]);
-            //Reg.RutaName = Convert.ToString(reader["Ruta"]);
-            //Reg.Shipper = Convert.ToInt32(reader["Shipper"]);
-            //Reg.Estado = Convert.ToString(reader["Estado"]);
-            //Reg.Id_planta = Convert.ToInt32(reader["Id_planta"]);
             return Reg;
         }
         //ACTUALIZAR SHIPPER  - NOT DONE (DONT NEED TO BUT SHOULD BE LOOKED INTO)
@@ -403,7 +390,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
 
             return Reg;
         }
-        //                                                                 OUTPUT 
+        //                                                                 HYDROFROM - OUTPUT 
 
         //ADDING NEW DATA TO THE TABLE - DONE
         public static Registro AgregarNuevo_output(Registro Reg)
@@ -561,7 +548,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         //return Reg;
         //}
 
-        //RETURN LIST TO DIPSLAY IN DAILY LOG INPUT
+        //RETURN LIST TO DIPSLAY IN DAILY LOG OUTPUT - HYDROFROM
         public static List<Registro> ListadoRegistros_output(int Status)
         {
             List<Registro> lista = new List<Registro>();
@@ -569,11 +556,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             {
                 conn.Open();
                 string query = @"SELECT H.Id_all_output,H.EntryDate_output,H.From_time_output, H.To_time_output, H.Part_number_output, H.Id_cliente_output, H.Id_planta_output, H.Id_carrier_output, H.Bill_of_Lading_output, H.Quantity_output, H.Dock_output,
-                    CASE 
-                    WHEN GETDATE() < H.EntryDate_output THEN 'ONTIME'
-                    WHEN GETDATE() >= H.EntryDate_output AND CAST(GETDATE() AS TIME) < CAST(H.From_time_output AS TIME) THEN 'ON TIME'
-                    WHEN GETDATE() >= H.EntryDate_output AND CAST(GETDATE() AS TIME) BETWEEN CAST(H.From_time_output AS TIME) AND CAST(H.To_time_output AS TIME) THEN 'ONTIME'
-                    ELSE 'DELAYED' END AS shipStatus_output,
+                    H.shipStatus_output,
                     H.shipReason_output, H.shipComment_output, 
                     C.description AS 'Cliente_output', L.description AS 'Carrier_output', P.description AS 'Plant_output'
                     FROM [dbo].[LogOutput] H
@@ -581,7 +564,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_output = L.id_carrier
                     INNER JOIN [dbo].[Planta]  P ON H.Id_planta_output  = P.id_planta
                     ORDER BY H.EntryDate_output ASC";
-                //WHERE H.shipStatus=@shipStatus AND H.Id_planta=@Id_planta ORDER BY H.Entrada desc (belong in query)
+                //WHERE H.shipStatus=@shipStatus
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -615,14 +598,6 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             Reg.shipStatus_output = Convert.ToString(reader["shipStatus_output"]);
             Reg.shipReason_output = Convert.ToString(reader["shipReason_output"]);
             Reg.shipComment_output = Convert.ToString(reader["shipComment_output"]);
-            //Reg.Entrada = Convert.ToDateTime(reader["Entrada"]);
-            //Reg.Salida = Convert.ToString(reader["Salida"]);
-            //Reg.Tarjeta = Convert.ToInt32(reader["Tarjeta"]);
-            //Reg.Placas = Convert.ToString(reader["Placas"]);
-            //Reg.Caja = Convert.ToString(reader["Caja"]);
-            //Reg.NombreOperador = Convert.ToString(reader["NombreOperador"]);
-            //Reg.Telefono = Convert.ToString(reader["Telefono"]);
-
             return Reg;
         }
         //GRIDVIEW X PLANTA - LIST DASHBOARD - DONE
@@ -675,28 +650,6 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             Reg.shipComment_output = Convert.ToString(reader["shipComment_output"]);
             Reg.ClienteName_output = Convert.ToString(reader["Cliente_output"]);
             Reg.CarrierName_output = Convert.ToString(reader["Carrier_output"]);
-
-            //Reg.Salida = Convert.ToString(reader["Salida"]);
-            //Reg.Caja = Convert.ToString(reader["Caja"]);
-            //Reg.RutaName = Convert.ToString(reader["Ruta"]);
-            //Reg.Shipper = Convert.ToInt32(reader["Shipper"]);
-            //Reg.Estado = Convert.ToString(reader["Estado"]);
-            //Reg.Id_planta = Convert.ToInt32(reader["Id_planta"]);
-            return Reg;
-        }
-        //ACTUALIZAR SHIPPER  - NOT DONE (DONT NEED TO BUT SHOULD BE LOOKED INTO)
-        public static Registro ActualizarShipper_output(Registro Reg)
-        {
-            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
-            {
-                conn.Open();
-                string query = @"UPDATE LogOutput SET  Shipper = @Shipper,shipStatus=@shipStatus WHERE Id_all = @Id_all";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Id_all", Reg.Id_all);
-                cmd.Parameters.AddWithValue("@Shipper", Reg.Shipper);
-                cmd.Parameters.AddWithValue("@shipStatus", Reg.Status);
-                cmd.ExecuteNonQuery();
-            }
             return Reg;
         }
         //OBTENER WIDGETS - NOT DONE
@@ -799,7 +752,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
 
         //                                                                     DOCK FILTER - INPUT
         //SHIPMENTS - INPUT - DOCK
-        public static List<Registro> dockQueryInput(string dockName, int Id_Planta)
+        public static List<Registro> dockQueryInput(string dockName)
         {
             List<Registro> regList = new List<Registro>();
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
@@ -811,13 +764,12 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                             INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
                             INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier
                             INNER JOIN [dbo].[Planta]  P ON H.Id_planta  = P.id_planta
-                            WHERE H.Dock = @dockName AND H.Id_planta = @Id_planta   
+                            WHERE H.Dock = @dockName 
                             ORDER BY H.EntryDate ASC";
 
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@dockName", dockName);
-                cmd.Parameters.AddWithValue("@Id_planta", Id_Planta);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -848,7 +800,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         //                                                                    DOCK FILTER - OUTPUT
         //SHIPMENT - OUTPUTS - DOCK
 
-        public static List<Registro> dockQueryOutput(string dockName, int Id_Planta)
+        public static List<Registro> dockQueryOutput(string dockName)
         {
             List<Registro> regList = new List<Registro>();
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
@@ -860,13 +812,12 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                             INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_output = C.id_cliente
                             INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_output = L.id_carrier
                             INNER JOIN [dbo].[Planta]  P ON H.Id_planta_output  = P.id_planta
-                            WHERE H.Dock_output = @dockName AND H.Id_planta_output = @Id_planta  
+                            WHERE H.Dock_output = @dockName
                             ORDER BY H.EntryDate_output ASC";
 
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@dockName", dockName);
-                cmd.Parameters.AddWithValue("@Id_planta", Id_Planta);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -980,96 +931,110 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             return list_dashboard;
         }
 
-
-        public static List<Registro> ListDashboard_COATINGS(int Status, int Id_planta)
-        {
+        public static List<Registro> ListDashboard_COATINGS(int Status)
+{
             List<Registro> list_dashboard_coatings = new List<Registro>();
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
             {
                 conn.Open();
-                string query = @"SELECT H.Id_all, H.EntryDate AS EntryDate,H.From_time,H.To_time,H.Part_number,H.Id_cliente,H.Id_planta,H.Id_carrier,H.Bill_of_Lading,H.Quantity,H.Dock,H.shipStatus,
-                              H.shipReason,H.shipComment,
-                              C.description AS Cliente,
-                              L.description AS Carrier,
-                              P.description AS Plant
-              FROM 
-                  [dbo].[LogInput] H
-              INNER JOIN 
-                   [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
-              INNER JOIN 
-                   [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier
-              INNER JOIN 
-                   [dbo].[Planta] P ON H.Id_planta = P.id_planta
-              WHERE H.Id_planta = @Id_planta
+                string query = @"
+        SELECT 'LogInput_coatings' AS SourceTable, H.Id_all_coatings, H.EntryDate_coatings AS EntryDate,H.From_time_coatings,H.To_time_coatings,H.Part_number_coatings,H.Id_cliente_coatings,H.Id_planta_coatings,H.Id_carrier_coatings,H.Bill_of_Lading_coatings,H.Quantity_coatings,H.Dock_coatings,H.shipStatus_coatings,
+                       H.shipReason_coatings,H.shipComment_coatings,
+                       C.description AS Cliente,
+                       L.description AS Carrier,
+                       P.description AS Plant
+        FROM 
+            [dbo].[LogInput_coatings] H
+        INNER JOIN 
+            [dbo].[Cliente] C ON H.Id_cliente_coatings = C.id_cliente
+        INNER JOIN 
+            [dbo].[Carrier] L ON H.Id_carrier_coatings = L.id_carrier
+        INNER JOIN 
+            [dbo].[Planta] P ON H.Id_planta_coatings = P.id_planta
 
-              UNION
+        UNION
 
-              SELECT 
-                   H.Id_all_output,
-                   H.EntryDate_output AS EntryDate,
-                   H.From_time_output AS From_time,
-                   H.To_time_output AS To_time,
-                   H.Part_number_output AS Part_number,
-                   H.Id_cliente_output AS Id_cliente,
-                   H.Id_planta_output AS Id_planta,
-                   H.Id_carrier_output AS Id_carrier,
-                   H.Bill_of_Lading_output AS Bill_of_Lading,
-                   H.Quantity_output AS Quantity,
-                   H.Dock_output AS Dock,
-                   H.shipStatus_output AS shipStatus,
-                   H.shipReason_output AS shipReason,
-                   H.shipComment_output AS shipComment,
-                   C.description AS Cliente,
-                   L.description AS Carrier,
-                   P.description AS Plant
-              FROM 
-                 [dbo].[LogOutput] H
-              INNER JOIN 
-                   [dbo].[Cliente] C ON H.Id_cliente_output = C.id_cliente
-              INNER JOIN 
-                    [dbo].[Carrier] L ON H.Id_carrier_output = L.id_carrier
-              INNER JOIN 
-                    [dbo].[Planta] P ON H.Id_planta_output = P.id_planta
-              WHERE H.Id_planta_output = @Id_planta
-              ORDER BY 
-                   EntryDate ASC";
+        SELECT 
+            'LogOutput_coatings' AS SourceTable,
+            H.Id_all_output_coatings,
+            H.EntryDate_output_coatings AS EntryDate_coatings,
+            H.From_time_output_coatings AS From_time_coatings,
+            H.To_time_output_coatings AS To_time_coatings,
+            H.Part_number_output_coatings AS Part_number_coatings,
+            H.Id_cliente_output_coatings AS Id_cliente_coatings,
+            H.Id_planta_output_coatings AS Id_planta_coatings,
+            H.Id_carrier_output_coatings AS Id_carrier_coatings,
+            H.Bill_of_Lading_output_coatings AS Bill_of_Lading_coatings,
+            H.Quantity_output_coatings AS Quantity_coatings,
+            H.Dock_output_coatings AS Dock_coatings,
+            H.shipStatus_output_coatings AS shipStatus_coatings,
+            H.shipReason_output_coatings AS shipReason_coatings,
+            H.shipComment_output_coatings AS shipComment_coatings,
+            C.description AS Cliente,
+            L.description AS Carrier,
+            P.description AS Plant
+        FROM 
+            [dbo].[LogOutput_coatings] H
+        INNER JOIN 
+            [dbo].[Cliente] C ON H.Id_cliente_output_coatings = C.id_cliente
+        INNER JOIN 
+            [dbo].[Carrier] L ON H.Id_carrier_output_coatings = L.id_carrier
+        INNER JOIN 
+            [dbo].[Planta] P ON H.Id_planta_output_coatings = P.id_planta
+        ORDER BY 
+            EntryDate ASC";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Status", Status);
-                cmd.Parameters.AddWithValue("@Id_planta", Id_planta);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    Registro Reg = new Registro();
+                    Registro Reg = new Registro
                     {
-                        Reg.Id_all = Convert.ToInt32(reader["Id_all"]);
-                        Reg.assignedDate = Convert.ToDateTime(reader["EntryDate"]);
-                        Reg.assignedFromtime = Convert.ToString(reader["From_time"]);
-                        Reg.assignedTotime = Convert.ToString(reader["To_time"]);
-                        Reg.partNumber = Convert.ToString(reader["Part_number"]);
-                        Reg.Id_cliente = Convert.ToInt32(reader["Id_cliente"]);
-                        Reg.Id_planta = Convert.ToInt32(reader["Id_planta"]);
-                        Reg.Id_carrier = Convert.ToInt32(reader["Id_carrier"]);
-                        Reg.PlantName = Convert.ToString(reader["Plant"]);
-                        Reg.assignedBOL = Convert.ToInt32(reader["Bill_of_Lading"]);
-                        Reg.assignedQTY = Convert.ToInt32(reader["Quantity"]);
-                        Reg.assignedDock = Convert.ToString(reader["Dock"]);
-                        Reg.shipStatus = Convert.ToString(reader["shipStatus"]);
-                        Reg.shipReason = Convert.ToString(reader["shipReason"]);
-                        Reg.shipComment = Convert.ToString(reader["shipComment"]);
-                        Reg.ClienteName = Convert.ToString(reader["Cliente"]);
-                        Reg.CarrierName = Convert.ToString(reader["Carrier"]);
-                        list_dashboard_coatings.Add(Reg);
-                    }
-
+                        Id_all_coatings = Convert.ToInt32(reader["Id_all_coatings"]),
+                        assignedDate_coatings = Convert.ToDateTime(reader["EntryDate"]),
+                        assignedFromtime_coatings = Convert.ToString(reader["From_time_coatings"]),
+                        assignedTotime_coatings = Convert.ToString(reader["To_time_coatings"]),
+                        partNumber_coatings = Convert.ToString(reader["Part_number_coatings"]),
+                        Id_cliente_coatings = Convert.ToInt32(reader["Id_cliente_coatings"]),
+                        Id_planta_coatings = Convert.ToInt32(reader["Id_planta_coatings"]),
+                        Id_carrier_coatings = Convert.ToInt32(reader["Id_carrier_coatings"]),
+                        PlantName_coatings = Convert.ToString(reader["Plant_coatings"]),
+                        assignedBOL_coatings = Convert.ToInt32(reader["Bill_of_Lading_coatings"]),
+                        assignedQTY_coatings = Convert.ToInt32(reader["Quantity_coatings"]),
+                        assignedDock_coatings = Convert.ToString(reader["Dock_coatings"]),
+                        shipStatus_coatings = Convert.ToString(reader["shipStatus_coatings"]),
+                        shipReason_coatings = Convert.ToString(reader["shipReason_coatings"]),
+                        shipComment_coatings = Convert.ToString(reader["shipComment_coatings"]),
+                        ClienteName_coatings = Convert.ToString(reader["Cliente"]),
+                        CarrierName_coatings = Convert.ToString(reader["Carrier"]),
+                        IsInput_coatings = String.Equals(Convert.ToString(reader["SourceTable"]), "LogInput_coatings", StringComparison.OrdinalIgnoreCase)
+                    };
+                    list_dashboard_coatings.Add(Reg);
                 }
             }
             return list_dashboard_coatings;
-
         }
 
 
-        //                                                                     LIST DASHBOARD BUT WITH DOCKS SEPARATED
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //                                                                     LIST DASHBOARD BUT WITH DOCKS SEPARATED - HYDROFORM
 
         public static List<Registro> ListDashboard_Dock(string dockName)
         {
@@ -1228,17 +1193,685 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             return list_control_panel_dock;
         }
 
+        //                                                                    COATINGS - REGISTER AND LIST INPUTS AND OUTPUTS
+
+        public static Registro AgregarNuevo_coatings(Registro Reg)
+        {
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                conn.Open();
+                //OBTENER EL ID UNICO DEL ISSUE
+                int ID;
+                string query = @"INSERT INTO LogInput_coatings (EntryDate_coatings,From_time_coatings,To_time_coatings,Part_number_coatings,Id_cliente_coatings,Id_planta_coatings,Id_carrier_coatings,Bill_of_Lading_coatings,Quantity_coatings,Dock_coatings,shipStatus_coatings, shipReason_coatings, shipComment_coatings)
+                                 VALUES (@assignedDate_coatings, @assignedFromtime_coatings,@assignedTotime_coatings,@partNumber_coatings,@Id_cliente_coatings,@Id_planta_coatings,@Id_carrier_coatings,@assignedBOL_coatings,@assignedQTY_coatings,@assignedDock_coatings,@shipStatus_coatings,@shipReason_coatings,@shipComment_coatings); SELECT SCOPE_IDENTITY()";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@assignedDate_coatings", Reg.assignedDate_coatings);
+                cmd.Parameters.AddWithValue("@assignedFromtime_coatings", Reg.assignedFromtime_coatings);
+                cmd.Parameters.AddWithValue("@assignedTotime_coatings", Reg.assignedTotime_coatings);
+                cmd.Parameters.AddWithValue("@partNumber_coatings", Reg.partNumber_coatings);
+                cmd.Parameters.AddWithValue("@Id_cliente_coatings", Reg.Id_cliente_coatings);
+                cmd.Parameters.AddWithValue("@Id_planta_coatings", Reg.Id_planta_coatings);
+                cmd.Parameters.AddWithValue("@Id_carrier_coatings", Reg.Id_carrier_coatings);
+                cmd.Parameters.AddWithValue("@assignedBOL_coatings", Reg.assignedBOL_coatings);
+                cmd.Parameters.AddWithValue("@assignedQTY_coatings", Reg.assignedQTY_coatings);
+                cmd.Parameters.AddWithValue("@assignedDock_coatings", Reg.assignedDock_coatings);
+                cmd.Parameters.AddWithValue("@shipStatus_coatings", Reg.shipStatus_coatings);
+                cmd.Parameters.AddWithValue("@shipReason_coatings", Reg.shipReason_coatings);
+                cmd.Parameters.AddWithValue("@shipComment_coatings", Reg.shipComment_coatings);
+
+                Reg.Id_all_coatings = Convert.ToInt32(cmd.ExecuteScalar());
+                ID = Reg.Id_all_coatings;
+            }
+            return Reg;
+        }
+        //UPDATE TABLE (THE WHOLE TABLE) -  NOT DONE - COATINGS
+        public static Registro ActualizarRegistro_coatings(Registro Reg)
+        {
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                conn.Open();
+                // Update statement for LogInput
+                string query = @"UPDATE LogInput_coatings 
+                         SET EntryDate_coatings = @EntryDate_coatings, 
+                             From_time_coatings = @From_time_coatings, 
+                             To_time_coatings = @To_time_coatings, 
+                             Part_number_coatings = @Part_number_coatings, 
+                             Id_cliente_coatings = @Id_cliente_coatings, 
+                             Id_planta_coatings = @Id_planta_coatings, 
+                             Id_carrier_coatings = @Id_carrier_coatings, 
+                             Bill_of_Lading_coatings = @Bill_of_Lading_coatings, 
+                             Quantity_coatings = @Quantity_coatings, 
+                             Dock_coatings = @Dock_coatings, 
+                             shipStatus_coatings = @shipStatus_coatings, 
+                             shipReason_coatings = @shipReason_coatings, 
+                             shipComment_coatings = @shipComment_coatings 
+                         WHERE Id_all_coatings = @Id_all_coatings";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@EntryDate_coatings", Reg.assignedDate_coatings);
+                cmd.Parameters.AddWithValue("@From_time_coatings", Reg.assignedFromtime_coatings);
+                cmd.Parameters.AddWithValue("@To_time_coatings", Reg.assignedTotime_coatings);
+                cmd.Parameters.AddWithValue("@Part_number_coatings", Reg.partNumber_coatings);
+                cmd.Parameters.AddWithValue("@Id_cliente_coatings", Reg.Id_cliente_coatings);
+                cmd.Parameters.AddWithValue("@Id_planta_coatings", Reg.Id_planta_coatings);
+                cmd.Parameters.AddWithValue("@Id_carrier_coatings", Reg.Id_carrier_coatings);
+                cmd.Parameters.AddWithValue("@Bill_of_Lading_coatings", Reg.assignedBOL_coatings);
+                cmd.Parameters.AddWithValue("@Quantity_coatings", Reg.assignedQTY_coatings);
+                cmd.Parameters.AddWithValue("@Dock_coatings", Reg.assignedDock_coatings);
+                cmd.Parameters.AddWithValue("@shipStatus_coatings", Reg.shipStatus_coatings);
+                cmd.Parameters.AddWithValue("@shipReason_coatings", Reg.shipReason_coatings);
+                cmd.Parameters.AddWithValue("@shipComment_coatings", Reg.shipComment_coatings);
+                cmd.Parameters.AddWithValue("@Id_all_coatings", Reg.Id_all_coatings); // Assuming Id_all is the primary key
+                cmd.ExecuteNonQuery(); // Execute the update query
+            }
+            return Reg;
+        }
+        //DELETE RECORDS FROM THE TABLE - COATINGS - DONE
+        public static void EliminarRegistro_coatings(int Id_all_coatings)
+        {
+            using (TransactionScope scope = new TransactionScope())
+            {
+                //Eliminar registros de categorias
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+                {
+                    conn.Open();
+                    string query = @"DELETE FROM LogInput_coatings WHERE Id_all_coatings = @Id_all_coatings";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@Id_all_coatings", Id_all_coatings);
+                    cmd.ExecuteNonQuery();
+                }
+                scope.Complete();
+            }
+        }
+
+        //OBTENER REGISTRO BY ID - NOT DONE
+        public static Registro ObtenerById_coatings(int Id_all)
+        {
+            Registro Reg = null;
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                conn.Open();
+                string query = @"SELECT H.Id_all_coatings, H.Id_cliente_coatings, H.Id_carrier_coatings, H.From_time_coatings, H.Tarjeta, D.Placas,  D.Caja, D.NombreOperador, D.Telefono, 
+                            C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant', H.Id_planta
+                            FROM [dbo].[LogInput] H
+                            INNER JOIN [dbo].[Shipdet] D ON H.Id_all=D.Id_all 
+                            INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
+                            INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier WHERE  H.Id_all=@Id_all
+                            INNER JOIN [dbo].[Planta]  P ON H.Id_planta = P.id_planta";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Id_all", Id_all);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    Reg = ConvertirRegistro(reader);
+                }
+            }
+            return Reg;
+        }
+
+        //RETURN LIST TO DIPSLAY IN DAILY LOG INPUT - COATINGS - DONE
+        public static List<Registro> ListadoRegistros_coatings(int Status)
+        {
+            List<Registro> lista = new List<Registro>();
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                conn.Open();
+                string query = @"SELECT H.Id_all_coatings, H.EntryDate_coatings, H.From_time_coatings, H.To_time_coatings, H.Part_number_coatings, H.Id_cliente_coatings, H.Id_planta_coatings, H.Id_carrier_coatings, H.Bill_of_Lading_coatings, H.Quantity_coatings, H.Dock_coatings, H.shipStatus_coatings,
+                            H.shipReason_coatings, H.shipComment_coatings, 
+                            C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant'
+                    FROM [dbo].[LogInput_coatings] H
+                    INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_coatings = C.id_cliente
+                    INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_coatings = L.id_carrier
+                    INNER JOIN [dbo].[Planta] P ON H.Id_planta_coatings = P.id_planta
+                    ORDER BY H.EntryDate_coatings ASC";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    lista.Add(ConvertirRegistro_coatings(reader));
+                }
+            }
+            return lista;
+        }
+
+        // CONVERTIR REGISTRO - DONE
+
+        private static Registro ConvertirRegistro_coatings(IDataReader reader)
+        {
+            Registro Reg = new Registro();
+            Reg.Id_all_coatings = Convert.ToInt32(reader["Id_all_coatings"]);
+            Reg.assignedDate_coatings = Convert.ToDateTime(reader["EntryDate_coatings"]);
+            Reg.assignedFromtime_coatings = Convert.ToString(reader["From_time_coatings"]);
+            Reg.assignedTotime_coatings = Convert.ToString(reader["To_time_coatings"]);
+            Reg.partNumber_coatings = Convert.ToString(reader["Part_number_coatings"]);
+            Reg.ClienteName_coatings = Convert.ToString(reader["Cliente"]);
+            Reg.CarrierName_coatings = Convert.ToString(reader["Carrier"]);
+            Reg.Id_cliente_coatings = Convert.ToInt32(reader["Id_cliente_coatings"]);
+            Reg.Id_planta_coatings = Convert.ToInt32(reader["Id_planta_coatings"]);
+            Reg.PlantName_coatings = Convert.ToString(reader["Plant"]);
+            Reg.Id_carrier_coatings = Convert.ToInt32(reader["Id_carrier_coatings"]);
+            Reg.assignedBOL_coatings = Convert.ToInt32(reader["Bill_of_Lading_coatings"]);
+            Reg.assignedQTY_coatings = Convert.ToInt32(reader["Quantity_coatings"]);
+            Reg.assignedDock_coatings = Convert.ToString(reader["Dock_coatings"]);
+            Reg.shipStatus_coatings = Convert.ToString(reader["shipStatus_coatings"]);
+            Reg.shipReason_coatings = Convert.ToString(reader["shipReason_coatings"]);
+            Reg.shipComment_coatings = Convert.ToString(reader["shipComment_coatings"]);
+            return Reg;
+        }
+
+        private static Registro ConvertirDash_coatings(IDataReader reader)
+        {
+            Registro Reg = new Registro();
+            Reg.Id_all_coatings = Convert.ToInt32(reader["Id_all"]);
+            Reg.assignedDate_coatings = Convert.ToDateTime(reader["EntryDate_coatings"]);
+            Reg.assignedFromtime_coatings = Convert.ToString(reader["From_time_coatings"]);
+            Reg.assignedTotime_coatings = Convert.ToString(reader["To_time_coatings"]);
+            Reg.partNumber_coatings = Convert.ToString(reader["Part_number_coatings"]);
+            Reg.Id_cliente_coatings = Convert.ToInt32(reader["Id_cliente_coatings"]);
+            Reg.Id_planta_coatings = Convert.ToInt32(reader["Id_planta_coatings"]);
+            Reg.PlantName_coatings = Convert.ToString(reader["Plant_coatings"]);
+            Reg.Id_carrier_coatings = Convert.ToInt32(reader["Id_carrier_coatings"]);
+            Reg.assignedBOL_coatings = Convert.ToInt32(reader["Bill_of_Lading_coatings"]);
+            Reg.assignedQTY_coatings = Convert.ToInt32(reader["Quantity_coatings"]);
+            Reg.assignedDock_coatings = Convert.ToString(reader["Dock_coatings"]);
+            Reg.shipStatus_coatings = Convert.ToString(reader["shipStatus_coatings"]);
+            Reg.shipReason_coatings = Convert.ToString(reader["shipReason_coatings"]);
+            Reg.shipComment_coatings = Convert.ToString(reader["shipComment_coatings"]);
+            Reg.ClienteName_coatings = Convert.ToString(reader["Cliente_coatings"]);
+            Reg.CarrierName_coatings = Convert.ToString(reader["Carrier_coatings"]);
+            return Reg;
+        }
+
+        public static Registro ObtenerRegistros_coatings(int Id_planta)
+        {
+            Registro list = null;
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                con.Open();
+                string query = @"
+                        SELECT DISTINCT  
+                        (SELECT ISNULL((Count(H.shipStatus_coatings)),0) FROM LogInput_coatings H  WHERE H.shipStatus_coatings = 3 = CONVERT(DATE,GETDATE()) AND H.Id_planta_coatings=@Id_planta_coatings) AS 'SHIPPED',
+
+                        (SELECT ISNULL((Count(H.shipStatus_coatings)),0) FROM LogInput_coatings H  WHERE H.shipStatus_coatings = 1 = CONVERT(DATE,GETDATE()) AND H.Id_planta_coatings=@Id_planta_coatings) AS 'EARRING',
+
+                        (SELECT ISNULL((Count(H.shipStatus_coatings)),0) FROM LogInput_coatings H  
+
+                        WHERE shipStatus_coatings = 2 = CONVERT(DATE,GETDATE()) AND H.Id_planta_coatings=@Id_planta)AS 'ONTIME' ,
+
+                        (SELECT ISNULL((Count(H.shipStatus)),0) AS 'DELAYED' FROM LogInput H 
+                        WHERE H.shipStatus_coatings = 2  = CONVERT(DATE,GETDATE()) AND H.Id_planta_coatings=@Id_planta) AS 'DELAYED' 
+                        FROM LogInput_coatings ";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@Id_planta", Id_planta);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    list = Convertir_coatings(reader);
+                }
+            }
+            return list;
+        }
+
+        //DONT KNOW WHAT THIS IS FOR - NOT DONE
+
+        private static Registro Convertir_coatings(IDataReader reader)
+        {
+            Registro list = new Registro();
+            list.Completed = Convert.ToString(reader["SHIPPED"]);
+            list.Pendiente = Convert.ToString(reader["EARRING"]);
+            list.Ontime = Convert.ToString(reader["ONTIME"]);
+            list.DELAYED = Convert.ToString(reader["DELAYED"]);
+            return list;
+        }
+
+        //                                                                                                    COATINGS OUTPUT
+
+        public static Registro AgregarNuevo_output_coatings(Registro Reg)
+        {
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                conn.Open();
+                //OBTENER EL ID UNICO DEL ISSUE
+                int ID;
+
+                string query = @"INSERT INTO LogOutput_coatings (EntryDate_output_coatings,From_time_output_coatings,To_time_output_coatings,Part_number_output_coatings,Id_cliente_output_coatings,Id_planta_output_coatings,Id_carrier_output_coatings,Bill_of_Lading_output_coatings,Quantity_output_coatings,Dock_output_coatings,shipStatus_output_coatings, shipReason_output_coatings, shipComment_output_coatings)
+                                 VALUES (@assignedDate_output_coatings, @assignedFromtime_output_coatings,@assignedTotime_output_coatings,@partNumber_output_coatings,@Id_cliente_output_coatings,@Id_planta_output_coatings,@Id_carrier_output_coatings,@assignedBOL_output_coatings,@assignedQTY_output_coatings,@assignedDock_output_coatings,@shipStatus_output_coatings,@shipReason_output_coatings,@shipComment_output_coatings); SELECT SCOPE_IDENTITY()";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@assignedDate_output_coatings", Reg.assignedDate_output_coatings);
+                cmd.Parameters.AddWithValue("@assignedFromtime_output_coatings", Reg.assignedFromtime_output_coatings);
+                cmd.Parameters.AddWithValue("@assignedTotime_output_coatings", Reg.assignedTotime_output_coatings);
+                cmd.Parameters.AddWithValue("@partNumber_output_coatings", Reg.partNumber_output_coatings);
+                cmd.Parameters.AddWithValue("@Id_cliente_output_coatings", Reg.Id_cliente_output_coatings);
+                cmd.Parameters.AddWithValue("@Id_planta_output_coatings", Reg.Id_planta_output_coatings);
+                cmd.Parameters.AddWithValue("@Id_carrier_output_coatings", Reg.Id_carrier_output_coatings);
+                cmd.Parameters.AddWithValue("@assignedBOL_output_coatings", Reg.assignedBOL_output_coatings);
+                cmd.Parameters.AddWithValue("@assignedQTY_output_coatings", Reg.assignedQTY_output_coatings);
+                cmd.Parameters.AddWithValue("@assignedDock_output_coatings", Reg.assignedDock_output_coatings);
+                cmd.Parameters.AddWithValue("@shipStatus_output_coatings", Reg.shipStatus_output_coatings);
+                cmd.Parameters.AddWithValue("@shipReason_output_coatings", Reg.shipReason_output_coatings);
+                cmd.Parameters.AddWithValue("@shipComment_output_coatings", Reg.shipComment_output_coatings);
+
+                //RECUPERAR ID GENERADO POR LA TAB
+                Reg.Id_all_output_coatings = Convert.ToInt32(cmd.ExecuteScalar());
+                ID = Reg.Id_all_output_coatings;
+            }
+            return Reg;
+        }
+
+        //UPDATE TABLE - DONE
+        public static Registro ActualizarRegistro_output_coatings(Registro Reg)
+        {
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                conn.Open();
+                // Update statement for LogInput
+                string query = @"UPDATE LogOutput_coatings 
+                         SET EntryDate_output_coatings = @EntryDate_output_coatings, 
+                             From_time_output_coatings = @From_time_output_coatings, 
+                             To_time_output_coatings = @To_time_output_coatings, 
+                             Part_number_output_coatings = @Part_number_output_coatings, 
+                             Id_cliente_output_coatings = @Id_cliente_output_coatings, 
+                             Id_planta_output_coatings = @Id_planta_output_coatings, 
+                             Id_carrier_output_coatings = @Id_carrier_output_coatings, 
+                             Bill_of_Lading_output_coatings = @Bill_of_Lading_output_coatings, 
+                             Quantity_output_coatings = @Quantity_output_coatings, 
+                             Dock_output_coatings = @Dock_output_coatings, 
+                             shipStatus_output_coatings = @shipStatus_output_coatings, 
+                             shipReason_output_coatings = @shipReason_output_coatings, 
+                             shipComment_output_coatings = @shipComment_output_coatings 
+                         WHERE Id_all_output_coatings = @Id_all_output_coatings";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@EntryDate_output_coatings", Reg.assignedDate_output_coatings);
+                cmd.Parameters.AddWithValue("@From_time_output_coatings", Reg.assignedFromtime_output_coatings);
+                cmd.Parameters.AddWithValue("@To_time_output_coatings", Reg.assignedTotime_output_coatings);
+                cmd.Parameters.AddWithValue("@Part_number_output_coatings", Reg.partNumber_output_coatings);
+                cmd.Parameters.AddWithValue("@Id_cliente_output_coatings", Reg.Id_cliente_output_coatings);
+                cmd.Parameters.AddWithValue("@Id_planta_output_coatings", Reg.Id_planta_output_coatings);
+                cmd.Parameters.AddWithValue("@Id_carrier_output_coatings", Reg.Id_carrier_output_coatings);
+                cmd.Parameters.AddWithValue("@Bill_of_Lading_output_coatings", Reg.assignedBOL_output_coatings);
+                cmd.Parameters.AddWithValue("@Quantity_output_coatings", Reg.assignedQTY_output_coatings);
+                cmd.Parameters.AddWithValue("@Dock_output_coatings", Reg.assignedDock_output_coatings);
+                cmd.Parameters.AddWithValue("@shipStatus_output_coatings", Reg.shipStatus_output_coatings);
+                cmd.Parameters.AddWithValue("@shipReason_output_coatings", Reg.shipReason_output_coatings);
+                cmd.Parameters.AddWithValue("@shipComment_output_coatings", Reg.shipComment_output_coatings);
+                cmd.Parameters.AddWithValue("@Id_all_output_coatings", Reg.Id_all_output_coatings); // Assuming Id_all is the primary key
+                cmd.ExecuteNonQuery(); // Execute the update query
+            }
+            return Reg;
+        }
+
+        //DELETE RECORDS FROM THE TABLE - DONE
+        public static void EliminarRegistro_output_coatings(int Id_all_output_coatings)
+        {
+            using (TransactionScope scope = new TransactionScope())
+            {
+                //Eliminar registros de categorias
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+                {
+                    conn.Open();
+                    string query = @"DELETE FROM LogOutput_coatings WHERE Id_all_output_coatings = @Id_all_output_coatings";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@Id_all_output_coatings", Id_all_output_coatings);
+                    cmd.ExecuteNonQuery();
+                }
+                scope.Complete();
+            }
+        }
+
+        //OBTENER REGISTRO BY ID - NOT TO BOTHER RIGHT NOW
+        public static Registro ObtenerById_output_coatings(int Id_all)
+        {
+            Registro Reg = null;
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                conn.Open();
+                string query = @"SELECT H.Id_all_output, H.Id_cliente_output, H.Id_carrier_output, H.From_time_output, H.Tarjeta, D.Placas,  D.Caja, D.NombreOperador, D.Telefono, 
+                            C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant', H.Id_planta
+                            FROM [dbo].[LogInput] H
+                            INNER JOIN [dbo].[Shipdet] D ON H.Id_all=D.Id_all 
+                            INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
+                            INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier WHERE  H.Id_all=@Id_all
+                            INNER JOIN [dbo].[Planta]  P ON H.Id_planta = P.id_planta";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Id_all", Id_all);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    Reg = ConvertirRegistro(reader);
+                }
+            }
+            return Reg;
+        }
+
+        public static List<Registro> ListadoRegistros_output_coatings(int Status)
+        {
+            List<Registro> lista = new List<Registro>();
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                conn.Open();
+                string query = @"SELECT H.Id_all_output_coatings, H.EntryDate_output_coatings, H.From_time_output_coatings, H.To_time_output_coatings, H.Part_number_output_coatings, H.Id_cliente_output_coatings, H.Id_planta_output_coatings, H.Id_carrier_output_coatings, H.Bill_of_Lading_output_coatings, H.Quantity_output_coatings, H.Dock_output_coatings, H.shipStatus_output_coatings,
+                            H.shipReason_output_coatings, H.shipComment_output_coatings, 
+                            C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant'
+                    FROM [dbo].[LogOutput_coatings] H
+                    INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_output_coatings = C.id_cliente
+                    INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_output_coatings = L.id_carrier
+                    INNER JOIN [dbo].[Planta] P ON H.Id_planta_output_coatings = P.id_planta
+                    ORDER BY H.EntryDate_output_coatings ASC";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    lista.Add(ConvertirRegistro_output_coatings(reader));
+                }
+            }
+            return lista;
+        }
+
+        // CONVERTIR REGISTRO - DONE
+
+        private static Registro ConvertirRegistro_output_coatings(IDataReader reader)
+        {
+            Registro Reg = new Registro();
+            Reg.Id_all_output_coatings = Convert.ToInt32(reader["Id_all_output_coatings"]);
+            Reg.assignedDate_output_coatings = Convert.ToDateTime(reader["EntryDate_output_coatings"]);
+            Reg.assignedFromtime_output_coatings = Convert.ToString(reader["From_time_output_coatings"]);
+            Reg.assignedTotime_output_coatings = Convert.ToString(reader["To_time_output_coatings"]);
+            Reg.partNumber_output_coatings = Convert.ToString(reader["Part_number_output_coatings"]);
+            Reg.ClienteName_output_coatings = Convert.ToString(reader["Cliente"]);
+            Reg.CarrierName_output_coatings = Convert.ToString(reader["Carrier"]);
+            Reg.Id_cliente_output_coatings = Convert.ToInt32(reader["Id_cliente_output_coatings"]);
+            Reg.Id_planta_output_coatings = Convert.ToInt32(reader["Id_planta_output_coatings"]);
+            Reg.PlantName_output_coatings = Convert.ToString(reader["Plant"]);
+            Reg.Id_carrier_output_coatings = Convert.ToInt32(reader["Id_carrier_output_coatings"]);
+            Reg.assignedBOL_output_coatings = Convert.ToInt32(reader["Bill_of_Lading_output_coatings"]);
+            Reg.assignedQTY_output_coatings = Convert.ToInt32(reader["Quantity_output_coatings"]);
+            Reg.assignedDock_output_coatings = Convert.ToString(reader["Dock_output_coatings"]);
+            Reg.shipStatus_output_coatings = Convert.ToString(reader["shipStatus_output_coatings"]);
+            Reg.shipReason_output_coatings = Convert.ToString(reader["shipReason_output_coatings"]);
+            Reg.shipComment_output_coatings = Convert.ToString(reader["shipComment_output_coatings"]);
+
+            return Reg;
+        }
+        private static Registro ConvertirDash_output_coatings(IDataReader reader)
+        {
+            Registro Reg = new Registro();
+            Reg.Id_all_output_coatings = Convert.ToInt32(reader["Id_all"]);
+            Reg.assignedDate_output_coatings = Convert.ToDateTime(reader["EntryDate_output_coatings"]);
+            Reg.assignedFromtime_output_coatings = Convert.ToString(reader["From_time_output_coatings"]);
+            Reg.assignedTotime_output_coatings = Convert.ToString(reader["To_time_output_coatings"]);
+            Reg.partNumber_output_coatings = Convert.ToString(reader["Part_number_output_coatings"]);
+            Reg.Id_cliente_output_coatings = Convert.ToInt32(reader["Id_cliente_output_coatings"]);
+            Reg.Id_planta_output_coatings = Convert.ToInt32(reader["Id_planta_output_coatings"]);
+            Reg.PlantName_output_coatings = Convert.ToString(reader["Plant_output_coatings"]);
+            Reg.Id_carrier_output_coatings = Convert.ToInt32(reader["Id_carrier_output_coatings"]);
+            Reg.assignedBOL_output_coatings = Convert.ToInt32(reader["Bill_of_Lading_output_coatings"]);
+            Reg.assignedQTY_output_coatings = Convert.ToInt32(reader["Quantity_output_coatings"]);
+            Reg.assignedDock_output_coatings = Convert.ToString(reader["Dock_output_coatings"]);
+            Reg.shipStatus_output_coatings = Convert.ToString(reader["shipStatus_output_coatings"]);
+            Reg.shipReason_output_coatings = Convert.ToString(reader["shipReason_output_coatings"]);
+            Reg.shipComment_output_coatings = Convert.ToString(reader["shipComment_output_coatings"]);
+            Reg.ClienteName_output_coatings = Convert.ToString(reader["Cliente_output_coatings"]);
+            Reg.CarrierName_output_coatings = Convert.ToString(reader["Carrier_output_coatings"]);
+            return Reg;
+        }
 
 
+        // DASHBOARD - DOCK COATINGS
+        public static List<Registro> ListDashboard_Dock_coatings(string dockName)
+        {
+            List<Registro> list_dashboard_dock = new List<Registro>();
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                conn.Open();
+                string query = @"SELECT 'LogInput' AS SourceTable, H.Id_all, H.EntryDate AS EntryDate,H.From_time,H.To_time,H.Part_number,H.Id_cliente,H.Id_planta,H.Id_carrier,H.Bill_of_Lading,H.Quantity,H.Dock,H.shipStatus,
+                              H.shipReason,H.shipComment,
+                              C.description AS Cliente,
+                              L.description AS Carrier,
+                              P.description AS Plant
+               FROM 
+                  [dbo].[LogInput] H
+               INNER JOIN 
+                   [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
+               INNER JOIN 
+                   [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier
+               INNER JOIN 
+                   [dbo].[Planta] P ON H.Id_planta = P.id_planta
+               WHERE H.Dock = @dockName    
+
+               UNION
+
+               SELECT 
+                   'LogOutput' AS SourceTable,
+                   H.Id_all_output,
+                   H.EntryDate_output AS EntryDate,
+                   H.From_time_output AS From_time,
+                   H.To_time_output AS To_time,
+                   H.Part_number_output AS Part_number,
+                   H.Id_cliente_output AS Id_cliente,
+                   H.Id_planta_output AS Id_planta,
+                   H.Id_carrier_output AS Id_carrier,
+                   H.Bill_of_Lading_output AS Bill_of_Lading,
+                   H.Quantity_output AS Quantity,
+                   H.Dock_output AS Dock,
+                   H.shipStatus_output AS shipStatus,
+                   H.shipReason_output AS shipReason,
+                   H.shipComment_output AS shipComment,
+                   C.description AS Cliente,
+                   L.description AS Carrier,
+                   P.description AS Plant
+               FROM 
+                 [dbo].[LogOutput] H
+               INNER JOIN 
+                   [dbo].[Cliente] C ON H.Id_cliente_output = C.id_cliente
+               INNER JOIN 
+                    [dbo].[Carrier] L ON H.Id_carrier_output = L.id_carrier
+               INNER JOIN 
+                    [dbo].[Planta] P ON H.Id_planta_output = P.id_planta
+               WHERE H.Dock_output = @dockName
+               ORDER BY 
+                   EntryDate ASC";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@dockName", dockName);
+                //cmd.Parameters.AddWithValue("@Id_planta", Id_Planta);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Registro Reg = new Registro()
+                    {
+                        Id_all = Convert.ToInt32(reader["Id_all"]),
+                        assignedDate = Convert.ToDateTime(reader["EntryDate"]),
+                        assignedFromtime = Convert.ToString(reader["From_time"]),
+                        assignedTotime = Convert.ToString(reader["To_time"]),
+                        partNumber = Convert.ToString(reader["Part_number"]),
+                        Id_cliente = Convert.ToInt32(reader["Id_cliente"]),
+                        Id_planta = Convert.ToInt32(reader["Id_planta"]),
+                        Id_carrier = Convert.ToInt32(reader["Id_carrier"]),
+                        PlantName = Convert.ToString(reader["Plant"]),
+                        assignedBOL = Convert.ToInt32(reader["Bill_of_Lading"]),
+                        assignedQTY = Convert.ToInt32(reader["Quantity"]),
+                        assignedDock = Convert.ToString(reader["Dock"]),
+                        shipStatus = Convert.ToString(reader["shipStatus"]),
+                        shipReason = Convert.ToString(reader["shipReason"]),
+                        shipComment = Convert.ToString(reader["shipComment"]),
+                        ClienteName = Convert.ToString(reader["Cliente"]),
+                        CarrierName = Convert.ToString(reader["Carrier"]),
+                        IsInput = String.Equals(Convert.ToString(reader["SourceTable"]), "LogInput", StringComparison.OrdinalIgnoreCase)
+                    };
+                    list_dashboard_dock.Add(Reg);
+                }
+            }
+            return list_dashboard_dock;
+        }
+
+        public static List<Registro> control_panel_dock_coatings(string dockName)
+        {
+            List<Registro> list_control_panel_dock = new List<Registro>();
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                conn.Open();
+                string query = @"WITH CombinedLogs AS (
+                SELECT 
+                    'LogInput' AS SourceTable,
+                    Id_all AS Id_all,
+                    EntryDate,
+                    From_time,
+                    To_time,
+                    Part_number,
+                    shipStatus
+                FROM 
+                    [dbo].[LogInput] H
+                WHERE 
+                    H.Dock = @dockName
+    
+                UNION ALL
+    
+                SELECT 
+                    'LogOutput' AS SourceTable,
+                    Id_all_output AS Id_all,
+                    EntryDate_output AS EntryDate,
+                    From_time_output AS From_time,
+                    To_time_output AS To_time,
+                    Part_number_output AS Part_number,
+                    shipStatus_output AS shipStatus
+                FROM 
+                    [dbo].[LogOutput] H
+                WHERE 
+                    H.Dock_output = @dockName
+            )
+
+            SELECT TOP 5
+                SourceTable,
+                Id_all,
+                EntryDate,
+                From_time,
+                To_time,
+                Part_number,
+                shipStatus
+            FROM 
+                CombinedLogs
+            ORDER BY 
+                From_time ASC";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@dockName", dockName);
+                //cmd.Parameters.AddWithValue("@Id_planta", Id_Planta);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Registro Reg = new Registro()
+                    {
+                        Id_all = Convert.ToInt32(reader["Id_all"]),
+                        assignedDate = Convert.ToDateTime(reader["EntryDate"]),
+                        assignedFromtime = Convert.ToString(reader["From_time"]),
+                        assignedTotime = Convert.ToString(reader["To_time"]),
+                        partNumber = Convert.ToString(reader["Part_number"]),
+                        shipStatus = Convert.ToString(reader["shipStatus"]),
+                    };
+                    list_control_panel_dock.Add(Reg);
+                }
+            }
+            return list_control_panel_dock;
+        }
+
+        //                                                                    COATINGS - DOCK QUERY (EACH DOCK INS AND OUTS)
 
 
+        // DOCK FOR INPUT AND OUTPUT - COATINGS
+        public static List<Registro> dockQueryInput_coatings(string dockName)
+        {
+            List<Registro> regList = new List<Registro>();
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                conn.Open();
+                string query = @"SELECT H.Id_all_coatings,H.EntryDate_coatings,H.From_time_coatings, H.To_time_coatings, H.Part_number_coatings, H.Id_cliente_coatings, H.Id_planta_coatings, H.Id_carrier_coatings, H.Bill_of_Lading_coatings, H.Quantity_coatings, H.Dock_coatings,H.shipStatus_coatings, H.shipReason_coatings, H.shipComment_coatings, 
+                            C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant'
+                            FROM [dbo].[LogInput_coatings] H
+                            INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_coatings = C.id_cliente
+                            INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_coatings = L.id_carrier
+                            INNER JOIN [dbo].[Planta]  P ON H.Id_planta_coatings  = P.id_planta
+                            WHERE H.Dock_coatings = @dockName
+                            ORDER BY H.EntryDate_coatings ASC";
 
 
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@dockName", dockName);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Registro Reg = new Registro();
+                    Reg.Id_all_coatings = Convert.ToInt32(reader["Id_all_coatings"]);
+                    Reg.assignedDate_coatings = Convert.ToDateTime(reader["EntryDate_coatings"]);
+                    Reg.assignedFromtime_coatings = Convert.ToString(reader["From_time_coatings"]);
+                    Reg.assignedTotime_coatings = Convert.ToString(reader["To_time_coatings"]);
+                    Reg.partNumber_coatings = Convert.ToString(reader["Part_number_coatings"]);
+                    Reg.Id_cliente_coatings = Convert.ToInt32(reader["Id_cliente_coatings"]);
+                    Reg.Id_planta_coatings = Convert.ToInt32(reader["Id_planta_coatings"]);
+                    Reg.Id_carrier_coatings = Convert.ToInt32(reader["Id_carrier_coatings"]);
+                    Reg.PlantName_coatings = Convert.ToString(reader["Plant"]);
+                    Reg.assignedBOL_coatings = Convert.ToInt32(reader["Bill_of_Lading_coatings"]);
+                    Reg.assignedQTY_coatings = Convert.ToInt32(reader["Quantity_coatings"]);
+                    Reg.assignedDock_coatings = Convert.ToString(reader["Dock_coatings"]);
+                    Reg.shipStatus_coatings = Convert.ToString(reader["shipStatus_coatings"]);
+                    Reg.shipReason_coatings = Convert.ToString(reader["shipReason_coatings"]);
+                    Reg.shipComment_coatings = Convert.ToString(reader["shipComment_coatings"]);
+                    Reg.ClienteName_coatings = Convert.ToString(reader["Cliente"]);
+                    Reg.CarrierName_coatings = Convert.ToString(reader["Carrier"]);
+                    regList.Add(Reg);
+                }
+            }
+            return regList;
+        }
+
+        //                                                                    DOCK FILTER - OUTPUT 
+        //SHIPMENT - OUTPUTS - DOCK
+
+        public static List<Registro> dockQueryOutput_coatings(string dockName)
+        {
+            List<Registro> regList = new List<Registro>();
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                conn.Open();
+                string query = @"SELECT H.Id_all_output_coatings,H.EntryDate_output_coatings,H.From_time_output_coatings, H.To_time_output_coatings, H.Part_number_output_coatings, H.Id_cliente_output_coatings, H.Id_planta_output_coatings, H.Id_carrier_output_coatings, H.Bill_of_Lading_output_coatings, H.Quantity_output_coatings, H.Dock_output_coatings,H.shipStatus_output_coatings, H.shipReason_output_coatings, H.shipComment_output_coatings, 
+                            C.description AS 'Cliente_output', L.description AS 'Carrier_output', P.description AS 'Plant_output'
+                            FROM [dbo].[LogOutput_coatings] H
+                            INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_output_coatings = C.id_cliente
+                            INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_output_coatings = L.id_carrier
+                            INNER JOIN [dbo].[Planta]  P ON H.Id_planta_output_coatings  = P.id_planta
+                            WHERE H.Dock_output_coatings = @dockName
+                            ORDER BY H.EntryDate_output_coatings ASC";
 
 
-
-
-
-
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@dockName", dockName);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Registro Reg = new Registro();
+                    Reg.Id_all_output_coatings = Convert.ToInt32(reader["Id_all_output_coatings"]);
+                    Reg.assignedDate_output_coatings = Convert.ToDateTime(reader["EntryDate_output_coatings"]);
+                    Reg.assignedFromtime_output_coatings = Convert.ToString(reader["From_time_output_coatings"]);
+                    Reg.assignedTotime_output_coatings = Convert.ToString(reader["To_time_output_coatings"]);
+                    Reg.partNumber_output_coatings = Convert.ToString(reader["Part_number_output_coatings"]);
+                    Reg.Id_cliente_output_coatings = Convert.ToInt32(reader["Id_cliente_output_coatings"]);
+                    Reg.Id_planta_output_coatings = Convert.ToInt32(reader["Id_planta_output_coatings"]);
+                    Reg.Id_carrier_output_coatings = Convert.ToInt32(reader["Id_carrier_output_coatings"]);
+                    Reg.PlantName_output_coatings = Convert.ToString(reader["Plant_output"]);
+                    Reg.assignedBOL_output_coatings = Convert.ToInt32(reader["Bill_of_Lading_output_coatings"]);
+                    Reg.assignedQTY_output_coatings = Convert.ToInt32(reader["Quantity_output_coatings"]);
+                    Reg.assignedDock_output_coatings = Convert.ToString(reader["Dock_output_coatings"]);
+                    Reg.shipStatus_output_coatings = Convert.ToString(reader["shipStatus_output_coatings"]);
+                    Reg.shipReason_output_coatings = Convert.ToString(reader["shipReason_output_coatings"]);
+                    Reg.shipComment_output_coatings = Convert.ToString(reader["shipComment_output_coatings"]);
+                    Reg.ClienteName_output_coatings = Convert.ToString(reader["Cliente_output"]);
+                    Reg.CarrierName_output_coatings = Convert.ToString(reader["Carrier_output"]);
+                    regList.Add(Reg);
+                }
+            }
+            return regList;
+        }
     }
 }

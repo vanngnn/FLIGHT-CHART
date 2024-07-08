@@ -349,19 +349,46 @@
                         <asp:HyperLink ID="LinkConfig" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-edit"></i><p>Daily Log<i class="fas fa-angle-left right"></i></p>
                         </asp:HyperLink>
+
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="RegistroEntrada.aspx" runat="server" Visible="true"  class="nav-link"> 
-                                    <i class="far fa-circle nav-icon"></i><p>Inputs</p>
+                                <asp:HyperLink ID="dailylog_input_coatings" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i><p>HYDROFORM<i class="fas fa-angle-left right"></i></p>
                                 </asp:HyperLink>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkRegEntry" NavigateUrl="RegistroEntrada.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                            <i class="far fa-circle nav-icon"></i><p>Inputs</p>
+                                        </asp:HyperLink>
+                                    </li>
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkRegOut" NavigateUrl="RegistroSalida.aspx" runat="server" Visible="true"  class="nav-link" > 
+                                            <i class="far fa-circle nav-icon"></i><p>Outputs</p>
+                                        </asp:HyperLink>
+                                    </li>
+                                </ul>
                             </li>
+
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="RegistroSalida.aspx" runat="server" Visible="true"  class="nav-link" > 
-                                    <i class="far fa-circle nav-icon"></i><p>Outputs</p>
+                                <asp:HyperLink ID="dailylog_output_coatings" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i><p>COATINGS<i class="fas fa-angle-left right"></i></p>
                                 </asp:HyperLink>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkRegEntry_coatings" NavigateUrl="RegistroEntrada_Coatings.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                            <i class="far fa-circle nav-icon"></i><p>Inputs</p>
+                                        </asp:HyperLink>
+                                    </li>
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkRegOut_coatings" NavigateUrl="RegistroSalida_Coatings.aspx" runat="server" Visible="true"  class="nav-link" > 
+                                            <i class="far fa-circle nav-icon"></i><p>Outputs</p>
+                                        </asp:HyperLink>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </li>
+
                     <li class="nav-item">
                         <asp:HyperLink ID="LinkShipper" NavigateUrl="SHIPPER.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-book"></i><p>Shipper</p>
@@ -483,20 +510,33 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowDataBound="gvRegistros_RowDataBound" >
+                <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all_coatings" class="table table-bordered table-striped" OnRowDataBound="gvRegistros_RowDataBound" >
                                 <Columns>
-                                     <asp:BoundField HeaderText="DATE" DataField="assignedDate" />
-                                     <asp:BoundField HeaderText="ASSIGNED TIME" DataField="TimePeriodAssigned" />
-                                     <asp:BoundField HeaderText="P/N" DataField="partNumber" />
-                                     <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
-                                     <asp:BoundField HeaderText="FROM" DataField="PlantName" />
-                                     <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
-                                     <asp:BoundField HeaderText="B/L" DataField="assignedBOL" />
-                                     <asp:BoundField HeaderText="QTY" DataField="assignedQTY" />
-                                     <asp:BoundField HeaderText="DOCK" DataField="assignedDock" />
-                                     <asp:BoundField HeaderText="STATUS" DataField="shipStatus" />
-                                     <asp:BoundField HeaderText="REASON" DataField="shipReason" />
-                                     <asp:BoundField HeaderText="COMMENT" DataField="shipComment" />
+                                     <asp:BoundField HeaderText="DATE" DataField="assignedDate_coatings" />
+                                     <asp:BoundField HeaderText="ASSIGNED TIME" DataField="TimePeriodAssigned_coatings" />
+                                     <asp:BoundField HeaderText="P/N" DataField="partNumber_coatings" />
+                                     <asp:BoundField HeaderText="PROJECT" DataField="ClienteName_coatings" />
+
+                                     <asp:TemplateField HeaderText="FROM/TO">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblFromTo" runat="server" 
+                                                       Text='<%# Eval("Dashboard_dock_plant_input_coatings") %>' 
+                                                       Visible='<%# (bool)Eval("IsInput_coatings") %>'>
+                                            </asp:Label>
+                                            <asp:Label ID="lblToFrom" runat="server" 
+                                                       Text='<%# Eval("Dashboard_dock_plant_output") %>' 
+                                                       Visible='<%# !(bool)Eval("IsInput_coatings") %>'>
+                                            </asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                     <asp:BoundField HeaderText="CARRIER" DataField="CarrierName_coatings" />
+                                     <asp:BoundField HeaderText="B/L" DataField="assignedBOL_coatings" />
+                                     <asp:BoundField HeaderText="QTY" DataField="assignedQTY_coatings" />
+                                     <asp:BoundField HeaderText="DOCK" DataField="assignedDock_coatings" />
+                                     <asp:BoundField HeaderText="STATUS" DataField="shipStatus_coatings" />
+                                     <asp:BoundField HeaderText="REASON" DataField="shipReason_coatings" />
+                                     <asp:BoundField HeaderText="COMMENT" DataField="shipComment_coatings" />
                                     <%--<asp:BoundField HeaderText="ASN Sent" DataField="ASN_Sent" />
                                     <asp:BoundField HeaderText="ASN Ack" DataField="ASN_Ack" />--%>
                                 </Columns>

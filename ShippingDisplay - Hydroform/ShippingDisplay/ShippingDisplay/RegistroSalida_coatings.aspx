@@ -1,4 +1,4 @@
-﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DASHBOARD_DOCK3_COATINGS.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.DASHBOARD_DOCK3_COATINGS" %>
+﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RegistroSalida_coatings.aspx.cs" Inherits="ShippingDisplay.ShippingDisplay.RegistroSalida_coatings" %>
 
 <!DOCTYPE html>
 
@@ -6,7 +6,6 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="refresh" content="30" />
     <link rel="icon" type="image/png" href="Template/img/martinrea_logo.png"/>
     <title>Shipping Display</title>
     <!-- Google Font: Source Sans Pro -->
@@ -29,8 +28,22 @@
     <link rel="stylesheet" href="template/plugins/daterangepicker/daterangepicker.css" />
     <!-- summernote -->
     <link rel="stylesheet" href="template/plugins/summernote/summernote-bs4.min.css" />
+    <!-- Select2 -->
+    <link rel="stylesheet" href="template/plugins/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="template/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" />
+    <script type = "text/javascript">
+        function DisableButton() {
+            document.getElementById("<%=btnRegistrar.ClientID %>").disabled = true;
+        }
+        window.onbeforeunload = DisableButton;
+        function isDelete() {
+            var r = confirm("Are you sure you want to delete this record?");
+            return r;
+        }
+    </script>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
+    
 <div class="wrapper">
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
@@ -374,12 +387,12 @@
                                 </asp:HyperLink>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <asp:HyperLink ID="LinkRegEntry_coatings" NavigateUrl="RegistroEntrada_Coatings.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                        <asp:HyperLink ID="LinkRegEntry_coatings" NavigateUrl="RegistroEntrada_coatings.aspx" runat="server" Visible="true"  class="nav-link"> 
                                             <i class="far fa-circle nav-icon"></i><p>Inputs</p>
                                         </asp:HyperLink>
                                     </li>
                                     <li class="nav-item">
-                                        <asp:HyperLink ID="LinkRegOut_coatings" NavigateUrl="RegistroSalida_Coatings.aspx" runat="server" Visible="true"  class="nav-link" > 
+                                        <asp:HyperLink ID="LinkRegOut_coatings" NavigateUrl="RegistroSalida_coatings.aspx" runat="server" Visible="true"  class="nav-link" > 
                                             <i class="far fa-circle nav-icon"></i><p>Outputs</p>
                                         </asp:HyperLink>
                                     </li>
@@ -418,137 +431,192 @@
         </div>
         <!-- /.sidebar -->
     </aside>
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
-                <%--<div class="row mb-2">
+                <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Dashboard</h1>
+                        <h1 class="m-0">Daily entry</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item active">Daily entry</li>
                         </ol>
                     </div><!-- /.col -->
-                </div><!-- /.row -->--%>
+                </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
 
         <!-- Main content -->
         <section class="content">
+            <!-- container-fluid -->
             <div class="container-fluid">
+               
                 <!-- Small boxes (Stat box) -->
-                <div class="row">
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                        <div class="small-box bg-success">
-                            <div class="inner">
-                                <h3><asp:Label ID="lblEntiempo" runat="server" Text="0"></asp:Label></h3>
-                                <p><h3>ON TIME</h3></p>
-                            </div>
-                            <div class="icon"> 
-                                <i class="ion ion-ios-clock"></i>                 
-                            </div>
+                <div class="card card-default">
+                    <!-- Horizontal Form -->
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <%--<h3 class="card-title">Horizontal Form</h3>--%>
                         </div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-danger">
-                            <div class="inner">
-                                <h3><asp:Label ID="lblAtrasado" runat="server" Text="0"></asp:Label></h3>
-                                <p><h3>DELAYED</h3></p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-android-warning"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-warning">
-                            <div class="inner">
-                                <h3><asp:Label ID="lblSinShipper" runat="server" Text="0"></asp:Label></h3>
-                                <p><h3>WITHOUT SHIPPER</h3></p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-android-checkmark-circle"></i>
-                            </div>
-                        </div>
-                    </div>     
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3><asp:Label ID="lblEnviado" runat="server" Text="0"></asp:Label></h3>
-                                <p><h3>SHIPPED</h3></p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-checkmark-round"></i>
-                            </div>
-                        </div>
-                    </div>   
-                </div>
-                <!-- /.row -->
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <div class="card-body">
+                          
+                             <div class="form-group row">
+                                 <div class="col-sm-10">
+                                     <asp:TextBox ID="TextBox1" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
+                                 </div>
+                             </div>
 
+                             <div class="form-group row">
+                                 <label for="inputTimePeriodAssigned" class="col-sm-2 col-form-label">Time period assigned:</label>
+                                 <div class="col-sm-3">
+                                     <label for="inputEntryDate" class="col-form-label">Date:</label>
+                                        <asp:TextBox ID="EntryDate" TextMode="date" name="input-entry-date" value="2024-01-01" runat="server" />
+                                 </div>
+                                 <div class="col-sm-3">
+                                     <label for="inputFromTime" class="col-form-label">From:</label>
+                                     <asp:TextBox ID="fromTime" TextMode="time" name="from-time" value="12:00" runat="server" />
+                                 </div>
+                                 <div class="col-sm-3">
+                                     <label for="inputToTime" class="col-form-label">To:</label>
+                                     <asp:TextBox ID="toTime" TextMode="time" name="to-time" value="12:00" runat="server" />
+                                 </div>
+                             </div>
+
+                            <div class="form-group row">
+                                <label for="inputPN" class="col-sm-2 col-form-label">P/N:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtId_all" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:TextBox ID="txtPN" runat="server" class="form-control" placeholder="Part Number"></asp:TextBox>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputCliente" class="col-sm-2 col-form-label">Project:</label>
+                                    <div class="col-sm-10">
+                                        <asp:DropDownList ID="dblCliente" runat="server"  class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputPlant" class="col-sm-2 col-form-label">To:</label>
+                                    <div class="col-sm-10">
+                                        <asp:DropDownList ID="dblPlant" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                    </div>
+                                    
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputCarrier" class="col-sm-2 col-form-label">Carrier:</label>
+                                    <div class="col-sm-10">
+                                        <asp:DropDownList ID="dblCarrier" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputBL" class="col-sm-2 col-form-label">B/L:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtBL" runat="server" class="form-control" placeholder="Bill Of Landing"></asp:TextBox>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputQTY" class="col-sm-2 col-form-label">Quantity:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtQTY" runat="server" class="form-control" placeholder="Quantity"></asp:TextBox>
+                                </div>
+                            </div>    
+
+                            <div class="form-group row">
+                                <label for="inputStatus" class="col-sm-2 col-form-label">Status:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtStatus" runat="server" class="form-control" placeholder="ID" Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:DropDownList ID="StatusDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                </div>
+                            </div>  
+
+                            <div class="form-group row">
+                                <label for="inputDock" class="col-sm-2 col-form-label">Dock:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtDock" runat="server" class="form-control" placeholder="-- DOCK --" Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:DropDownList ID="DockDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                </div>
+                            </div>  
+
+                            <div class="form-group row">
+                                <label for="inputStatus" class="col-sm-2 col-form-label">Reason:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtReason" runat="server" class="form-control" placeholder="-- REASON --" Enable="false" Visible="false"></asp:TextBox>
+                                    <asp:DropDownList ID="ReasonDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputComment" class="col-sm-2 col-form-label">Comment:</label>
+                                <div class="col-sm-10">
+                                    <asp:TextBox ID="txtComment" runat="server" class="form-control" placeholder="Additional Comments"></asp:TextBox>
+                                </div>
+                            </div>  
+                            </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <asp:Button ID="btnRegistrar" runat="server" Text="Save"  class="btn btn-block btn-info btn-lg" OnClick="btnRegistrar_Click"/>
+                        </div>
+                            <!-- /.card-footer -->                  
+                    </div>
+                    <!-- /.card -->
+                </div>
                 <!-- Main row -->
                 <div class="row">
                     <div class="col-12">
                         <!-- /.card -->
-
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Daily entry</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <asp:GridView ID="DASHBOARD_DOCK1_REGISTER" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowDataBound="DASHBOARD_DOCK1_REGISTER_RowDataBound" >
+                        <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">List</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
                                 <Columns>
-                                    <asp:BoundField HeaderText="DATE" DataField="assignedDate" />
-                                    <asp:BoundField HeaderText="ASSIGNED TIME" DataField="TimePeriodAssigned" />
-                                    <asp:BoundField HeaderText="P/N" DataField="partNumber" />
-                                    <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
-
-                                    <asp:TemplateField HeaderText="FROM/TO">
+                                    <asp:BoundField HeaderText="DATE" DataField="assignedDate_output_coatings" />
+                                    <asp:BoundField HeaderText="ASSIGNED TIME" DataField="TimePeriodAssigned_output_coatings" />
+                                    <asp:BoundField HeaderText="P/N" DataField="partNumber_output_coatings" />
+                                    <asp:BoundField HeaderText="PROJECT" DataField="ClienteName_output_coatings" />
+                                    <asp:BoundField HeaderText="FROM" DataField="PlantName_output_coatings" />
+                                    <asp:BoundField HeaderText="CARRIER" DataField="CarrierName_output_coatings" />
+                                    <asp:BoundField HeaderText="B/L" DataField="assignedBOL_output_coatings" />
+                                    <asp:BoundField HeaderText="QTY" DataField="assignedQTY_output_coatings" />
+                                    <asp:BoundField HeaderText="DOCK" DataField="assignedDock_output_coatings" />
+                                    <asp:BoundField HeaderText="STATUS" DataField="shipStatus_output_coatings" />
+                                    <asp:BoundField HeaderText="REASON" DataField="shipReason_output_coatings" />
+                                    <asp:BoundField HeaderText="COMMENT" DataField="shipComment_output_coatings" />
+                                    <asp:TemplateField>
                                         <ItemTemplate>
-                                            <asp:Label ID="lblFromTo" runat="server" 
-                                                       Text='<%# Eval("Dashboard_dock_plant_input") %>' 
-                                                       Visible='<%# (bool)Eval("IsInput") %>'>
-                                            </asp:Label>
-                                            <asp:Label ID="lblToFrom" runat="server" 
-                                                       Text='<%# Eval("Dashboard_dock_plant_output") %>' 
-                                                       Visible='<%# !(bool)Eval("IsInput") %>'>
-                                            </asp:Label>
+                                            <asp:Button text="Edit" CommandName="Editar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-primary" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-
-                                    <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
-                                    <asp:BoundField HeaderText="B/L" DataField="assignedBOL" />
-                                    <asp:BoundField HeaderText="QTY" DataField="assignedQTY" />
-                                    <asp:BoundField HeaderText="DOCK" DataField="assignedDock" />
-                                    <asp:BoundField HeaderText="STATUS" DataField="shipStatus" />
-                                    <asp:BoundField HeaderText="REASON" DataField="shipReason" />
-                                    <asp:BoundField HeaderText="COMMENT" DataField="shipComment" />
-                                    <%--<asp:BoundField HeaderText="ASN Sent" DataField="ASN_Sent" />
-                                    <asp:BoundField HeaderText="ASN Ack" DataField="ASN_Ack" />--%>
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <asp:Button text="Delete" CommandName="Eliminar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-danger" OnClientClick="return isDelete();" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                 </Columns>
-                </asp:GridView>
-                      
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
+                            </asp:GridView>
+                        </div>
+                    <!-- /.card-body -->
+                    </div>
+                        <!-- /.card -->
                     </div>
                 </div>
-            <!-- /.row (main row) -->
-            </div><!-- /.container-fluid -->
+                <!-- /.row (main row) -->
+            </div>
+            <!-- /.container-fluid -->
         </section>
         <!-- /.content -->
     </div>
@@ -573,10 +641,7 @@
 <script src="template/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="template/plugins/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-    $.widget.bridge('uibutton', $.ui.button)
-</script>
+
 <!-- Bootstrap 4 -->
 <script src="template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS -->
@@ -603,6 +668,143 @@
 <script src="template/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="template/dist/js/pages/dashboard.js"></script>
+<!-- bs-custom-file-input -->
+<script src="template/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<!-- Select2 -->
+<script src="template/plugins/select2/js/select2.full.min.js"></script>
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2()
 
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+
+        //Datemask dd/mm/yyyy
+        $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+        //Datemask2 mm/dd/yyyy
+        $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+        //Money Euro
+        $('[data-mask]').inputmask()
+
+        //Date picker
+        $('#reservationdate').datetimepicker({
+            format: 'L'
+        });
+
+        //Date and time picker
+        $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+
+        //Date range picker
+        $('#reservation').daterangepicker()
+        //Date range picker with time picker
+        $('#reservationtime').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 30,
+            locale: {
+                format: 'MM/DD/YYYY hh:mm A'
+            }
+        })
+        //Date range as a button
+        $('#daterange-btn').daterangepicker(
+            {
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                startDate: moment().subtract(29, 'days'),
+                endDate: moment()
+            },
+            function (start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+            }
+        )
+
+        //Timepicker
+        $('#timepicker').datetimepicker({
+            format: 'LT'
+        })
+
+        //Bootstrap Duallistbox
+        $('.duallistbox').bootstrapDualListbox()
+
+        //Colorpicker
+        $('.my-colorpicker1').colorpicker()
+        //color picker with addon
+        $('.my-colorpicker2').colorpicker()
+
+        $('.my-colorpicker2').on('colorpickerChange', function (event) {
+            $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+        })
+
+        $("input[data-bootstrap-switch]").each(function () {
+            $(this).bootstrapSwitch('state', $(this).prop('checked'));
+        })
+
+    })
+    // BS-Stepper Init
+    document.addEventListener('DOMContentLoaded', function () {
+        window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+    })
+
+    // DropzoneJS Demo Code Start
+    Dropzone.autoDiscover = false
+
+    // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+    var previewNode = document.querySelector("#template")
+    previewNode.id = ""
+    var previewTemplate = previewNode.parentNode.innerHTML
+    previewNode.parentNode.removeChild(previewNode)
+
+    var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+        url: "/target-url", // Set the url
+        thumbnailWidth: 80,
+        thumbnailHeight: 80,
+        parallelUploads: 20,
+        previewTemplate: previewTemplate,
+        autoQueue: false, // Make sure the files aren't queued until manually added
+        previewsContainer: "#previews", // Define the container to display the previews
+        clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+    })
+
+    myDropzone.on("addedfile", function (file) {
+        // Hookup the start button
+        file.previewElement.querySelector(".start").onclick = function () { myDropzone.enqueueFile(file) }
+    })
+
+    // Update the total progress bar
+    myDropzone.on("totaluploadprogress", function (progress) {
+        document.querySelector("#total-progress.progress-bar").style.width = progress + "%"
+    })
+
+    myDropzone.on("sending", function (file) {
+        // Show the total progress bar when upload starts
+        document.querySelector("#total-progress").style.opacity = "1"
+        // And disable the start button
+        file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+    })
+
+    // Hide the total progress bar when nothing's uploading anymore
+    myDropzone.on("queuecomplete", function (progress) {
+        document.querySelector("#total-progress").style.opacity = "0"
+    })
+
+    // Setup the buttons for all transfers
+    // The "add files" button doesn't need to be setup because the config
+    // `clickable` has already been specified.
+    document.querySelector("#actions .start").onclick = function () {
+        myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+    }
+    document.querySelector("#actions .cancel").onclick = function () {
+        myDropzone.removeAllFiles(true)
+    }
+    // DropzoneJS Demo Code End
+</script>
 </body>
 </html>

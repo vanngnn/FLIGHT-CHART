@@ -35,8 +35,8 @@ namespace ShippingDisplay.ShippingDisplay
         private void CargarGrid()
         {
             string dockName = "Dock 1";  // Specify the dock name here
-            DAILYOUTPUT_DOCK1_COATINGS_REGISTER.DataSource = RegistroDAL.dockQueryOutput(dockName);
-            DAILYOUTPUT_DOCK1_COATINGS_REGISTER.DataBind();
+            DAILYOUTPUT_DOCK1_REGISTER_COATINGS.DataSource = RegistroDAL.dockQueryOutput_coatings(dockName);
+            DAILYOUTPUT_DOCK1_REGISTER_COATINGS.DataBind();
         }
         public void ObtenerWidgets()
         {
@@ -95,20 +95,20 @@ namespace ShippingDisplay.ShippingDisplay
             FormsAuthentication.SignOut();
             FormsAuthentication.RedirectToLoginPage();
         }
-        protected void DAILYOUTPUT_DOCK1_COATINGS_REGISTER_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void DAILYOUTPUT_DOCK1_REGISTER_COATINGS_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                string Estado = e.Row.Cells[8].Text;
-                if (Estado == "ONTIME")
+                string Estado = e.Row.Cells[9].Text;
+                if (Estado == "On time")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#28a745");
                 }
-                else if (Estado == "SHIPPED")
+                else if (Estado == "Shipped")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#17a2b8");
                 }
-                else if (Estado == "DELAYED")
+                else if (Estado == "Delayed")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#dc3545");
                     e.Row.CssClass = "blink";

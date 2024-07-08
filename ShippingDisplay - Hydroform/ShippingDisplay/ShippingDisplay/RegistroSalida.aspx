@@ -361,19 +361,46 @@
                         <asp:HyperLink ID="LinkConfig" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-edit"></i><p>Daily Log<i class="fas fa-angle-left right"></i></p>
                         </asp:HyperLink>
+
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="RegistroEntrada.aspx" runat="server" Visible="true"  class="nav-link"> 
-                                    <i class="far fa-circle nav-icon"></i><p>Inputs</p>
+                                <asp:HyperLink ID="dailylog_input_coatings" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i><p>HYDROFORM<i class="fas fa-angle-left right"></i></p>
                                 </asp:HyperLink>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkRegEntry" NavigateUrl="RegistroEntrada.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                            <i class="far fa-circle nav-icon"></i><p>Inputs</p>
+                                        </asp:HyperLink>
+                                    </li>
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkRegOut" NavigateUrl="RegistroSalida.aspx" runat="server" Visible="true"  class="nav-link" > 
+                                            <i class="far fa-circle nav-icon"></i><p>Outputs</p>
+                                        </asp:HyperLink>
+                                    </li>
+                                </ul>
                             </li>
+
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="RegistroSalida.aspx" runat="server" Visible="true"  class="nav-link" > 
-                                    <i class="far fa-circle nav-icon"></i><p>Outputs</p>
+                                <asp:HyperLink ID="dailylog_output_coatings" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i><p>COATINGS<i class="fas fa-angle-left right"></i></p>
                                 </asp:HyperLink>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkRegEntry_coatings" NavigateUrl="RegistroEntrada_Coatings.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                            <i class="far fa-circle nav-icon"></i><p>Inputs</p>
+                                        </asp:HyperLink>
+                                    </li>
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkRegOut_coatings" NavigateUrl="RegistroSalida_Coatings.aspx" runat="server" Visible="true"  class="nav-link" > 
+                                            <i class="far fa-circle nav-icon"></i><p>Outputs</p>
+                                        </asp:HyperLink>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </li>
+
                     <li class="nav-item">
                         <asp:HyperLink ID="LinkShipper" NavigateUrl="SHIPPER.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-book"></i><p>Shipper</p>

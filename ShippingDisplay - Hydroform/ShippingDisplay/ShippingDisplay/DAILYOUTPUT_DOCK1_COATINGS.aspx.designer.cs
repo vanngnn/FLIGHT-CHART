@@ -393,15 +393,6 @@ namespace ShippingDisplay.ShippingDisplay
         protected global::System.Web.UI.WebControls.HyperLink dailyoutput_dock1_coatings;
 
         /// <summary>
-        /// dailyoutput_dock2_coatings control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink dailyoutput_dock2_coatings;
-
-        /// <summary>
         /// dailyoutput_dock3_coatings control.
         /// </summary>
         /// <remarks>
@@ -525,6 +516,6 @@ namespace ShippingDisplay.ShippingDisplay
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView DAILYOUTPUT_DOCK1_COATINGS_REGISTER;
+        protected global::System.Web.UI.WebControls.GridView DAILYOUTPUT_DOCK1_REGISTER_COATINGS;
     }
 }
