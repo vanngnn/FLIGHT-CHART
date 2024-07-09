@@ -115,8 +115,8 @@ namespace ShippingDisplay.ShippingDisplay
         // DONE
         protected void btnRegistrar_Click(object sender, EventArgs e) //onclick for register button
         {
-            //try
-            //{
+            try
+            {
             string Username = HttpContext.Current.User.Identity.Name;
             CargarPerfil(Username);
             string ID;
@@ -140,6 +140,7 @@ namespace ShippingDisplay.ShippingDisplay
                     Reg.shipStatus_output_coatings = StatusDropDown.SelectedItem.Text;
                     Reg.shipReason_output_coatings = ReasonDropDown.SelectedItem.Text;
                     Reg.shipComment_output_coatings = txtComment.Text;
+                    Reg.Id_all_output_coatings = Convert.ToInt32(txtId_all.Text);
 
                 }
                 RegistroDAL.AgregarNuevo_output_coatings(Reg);
@@ -180,8 +181,9 @@ namespace ShippingDisplay.ShippingDisplay
                         Reg.shipStatus_output_coatings = StatusDropDown.SelectedItem.Text;
                         Reg.shipReason_output_coatings = ReasonDropDown.SelectedItem.Text;
                         Reg.shipComment_output_coatings = txtComment.Text;
+                        Reg.Id_all_output_coatings = Convert.ToInt32(txtId_all.Text);
                     }
-                    RegistroDAL.ActualizarRegistro(Reg);
+                    RegistroDAL.ActualizarRegistro_output_coatings(Reg);
                     CleanControl(this.Controls);
                     CargarGrid();
                     string script = @"<script type='text/javascript'> alert('Updated successfully'); </script>";
@@ -193,12 +195,12 @@ namespace ShippingDisplay.ShippingDisplay
                     ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
                 }
             }
-            //}
-            //catch
-            //{
-            //   string script = @"<script type='text/javascript'> alert('Oops! Something went wrong.'); </script>";
-            //    ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
-            //}
+            }
+            catch
+            {
+               string script = @"<script type='text/javascript'> alert('Oops! Something went wrong.'); </script>";
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
+            }
         }
         private void CargarGrid()
         {
@@ -209,35 +211,41 @@ namespace ShippingDisplay.ShippingDisplay
 
         protected void gvRegistros_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Editar")
+            if (e.CommandName == "Editar" || e.CommandName == "Eliminar")
             {
-                int index = int.Parse(e.CommandArgument.ToString());
-                int cod = int.Parse(gvRegistros.Rows[index].Cells[0].Text);
-                CargarRegistro(cod);
-            }
-            else if (e.CommandName == "Eliminar")
-            {
-                int index = int.Parse(e.CommandArgument.ToString());
-                int cod = int.Parse(gvRegistros.Rows[index].Cells[0].Text);
-                try
+                // Get the row index from CommandArgument
+                int index = Convert.ToInt32(e.CommandArgument);
+
+                // Get the Id_all value from DataKeys
+                int cod = Convert.ToInt32(gvRegistros.DataKeys[index].Value);
+
+                if (e.CommandName == "Editar")
                 {
-                    RegistroDAL.EliminarRegistro(cod);
-                    CleanControl(this.Controls);
-                    CargarGrid();
+                    CargarRegistro_output_coatings(cod);
                 }
-                catch (Exception)
+                else if (e.CommandName == "Eliminar")
                 {
-                    throw;
+                    try
+                    {
+                        RegistroDAL.EliminarRegistro_output_coatings(cod);
+                        CleanControl(this.Controls);
+                        CargarGrid();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle the exception (e.g., log it, show a message to the user, etc.)
+                        throw;
+                    }
                 }
             }
         }
 
         //DONE
-        private void CargarRegistro(int Id_all_output_coatings)
+        private void CargarRegistro_output_coatings(int Id_all_output_coatings)
         {
-            Registro Reg = RegistroDAL.ObtenerById(Id_all_output_coatings);
+            Registro Reg = RegistroDAL.ObtenerById_output_coatings(Id_all_output_coatings);
             txtId_all.Text = Convert.ToString(Reg.Id_all_output_coatings);
-            EntryDate.Text = Convert.ToString(Reg.assignedDate_output_coatings);
+            EntryDate.Text = Reg.assignedDate_output_coatings.ToString("yyyy-MM-dd");
             fromTime.Text = Convert.ToString(Reg.assignedFromtime_output_coatings);
             toTime.Text = Convert.ToString(Reg.assignedTotime_output_coatings);
             txtPN.Text = Convert.ToString(Reg.partNumber_output_coatings);

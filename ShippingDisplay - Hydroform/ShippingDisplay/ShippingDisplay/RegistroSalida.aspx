@@ -407,7 +407,7 @@
                         </asp:HyperLink>
                     </li>
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkReport" NavigateUrl="REPORTS.aspx" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkReport" NavigateUrl="Reportes.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon far fa-calendar-alt"></i><p>Reports</p>
                         </asp:HyperLink>
                     </li>
@@ -582,8 +582,9 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
+                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all_output" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
                                 <Columns>
+                                    <asp:BoundField HeaderText="ID" DataField="Id_all_output" Visible="false" />
                                     <asp:BoundField HeaderText="DATE" DataField="assignedDate_output" />
                                     <asp:BoundField HeaderText="ASSIGNED TIME" DataField="TimePeriodAssigned_output" />
                                     <asp:BoundField HeaderText="P/N" DataField="partNumber_output" />

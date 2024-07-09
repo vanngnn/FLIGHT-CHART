@@ -162,8 +162,8 @@ namespace ShippingDisplay.ShippingDisplay
             }
             else
             {
-                try
-                {
+                //try
+                //{
                     //DEFINICIÓN DE VARIABLES LOCALES
                     Registro Reg = new Registro();
                     {
@@ -180,18 +180,19 @@ namespace ShippingDisplay.ShippingDisplay
                         Reg.shipStatus_output = StatusDropDown.SelectedItem.Text;
                         Reg.shipReason_output = ReasonDropDown.SelectedItem.Text;
                         Reg.shipComment_output = txtComment.Text;
+                        Reg.Id_all_output= Convert.ToInt32(txtId_all.Text);
                     }
-                    RegistroDAL.ActualizarRegistro(Reg);
+                    RegistroDAL.ActualizarRegistro_output(Reg);
                     CleanControl(this.Controls);
                     CargarGrid();
                     string script = @"<script type='text/javascript'> alert('Updated successfully'); </script>";
                     ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
-                }
-                catch
-                {
-                    string script = @"<script type='text/javascript'> alert('Error sending email notification'); </script>";
-                    ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
-                }
+                //}
+                //catch
+                //{
+                  //  string script = @"<script type='text/javascript'> alert('Error sending email notification'); </script>";
+                    //ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
+                //}
             }
             //}
             //catch
@@ -202,32 +203,38 @@ namespace ShippingDisplay.ShippingDisplay
         }
         private void CargarGrid()
         {
-            int shipStatus = 1;
+            int shipStatus = 2;
             gvRegistros.DataSource = RegistroDAL.ListadoRegistros_output(shipStatus);
             gvRegistros.DataBind();
         }
 
         protected void gvRegistros_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Editar")
+            if (e.CommandName == "Editar" || e.CommandName == "Eliminar")
             {
-                int index = int.Parse(e.CommandArgument.ToString());
-                int cod = int.Parse(gvRegistros.Rows[index].Cells[0].Text);
-                CargarRegistro(cod);
-            }
-            else if (e.CommandName == "Eliminar")
-            {
-                int index = int.Parse(e.CommandArgument.ToString());
-                int cod = int.Parse(gvRegistros.Rows[index].Cells[0].Text);
-                try
+                // Get the row index from CommandArgument
+                int index = Convert.ToInt32(e.CommandArgument);
+
+                // Get the Id_all value from DataKeys
+                int cod = Convert.ToInt32(gvRegistros.DataKeys[index].Value);
+
+                if (e.CommandName == "Editar")
                 {
-                    RegistroDAL.EliminarRegistro(cod);
-                    CleanControl(this.Controls);
-                    CargarGrid();
+                    CargarRegistro(cod);
                 }
-                catch (Exception)
+                else if (e.CommandName == "Eliminar")
                 {
-                    throw;
+                    try
+                    {
+                        RegistroDAL.EliminarRegistro_output(cod);
+                        CleanControl(this.Controls);
+                        CargarGrid();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle the exception (e.g., log it, show a message to the user, etc.)
+                        throw;
+                    }
                 }
             }
         }
@@ -235,9 +242,9 @@ namespace ShippingDisplay.ShippingDisplay
         //DONE
         private void CargarRegistro(int Id_all_output)
         {
-            Registro Reg = RegistroDAL.ObtenerById(Id_all_output);
+            Registro Reg = RegistroDAL.ObtenerById_output(Id_all_output);
             txtId_all.Text = Convert.ToString(Reg.Id_all_output);
-            EntryDate.Text = Convert.ToString(Reg.assignedDate_output);
+            EntryDate.Text = Reg.assignedDate_output.ToString("yyyy-MM-dd");
             fromTime.Text = Convert.ToString(Reg.assignedFromtime_output);
             toTime.Text = Convert.ToString(Reg.assignedTotime_output);
             txtPN.Text = Convert.ToString(Reg.partNumber_output);

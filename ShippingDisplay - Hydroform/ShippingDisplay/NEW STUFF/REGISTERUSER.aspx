@@ -123,7 +123,7 @@
                         </asp:HyperLink>
                     </li>
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkReport" NavigateUrl="REPORTS.aspx" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkReport" NavigateUrl="Reportes.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon far fa-calendar-alt"></i><p>Reports</p>
                         </asp:HyperLink>
                     </li>

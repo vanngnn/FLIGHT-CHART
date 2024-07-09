@@ -11,7 +11,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
 {
     public class Correo
     {
-        public void enviarCorreo(string destinatario, string copia, string Msj, string Msj2, string PlantaC, string CarrierName, string Caja)
+        public void enviarCorreo(string destinatario, string copia, string Msj, string Msj2, string PlantaC, string CarrierName, int Caja)
         {
             DateTime date = DateTime.Today;
             string Hora = DateTime.Now.ToString("HH:mm:ss");

@@ -395,7 +395,7 @@
                         </asp:HyperLink>
                     </li>
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkReport" NavigateUrl="REPORTS.aspx" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkReport" NavigateUrl="Reportes.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon far fa-calendar-alt"></i><p>Reports</p>
                         </asp:HyperLink>
                     </li>
@@ -444,7 +444,6 @@
         <section class="content">
             <!-- container-fluid -->
             <div class="container-fluid">
-               
                 <!-- Small boxes (Stat box) -->
                 <div class="card card-default">
                     <!-- Horizontal Form -->
@@ -456,38 +455,40 @@
                         <!-- form start -->
                         <div class="card-body">
                             <!-- Date range -->
-
-                            <div class="form-group">
-                                <label>Date:</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="far fa-calendar-alt"></i>
-                                        </span>
+                            <div class="form-group row">
+                                <label for="reservation" class="col-sm-2 col-form-label">Date:</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="far fa-calendar-alt"></i>
+                                            </span>
+                                        </div>
+                                        <asp:TextBox ID="reservation" class="form-control float-right" runat="server"></asp:TextBox>
                                     </div>
-                                    <asp:TextBox ID="reservation" class="form-control float-right" runat="server"></asp:TextBox>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label>Plant:</label>
-                                <div class="input-group"> 
-                                    <asp:DropDownList ID="dblPlanta" runat="server" class="select2" style="width: 100%;"></asp:DropDownList>
+                            <div class="form-group row">
+                                <label for="dblPlanta" class="col-sm-2 col-form-label">Plant:</label>
+                                <div class="col-sm-10">
+                                    <asp:DropDownList ID="dblPlanta" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label>Type of shipment:</label>
-                                <div class="input-group">
-                                    <asp:DropDownList ID="ReportFilterDropDown" runat="server" class="select2" style="width: 100%;"></asp:DropDownList>
+                            <div class="form-group row">
+                                <label for="ReportFilterDropDown" class="col-sm-2 col-form-label">Type of shipment:</label>
+                                <div class="col-sm-10">
+                                    <asp:DropDownList ID="ReportFilterDropDown" runat="server" class="form-control select2" style="width: 100%;"></asp:DropDownList>
                                 </div>
                             </div>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <asp:Button ID="btnFiltrar" runat="server" Text="Filter"  class="btn btn-block btn-info btn-lg" OnClick="btnFiltrar_Click" />
+                            <asp:Button ID="btnFiltrar" runat="server" Text="Filter" class="btn btn-block btn-info btn-lg" OnClick="btnFiltrar_Click" />
                         </div>
-                            <!-- /.card-footer -->                  
+                        <!-- /.card-footer -->
+
                     </div>
                     <!-- /.card -->
                 </div>

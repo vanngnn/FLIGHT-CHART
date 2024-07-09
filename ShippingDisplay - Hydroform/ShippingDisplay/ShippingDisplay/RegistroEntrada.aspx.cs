@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Web.Security;
 using ShippingDisplay.ShippingDisplay.DataAccess;
 using ShippingDisplay.ShippingDisplay.DataAccess.Entidades;
+using System.Globalization;
 
 namespace ShippingDisplay.ShippingDisplay
 {
@@ -115,8 +116,8 @@ namespace ShippingDisplay.ShippingDisplay
         // DONE
         protected void btnRegistrar_Click(object sender, EventArgs e) //onclick for register button
         {
-            //try
-            //{
+            try
+            {
             string Username = HttpContext.Current.User.Identity.Name;
             CargarPerfil(Username);
             string ID;
@@ -161,13 +162,14 @@ namespace ShippingDisplay.ShippingDisplay
                 CargarGrid();
             }
             else
+
             {
                 try
                 {
                     //DEFINICIÓN DE VARIABLES LOCALES
                     Registro Reg = new Registro();
                     {
-                        Reg.assignedDate = Convert.ToDateTime(EntryDate.Text);
+                        Reg.assignedDate= Convert.ToDateTime(EntryDate.Text);
                         Reg.assignedFromtime = Convert.ToString(fromTime.Text);
                         Reg.assignedTotime = Convert.ToString(toTime.Text);
                         Reg.partNumber = txtPN.Text;
@@ -180,6 +182,7 @@ namespace ShippingDisplay.ShippingDisplay
                         Reg.shipStatus = StatusDropDown.SelectedItem.Text;
                         Reg.shipReason = ReasonDropDown.SelectedItem.Text;
                         Reg.shipComment = txtComment.Text;
+                        Reg.Id_all = Convert.ToInt32(txtId_all.Text);
                     }
                     RegistroDAL.ActualizarRegistro(Reg);
                     CleanControl(this.Controls);
@@ -193,12 +196,12 @@ namespace ShippingDisplay.ShippingDisplay
                     ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
                 }
             }
-            //}
-            //catch
-            //{
-            //   string script = @"<script type='text/javascript'> alert('Oops! Something went wrong.'); </script>";
-            //    ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
-            //}
+            }
+            catch
+            {
+               string script = @"<script type='text/javascript'> alert('Oops! Something went wrong.'); </script>";
+               ScriptManager.RegisterStartupScript(this, typeof(Page), "Alert", script, false);
+            }
         }
         private void CargarGrid()
         {
@@ -209,35 +212,42 @@ namespace ShippingDisplay.ShippingDisplay
 
         protected void gvRegistros_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Editar")
+            if (e.CommandName == "Editar" || e.CommandName == "Eliminar")
             {
-                int index = int.Parse(e.CommandArgument.ToString());
-                int cod = int.Parse(gvRegistros.Rows[index].Cells[0].Text);
-                CargarRegistro(cod);
-            }
-            else if (e.CommandName == "Eliminar")
-            {
-                int index = int.Parse(e.CommandArgument.ToString());
-                int cod = int.Parse(gvRegistros.Rows[index].Cells[0].Text);
-                try
+                // Get the row index from CommandArgument
+                int index = Convert.ToInt32(e.CommandArgument);
+
+                // Get the Id_all value from DataKeys
+                int cod = Convert.ToInt32(gvRegistros.DataKeys[index].Value);
+
+                if (e.CommandName == "Editar")
                 {
-                    RegistroDAL.EliminarRegistro(cod);
-                    CleanControl(this.Controls);
-                    CargarGrid();
+                    CargarRegistro(cod);
                 }
-                catch (Exception)
+                else if (e.CommandName == "Eliminar")
                 {
-                    throw;
+                    try
+                    {
+                        RegistroDAL.EliminarRegistro(cod);
+                        CleanControl(this.Controls);
+                        CargarGrid();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle the exception (e.g., log it, show a message to the user, etc.)
+                        throw;
+                    }
                 }
             }
         }
+
 
         //DONE
         private void CargarRegistro(int Id_all)
         {
             Registro Reg = RegistroDAL.ObtenerById(Id_all);
             txtId_all.Text = Convert.ToString(Reg.Id_all);
-            EntryDate.Text = Convert.ToString(Reg.assignedDate);
+            EntryDate.Text = Reg.assignedDate.ToString("yyyy-MM-dd");
             fromTime.Text = Convert.ToString(Reg.assignedFromtime);
             toTime.Text = Convert.ToString(Reg.assignedTotime);
             txtPN.Text = Convert.ToString(Reg.partNumber);
@@ -250,11 +260,6 @@ namespace ShippingDisplay.ShippingDisplay
             StatusDropDown.SelectedValue = Convert.ToString(Reg.shipStatus);
             ReasonDropDown.SelectedValue = Convert.ToString(Reg.shipReason);
             txtComment.Text = Convert.ToString(Reg.shipComment);
-            // txtPlacas.Text = Convert.ToString(Reg.Placas);
-            // txtCaja.Text = Convert.ToString(Reg.Caja);
-            // txtOperador.Text = Convert.ToString(Reg.NombreOperador);
-            // txtTelefono.Text = Convert.ToString(Reg.Telefono);
-            // txtAcceso.Text = Convert.ToString(Reg.Tarjeta);
         }
 
         //DONT KNOW BUT SEEMS DONE
