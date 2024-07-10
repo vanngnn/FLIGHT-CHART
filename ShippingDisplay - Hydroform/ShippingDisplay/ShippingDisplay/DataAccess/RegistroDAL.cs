@@ -181,36 +181,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
 
             return Reg;
         }
-        //GRIDVIEW X PLANTA - LIST DASHBOARD - DONE
 
-        //public static List<Registro> ListadoDashboard (int Id_planta)
-        //{
-        //   List<Registro> lista = new List<Registro>();
-        // using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
-        //{
-        //    conn.Open();
-        //   string query = @"SELECT H.Id_all,H.EntryDate,H.From_time,H.To_time AS TimeRange,H.Part_number, H.Id_cliente, H.Id_planta,H.Id_carrier,H.Bill_of_Lading, H.Quantity,H.Dock,H.shipStatus, H.shipReason,H.shipComment, C.description AS 'Cliente',L.description AS 'Carrier',
-        //          CASE WHEN shipStatus = 3 THEN 'SHIPPED' WHEN shipStatus = 1 THEN 'EARRING'
-        //               --WHEN shipStatus = 2 THEN 'ONTIME'
-        //               WHEN shipStatus = 2 THEN 'ONTIME'
-        //               WHEN shipStatus = 2 THEN 'DELAYED' END AS ESTADO 
-        //          FROM [dbo].[LogInput] H
-        //         INNER JOIN [dbo].[Shipdet] D ON H.Id_all=D.Id_all 
-        //         INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
-        //         INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier 
-        //         WHERE  H.Id_planta=@Id_planta ";
-        // SqlCommand cmd = new SqlCommand(query, conn);
-        //cmd.Parameters.AddWithValue("@Id_planta", Id_planta);
-        // SqlDataReader reader = cmd.ExecuteReader();
-        //while (reader.Read())
-        //{
-        //   lista.Add(ConvertirDash(reader));
-        //    }
-        // }
-        //   return lista;
-        //}
-
-        //CONVERT VALUES - DONE
         private static Registro ConvertirDash(IDataReader reader)
         {
             Registro Reg = new Registro();
@@ -248,7 +219,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             }
             return Reg;
         }
-        //OBTENER WIDGETS - NOT DONE
+        //COUNT SHIP STATUS AND DISPLAY IT ON "ALL" - DASHBOARD - HYDROFORM
         public static Registro ObtenerRegistros(int Id_planta)
         {
             Registro list = null;
@@ -256,18 +227,16 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             {
                 con.Open();
                 string query = @"
-                        SELECT DISTINCT  
-                        (SELECT ISNULL((Count(H.shipStatus)),0) FROM LogInput H  WHERE H.shipStatus = 3 = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta ) AS 'SHIPPED',
-
-                        (SELECT ISNULL((Count(H.shipStatus)),0) FROM LogInput H  WHERE H.shipStatus = 1 = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta) AS 'EARRING',
-
-                        (SELECT ISNULL((Count(H.shipStatus)),0) FROM LogInput H  
-
-                        WHERE shipStatus = 2 = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta)AS 'ONTIME' ,
-
-                        (SELECT ISNULL((Count(H.shipStatus)),0) AS 'DELAYED' FROM LogInput H 
-                        WHERE H.shipStatus = 2  = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta) AS 'DELAYED' 
-                        FROM LogInput ";
+                        SELECT
+                        ISNULL(SUM(CASE WHEN H.shipStatus = 'On time' AND (CONVERT(DATE, H.EntryDate) = CONVERT(DATE, GETDATE()) OR H.EntryDate > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'OnTime',
+                        ISNULL(SUM(CASE WHEN H.shipStatus = 'Delayed' THEN 1 ELSE 0 END), 0) AS 'Delayed',
+                        ISNULL(SUM(CASE WHEN H.shipStatus = 'Without shipper' THEN 1 ELSE 0 END), 0) AS 'WithoutShipper',
+                        ISNULL(SUM(CASE WHEN H.shipStatus = 'Shipped' AND (CONVERT(DATE, H.EntryDate) = CONVERT(DATE, GETDATE()) OR H.EntryDate > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'Shipped'
+                    FROM (
+                        SELECT shipStatus, EntryDate FROM LogInput
+                        UNION ALL
+                        SELECT shipStatus_output AS shipStatus, EntryDate_output AS EntryDate FROM LogOutput
+                    ) AS H;";
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@Id_planta", Id_planta);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -279,17 +248,208 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             return list;
         }
 
+        //COUNT SHIP STATUS AND DISPLAY IT ON "DOCK" - DASHBOARD - HYDROFORM - BOTH INS AND OUTS
+        public static Registro ObtenerRegistros_dashboard_dock(string dockName)
+        {
+            Registro list = null;
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                con.Open();
+                string query = @"
+            SELECT
+                ISNULL(SUM(CASE WHEN H.shipStatus = 'On time' AND (CONVERT(DATE, H.EntryDate) = CONVERT(DATE, GETDATE()) OR H.EntryDate > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'OnTime',
+                ISNULL(SUM(CASE WHEN H.shipStatus = 'Delayed' THEN 1 ELSE 0 END), 0) AS 'Delayed',
+                ISNULL(SUM(CASE WHEN H.shipStatus = 'Without shipper' THEN 1 ELSE 0 END), 0) AS 'WithoutShipper',
+                ISNULL(SUM(CASE WHEN H.shipStatus = 'Shipped' AND (CONVERT(DATE, H.EntryDate) = CONVERT(DATE, GETDATE()) OR H.EntryDate > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'Shipped'
+            FROM (
+                SELECT shipStatus, EntryDate, Dock FROM LogInput
+                UNION ALL
+                SELECT shipStatus_output AS shipStatus, EntryDate_output AS EntryDate, Dock_output AS Dock FROM LogOutput
+            ) AS H
+            WHERE H.Dock = @dockName;";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@dockName", dockName);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    list = Convertir(reader);
+                }
+
+                reader.Close();
+            }
+
+            return list;
+        }
+        public static Registro ObtenerRegistros_dashboard_dock_coatings(string dockName)
+        {
+            Registro list = null;
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                con.Open();
+                string query = @"
+            SELECT
+                ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'On time' AND (CONVERT(DATE, H.EntryDate_coatings) = CONVERT(DATE, GETDATE()) OR H.EntryDate_coatings > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'OnTime',
+                ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'Delayed' THEN 1 ELSE 0 END), 0) AS 'Delayed',
+                ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'Without shipper' THEN 1 ELSE 0 END), 0) AS 'WithoutShipper',
+                ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'Shipped' AND (CONVERT(DATE, H.EntryDate_coatings) = CONVERT(DATE, GETDATE()) OR H.EntryDate_coatings > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'Shipped'
+            FROM (
+                SELECT shipStatus_coatings, EntryDate_coatings, Dock_coatings FROM LogInput_coatings
+                UNION ALL
+                SELECT shipStatus_output_coatings AS shipStatus_coatings, EntryDate_output_coatings AS EntryDate_coatings, Dock_output_coatings AS Dock_coatings FROM LogOutput_coatings
+            ) AS H
+            WHERE H.Dock_coatings = @dockName;";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@dockName", dockName);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    list = Convertir(reader);
+                }
+
+                reader.Close();
+            }
+
+            return list;
+        }
+
+        public static Registro ObtenerRegistros_shipment_dock_input(string dockName)
+        {
+            Registro list = null;
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                con.Open();
+                string query = @"
+            SELECT
+            ISNULL(SUM(CASE WHEN shipStatus = 'On time' AND (CONVERT(DATE, EntryDate) = CONVERT(DATE, GETDATE()) OR EntryDate > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'OnTime',
+            ISNULL(SUM(CASE WHEN shipStatus = 'Delayed' THEN 1 ELSE 0 END), 0) AS 'Delayed',
+            ISNULL(SUM(CASE WHEN shipStatus = 'Without shipper' THEN 1 ELSE 0 END), 0) AS 'WithoutShipper',
+            ISNULL(SUM(CASE WHEN shipStatus = 'Shipped' AND (CONVERT(DATE, EntryDate) = CONVERT(DATE, GETDATE()) OR EntryDate > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'Shipped'
+            FROM LogInput
+            WHERE Dock = @dockName;";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@dockName", dockName);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    list = Convertir(reader);
+                }
+
+                reader.Close();
+            }
+
+            return list;
+        }
+
+        public static Registro ObtenerRegistros_shipment_dock_output(string dockName)
+        {
+            Registro list = null;
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                con.Open();
+                string query = @"
+            SELECT
+            ISNULL(SUM(CASE WHEN shipStatus_output = 'On time' AND (CONVERT(DATE, EntryDate_output) = CONVERT(DATE, GETDATE()) OR EntryDate_output > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'OnTime',
+            ISNULL(SUM(CASE WHEN shipStatus_output = 'Delayed' THEN 1 ELSE 0 END), 0) AS 'Delayed',
+            ISNULL(SUM(CASE WHEN shipStatus_output = 'Without shipper' THEN 1 ELSE 0 END), 0) AS 'WithoutShipper',
+            ISNULL(SUM(CASE WHEN shipStatus_output = 'Shipped' AND (CONVERT(DATE, EntryDate_output) = CONVERT(DATE, GETDATE()) OR EntryDate_output > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'Shipped'
+            FROM LogOutput
+            WHERE Dock_output = @dockName;";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@dockName", dockName);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    list = Convertir(reader);
+                }
+
+                reader.Close();
+            }
+
+            return list;
+        }
+
+        // COUNT SHIP STATUS - SHIPMENT - INS AND OUTS SEPARATELY - COATINGS
+        public static Registro ObtenerRegistros_shipment_dock_input_coatings(string dockName)
+        {
+            Registro list = null;
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                con.Open();
+                string query = @"
+            SELECT
+            ISNULL(SUM(CASE WHEN shipStatus_coatings = 'On time' AND (CONVERT(DATE, EntryDate_coatings) = CONVERT(DATE, GETDATE()) OR EntryDate_coatings > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'OnTime',
+            ISNULL(SUM(CASE WHEN shipStatus_coatings = 'Delayed' THEN 1 ELSE 0 END), 0) AS 'Delayed',
+            ISNULL(SUM(CASE WHEN shipStatus_coatings = 'Without shipper' THEN 1 ELSE 0 END), 0) AS 'WithoutShipper',
+            ISNULL(SUM(CASE WHEN shipStatus_coatings = 'Shipped' AND (CONVERT(DATE, EntryDate_coatings) = CONVERT(DATE, GETDATE()) OR EntryDate_coatings > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'Shipped'
+            FROM LogInput_coatings
+            WHERE Dock_coatings = @dockName;";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@dockName", dockName);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    list = Convertir(reader);
+                }
+
+                reader.Close();
+            }
+
+            return list;
+        }
+
+        public static Registro ObtenerRegistros_shipment_dock_output_coatings(string dockName)
+        {
+            Registro list = null;
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                con.Open();
+                string query = @"
+            SELECT
+            ISNULL(SUM(CASE WHEN shipStatus_output_coatings = 'On time' AND (CONVERT(DATE, EntryDate_output_coatings) = CONVERT(DATE, GETDATE()) OR EntryDate_output_coatings > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'OnTime',
+            ISNULL(SUM(CASE WHEN shipStatus_output_coatings = 'Delayed' THEN 1 ELSE 0 END), 0) AS 'Delayed',
+            ISNULL(SUM(CASE WHEN shipStatus_output_coatings = 'Without shipper' THEN 1 ELSE 0 END), 0) AS 'WithoutShipper',
+            ISNULL(SUM(CASE WHEN shipStatus_output_coatings = 'Shipped' AND (CONVERT(DATE, EntryDate_output_coatings) = CONVERT(DATE, GETDATE()) OR EntryDate_output_coatings > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'Shipped'
+            FROM LogOutput_coatings
+            WHERE Dock_output_coatings = @dockName;";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@dockName", dockName);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    list = Convertir(reader);
+                }
+
+                reader.Close();
+            }
+
+            return list;
+        }
+
         //DONT KNOW WHAT THIS IS FOR - NOT DONE
 
         private static Registro Convertir(IDataReader reader)
         {
             Registro list = new Registro();
-            list.Completed = Convert.ToString(reader["SHIPPED"]);
-            list.Pendiente = Convert.ToString(reader["EARRING"]);
-            list.Ontime = Convert.ToString(reader["ONTIME"]);
-            list.DELAYED = Convert.ToString(reader["DELAYED"]);
+            list.OnTime = Convert.ToString(reader["OnTime"]);
+            list.Delayed = Convert.ToString(reader["Delayed"]);
+            list.WithoutShipper = Convert.ToString(reader["WithoutShipper"]);
+            list.Shipped = Convert.ToString(reader["Shipped"]);
             return list;
         }
+
+
 
         //FITLER REPORT - NOT DONE
         public static List<Registro> FiltroReporte(int Id_planta, string FechaIni, string FechaFin)
@@ -570,7 +730,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         //          CASE WHEN shipStatus = 3 THEN 'SHIPPED' WHEN shipStatus = 1 THEN 'EARRING'
         //               --WHEN shipStatus = 2 THEN 'ONTIME'
         //               WHEN shipStatus = 2 THEN 'ONTIME'
-        //               WHEN shipStatus = 2 THEN 'DELAYED' END AS ESTADO 
+        //               WHEN shipStatus = 2 THEN 'Delayed' END AS ESTADO 
         //          FROM [dbo].[LogInput] H
         //         INNER JOIN [dbo].[Shipdet] D ON H.Id_all=D.Id_all 
         //         INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
@@ -627,8 +787,8 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
 
                         WHERE shipStatus = 2 = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta)AS 'ONTIME' ,
 
-                        (SELECT ISNULL((Count(H.shipStatus)),0) AS 'DELAYED' FROM LogInput H 
-                        WHERE H.shipStatus = 2  = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta) AS 'DELAYED' 
+                        (SELECT ISNULL((Count(H.shipStatus)),0) AS 'Delayed' FROM LogInput H 
+                        WHERE H.shipStatus = 2  = CONVERT(DATE,GETDATE()) AND H.Id_planta=@Id_planta) AS 'Delayed' 
                         FROM LogInput ";
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@Id_planta", Id_planta);
@@ -646,10 +806,10 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         private static Registro Convertir_output(IDataReader reader)
         {
             Registro list = new Registro();
-            list.Completed = Convert.ToString(reader["SHIPPED"]);
-            list.Pendiente = Convert.ToString(reader["EARRING"]);
-            list.Ontime = Convert.ToString(reader["ONTIME"]);
-            list.DELAYED = Convert.ToString(reader["DELAYED"]);
+            list.Shipped = Convert.ToString(reader["SHIPPED"]);
+            list.WithoutShipper = Convert.ToString(reader["EARRING"]);
+            list.OnTime = Convert.ToString(reader["ONTIME"]);
+            list.Delayed = Convert.ToString(reader["Delayed"]);
             return list;
         }
 
@@ -782,51 +942,56 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             {
                 conn.Open();
                 string query = @"
-        SELECT 'LogInput' AS SourceTable, H.Id_all, H.EntryDate AS EntryDate,H.From_time,H.To_time,H.Part_number,H.Id_cliente,H.Id_planta,H.Id_carrier,H.Bill_of_Lading,H.Quantity,H.Dock,H.shipStatus,
-                       H.shipReason,H.shipComment,
+                        SELECT 'LogInput' AS SourceTable, 
+                       H.Id_all, 
+                       H.EntryDate AS EntryDate, 
+                       H.From_time, 
+                       H.To_time, 
+                       H.Part_number, 
+                       H.Id_cliente, 
+                       H.Id_planta, 
+                       H.Id_carrier, 
+                       H.Bill_of_Lading, 
+                       H.Quantity, 
+                       H.Dock, 
+                       H.shipStatus,
+                       H.shipReason,
+                       H.shipComment,
                        C.description AS Cliente,
                        L.description AS Carrier,
                        P.description AS Plant
-        FROM 
-            [dbo].[LogInput] H
-        INNER JOIN 
-            [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
-        INNER JOIN 
-            [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier
-        INNER JOIN 
-            [dbo].[Planta] P ON H.Id_planta = P.id_planta
+                FROM [dbo].[LogInput] H
+                INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
+                INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier
+                INNER JOIN [dbo].[Planta] P ON H.Id_planta = P.id_planta
+                WHERE (H.shipStatus != 'Shipped' OR H.EntryDate >= CAST(GETDATE() AS DATE))
 
-        UNION
+                UNION
 
-        SELECT 
-            'LogOutput' AS SourceTable,
-            H.Id_all_output,
-            H.EntryDate_output AS EntryDate,
-            H.From_time_output AS From_time,
-            H.To_time_output AS To_time,
-            H.Part_number_output AS Part_number,
-            H.Id_cliente_output AS Id_cliente,
-            H.Id_planta_output AS Id_planta,
-            H.Id_carrier_output AS Id_carrier,
-            H.Bill_of_Lading_output AS Bill_of_Lading,
-            H.Quantity_output AS Quantity,
-            H.Dock_output AS Dock,
-            H.shipStatus_output AS shipStatus,
-            H.shipReason_output AS shipReason,
-            H.shipComment_output AS shipComment,
-            C.description AS Cliente,
-            L.description AS Carrier,
-            P.description AS Plant
-        FROM 
-            [dbo].[LogOutput] H
-        INNER JOIN 
-            [dbo].[Cliente] C ON H.Id_cliente_output = C.id_cliente
-        INNER JOIN 
-            [dbo].[Carrier] L ON H.Id_carrier_output = L.id_carrier
-        INNER JOIN 
-            [dbo].[Planta] P ON H.Id_planta_output = P.id_planta
-        ORDER BY 
-            EntryDate ASC";
+                SELECT 'LogOutput' AS SourceTable,
+                       H.Id_all_output,
+                       H.EntryDate_output AS EntryDate,
+                       H.From_time_output AS From_time,
+                       H.To_time_output AS To_time,
+                       H.Part_number_output AS Part_number,
+                       H.Id_cliente_output AS Id_cliente,
+                       H.Id_planta_output AS Id_planta,
+                       H.Id_carrier_output AS Id_carrier,
+                       H.Bill_of_Lading_output AS Bill_of_Lading,
+                       H.Quantity_output AS Quantity,
+                       H.Dock_output AS Dock,
+                       H.shipStatus_output AS shipStatus,
+                       H.shipReason_output AS shipReason,
+                       H.shipComment_output AS shipComment,
+                       C.description AS Cliente,
+                       L.description AS Carrier,
+                       P.description AS Plant
+                FROM [dbo].[LogOutput] H
+                INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_output = C.id_cliente
+                INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_output = L.id_carrier
+                INNER JOIN [dbo].[Planta] P ON H.Id_planta_output = P.id_planta
+                WHERE (H.shipStatus_output != 'Shipped' OR H.EntryDate_output >= CAST(GETDATE() AS DATE))
+                ORDER BY EntryDate ASC;";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -1457,6 +1622,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             return Reg;
         }
 
+        // COUNT SHIP STATUS - "ALL" DASHBOARD - COATINGS (BOTH INS AND OUTS)
         public static Registro ObtenerRegistros_coatings(int Id_planta)
         {
             Registro list = null;
@@ -1464,40 +1630,27 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             {
                 con.Open();
                 string query = @"
-                        SELECT DISTINCT  
-                        (SELECT ISNULL((Count(H.shipStatus_coatings)),0) FROM LogInput_coatings H  WHERE H.shipStatus_coatings = 3 = CONVERT(DATE,GETDATE()) AND H.Id_planta_coatings=@Id_planta_coatings) AS 'SHIPPED',
-
-                        (SELECT ISNULL((Count(H.shipStatus_coatings)),0) FROM LogInput_coatings H  WHERE H.shipStatus_coatings = 1 = CONVERT(DATE,GETDATE()) AND H.Id_planta_coatings=@Id_planta_coatings) AS 'EARRING',
-
-                        (SELECT ISNULL((Count(H.shipStatus_coatings)),0) FROM LogInput_coatings H  
-
-                        WHERE shipStatus_coatings = 2 = CONVERT(DATE,GETDATE()) AND H.Id_planta_coatings=@Id_planta)AS 'ONTIME' ,
-
-                        (SELECT ISNULL((Count(H.shipStatus)),0) AS 'DELAYED' FROM LogInput H 
-                        WHERE H.shipStatus_coatings = 2  = CONVERT(DATE,GETDATE()) AND H.Id_planta_coatings=@Id_planta) AS 'DELAYED' 
-                        FROM LogInput_coatings ";
+                        SELECT
+                        ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'On time' AND (CONVERT(DATE, H.EntryDate_coatings) = CONVERT(DATE, GETDATE()) OR H.EntryDate_coatings > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'OnTime',
+                        ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'Delayed' THEN 1 ELSE 0 END), 0) AS 'Delayed',
+                        ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'Without shipper' THEN 1 ELSE 0 END), 0) AS 'WithoutShipper',
+                        ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'Shipped' AND (CONVERT(DATE, H.EntryDate_coatings) = CONVERT(DATE, GETDATE()) OR H.EntryDate_coatings > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'Shipped'
+                    FROM (
+                        SELECT shipStatus_coatings, EntryDate_coatings FROM LogInput_coatings
+                        UNION ALL
+                        SELECT shipStatus_output_coatings AS shipStatus_coatings, EntryDate_output_coatings AS EntryDate_coatings FROM LogOutput_coatings
+                    ) AS H;";
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@Id_planta", Id_planta);
+                cmd.Parameters.AddWithValue("@Id_planta_coatings", Id_planta);
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    list = Convertir_coatings(reader);
+                    list = Convertir(reader);
                 }
             }
             return list;
         }
-
-        //DONT KNOW WHAT THIS IS FOR - NOT DONE
-
-        private static Registro Convertir_coatings(IDataReader reader)
-        {
-            Registro list = new Registro();
-            list.Completed = Convert.ToString(reader["SHIPPED"]);
-            list.Pendiente = Convert.ToString(reader["EARRING"]);
-            list.Ontime = Convert.ToString(reader["ONTIME"]);
-            list.DELAYED = Convert.ToString(reader["DELAYED"]);
-            return list;
-        }
+        
 
         //                                                                                                    COATINGS OUTPUT
 

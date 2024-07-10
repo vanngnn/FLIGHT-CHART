@@ -45,7 +45,7 @@ namespace ShippingDisplay.ShippingDisplay
                 string username = HttpContext.Current.User.Identity.Name;
                 Usuario perfil = UsuarioDAL.ObtenerUser(username);
                 Id_Planta = perfil.Id_planta;
-                Registro Reg = RegistroDAL.ObtenerRegistros_output(Id_Planta);
+                Registro Reg = RegistroDAL.ObtenerRegistros_shipment_dock_output("Dock 1");
                 if (Reg == null)
                 {
                     lblEntiempo.Text = "0";
@@ -55,10 +55,10 @@ namespace ShippingDisplay.ShippingDisplay
                 }
                 else
                 {
-                    lblEntiempo.Text = Convert.ToString(Reg.Ontime);
-                    lblAtrasado.Text = Convert.ToString(Reg.DELAYED);
-                    lblSinShipper.Text = Convert.ToString(Reg.Pendiente);
-                    lblEnviado.Text = Convert.ToString(Reg.Completed);
+                    lblEntiempo.Text = Convert.ToString(Reg.OnTime);
+                    lblAtrasado.Text = Convert.ToString(Reg.Delayed);
+                    lblSinShipper.Text = Convert.ToString(Reg.WithoutShipper);
+                    lblEnviado.Text = Convert.ToString(Reg.Shipped);
                 }
             }
             catch
@@ -99,16 +99,16 @@ namespace ShippingDisplay.ShippingDisplay
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                string Estado = e.Row.Cells[8].Text;
-                if (Estado == "ONTIME")
+                string Estado = e.Row.Cells[9].Text;
+                if (Estado == "On Time")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#28a745");
                 }
-                else if (Estado == "SHIPPED")
+                else if (Estado == "Shipped")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#17a2b8");
                 }
-                else if (Estado == "DELAYED")
+                else if (Estado == "Delayed")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#dc3545");
                     e.Row.CssClass = "blink";

@@ -201,7 +201,7 @@
                         <div class="small-box bg-danger">
                             <div class="inner">
                                 <h3><asp:Label ID="lblAtrasado" runat="server" Text="0"></asp:Label></h3>
-                                <p><h3>DELAYED</h3></p>
+                                <p><h3>Delayed</h3></p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-android-warning"></i>

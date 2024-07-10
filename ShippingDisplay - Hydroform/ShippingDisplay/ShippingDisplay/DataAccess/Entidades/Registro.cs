@@ -36,10 +36,15 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         public int Status { get; set; } //STATUS
 
         //
-        public string Ontime { get; set; }
-        public string DELAYED { get; set; }
-        public string Completed { get; set; }
-        public string Pendiente { get; set; }
+        public string OnTime { get; set; }
+        public string Delayed { get; set; }
+        public string WithoutShipper { get; set; }
+        public string Shipped { get; set; }
+
+
+
+
+
         public string TimePeriodAssigned //CONCATENATE FROM TIME AND TO TIME
         {
             get

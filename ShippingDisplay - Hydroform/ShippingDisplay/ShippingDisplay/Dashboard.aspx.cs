@@ -58,10 +58,10 @@ namespace ShippingDisplay.ShippingDisplay
                 }
                 else
                 {
-                    lblEntiempo.Text = Convert.ToString(Reg.Ontime);
-                    lblAtrasado.Text = Convert.ToString(Reg.DELAYED);
-                    lblSinShipper.Text = Convert.ToString(Reg.Pendiente);
-                    lblEnviado.Text = Convert.ToString(Reg.Completed);
+                    lblEntiempo.Text = Convert.ToString(Reg.OnTime);
+                    lblAtrasado.Text = Convert.ToString(Reg.Delayed);
+                    lblSinShipper.Text = Convert.ToString(Reg.WithoutShipper);
+                    lblEnviado.Text = Convert.ToString(Reg.Shipped);
                 }
             }
             catch
@@ -70,7 +70,7 @@ namespace ShippingDisplay.ShippingDisplay
             }
         }
 
-        private bool IsNull(Registro Ontime)
+        private bool IsNull(Registro OnTime)
         {
             throw new NotImplementedException();
         }

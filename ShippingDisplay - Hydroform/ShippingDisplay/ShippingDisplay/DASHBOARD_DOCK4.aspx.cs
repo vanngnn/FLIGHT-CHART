@@ -46,7 +46,7 @@ namespace ShippingDisplay.ShippingDisplay
                 Usuario perfil = UsuarioDAL.ObtenerUser(username);
                 Id_Planta = perfil.Id_planta;
 
-                Registro Reg = RegistroDAL.ObtenerRegistros(Id_Planta);
+                Registro Reg = RegistroDAL.ObtenerRegistros_dashboard_dock("Dock 4");
                 if (Reg == null)
                 {
                     lblEntiempo.Text = "0";
@@ -56,10 +56,10 @@ namespace ShippingDisplay.ShippingDisplay
                 }
                 else
                 {
-                    lblEntiempo.Text = Convert.ToString(Reg.Ontime);
-                    lblAtrasado.Text = Convert.ToString(Reg.DELAYED);
-                    lblSinShipper.Text = Convert.ToString(Reg.Pendiente);
-                    lblEnviado.Text = Convert.ToString(Reg.Completed);
+                    lblEntiempo.Text = Convert.ToString(Reg.OnTime);
+                    lblAtrasado.Text = Convert.ToString(Reg.Delayed);
+                    lblSinShipper.Text = Convert.ToString(Reg.WithoutShipper);
+                    lblEnviado.Text = Convert.ToString(Reg.Shipped);
                 }
             }
             catch

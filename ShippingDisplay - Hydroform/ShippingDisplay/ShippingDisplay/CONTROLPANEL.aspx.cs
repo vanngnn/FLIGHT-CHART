@@ -77,7 +77,7 @@ namespace ShippingDisplay.ShippingDisplay
                 }
             }
         }
-        private bool IsNull(Registro Ontime)
+        private bool IsNull(Registro OnTime)
         {
             throw new NotImplementedException();
         }

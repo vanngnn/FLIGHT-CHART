@@ -282,7 +282,7 @@ namespace ShippingDisplay.ShippingDisplay
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink dailyoutput_dock2_coatings;
+        protected global::System.Web.UI.WebControls.HyperLink dailyoutput_dock2;
 
         /// <summary>
         /// dailyoutput_dock3 control.
@@ -393,6 +393,15 @@ namespace ShippingDisplay.ShippingDisplay
         protected global::System.Web.UI.WebControls.HyperLink dailyoutput_dock1_coatings;
 
         /// <summary>
+        /// dailyoutput_dock2_coatings control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink dailyoutput_dock2_coatings;
+
+        /// <summary>
         /// dailyoutput_dock3_coatings control.
         /// </summary>
         /// <remarks>
@@ -420,6 +429,15 @@ namespace ShippingDisplay.ShippingDisplay
         protected global::System.Web.UI.WebControls.HyperLink LinkConfig;
 
         /// <summary>
+        /// dailylog_input_coatings control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink dailylog_input_coatings;
+
+        /// <summary>
         /// LinkRegEntry control.
         /// </summary>
         /// <remarks>
@@ -436,6 +454,33 @@ namespace ShippingDisplay.ShippingDisplay
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink LinkRegOut;
+
+        /// <summary>
+        /// dailylog_output_coatings control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink dailylog_output_coatings;
+
+        /// <summary>
+        /// LinkRegEntry_coatings control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink LinkRegEntry_coatings;
+
+        /// <summary>
+        /// LinkRegOut_coatings control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink LinkRegOut_coatings;
 
         /// <summary>
         /// LinkShipper control.
@@ -510,7 +555,7 @@ namespace ShippingDisplay.ShippingDisplay
         protected global::System.Web.UI.WebControls.Label lblEnviado;
 
         /// <summary>
-        /// DAILYOUTPUT_DOCK1_REGISTER control.
+        /// DAILYOUTPUT_DOCK1_REGISTER_COATINGS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
