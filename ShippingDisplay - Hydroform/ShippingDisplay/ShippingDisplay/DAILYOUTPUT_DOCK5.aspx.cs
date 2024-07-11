@@ -99,12 +99,12 @@ namespace ShippingDisplay.ShippingDisplay
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                string Estado = e.Row.Cells[8].Text;
-                if (Estado == "ONTIME")
+                string Estado = e.Row.Cells[9].Text;
+                if (Estado == "On Time")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#28a745");
                 }
-                else if (Estado == "SHIPPED")
+                else if (Estado == "Shipped")
                 {
                     e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#17a2b8");
                 }

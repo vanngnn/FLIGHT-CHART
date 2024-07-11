@@ -6,7 +6,6 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="refresh" content="30" />
     <link rel="icon" type="image/png" href="Template/img/martinrea_logo.png"/>
     <title>Shipping Display</title>
     <!-- Google Font: Source Sans Pro -->
