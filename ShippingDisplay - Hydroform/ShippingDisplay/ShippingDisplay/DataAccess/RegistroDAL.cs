@@ -131,20 +131,39 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         }
 
         //RETURN LIST TO DIPSLAY IN DAILY LOG INPUT - HYDROFORM - DONE
-        public static List<Registro> ListadoRegistros(int Status)
+        public static List<Registro> ListadoRegistros()
         {
             List<Registro> lista = new List<Registro>();
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
             {
                 conn.Open();
-                string query = @"SELECT H.Id_all, H.EntryDate, H.From_time, H.To_time, H.Part_number, H.Id_cliente, H.Id_planta, H.Id_carrier, H.Bill_of_Lading, H.Quantity, H.Dock, H.shipStatus,
-                            H.shipReason, H.shipComment, 
-                            C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant'
-                    FROM [dbo].[LogInput] H
-                    INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
-                    INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier
-                    INNER JOIN [dbo].[Planta] P ON H.Id_planta = P.id_planta
-                    ORDER BY H.EntryDate ASC";
+                string query = @"SELECT 
+                    H.Id_all, H.EntryDate, H.From_time, H.To_time, H.Part_number, H.Id_cliente, H.Id_planta, H.Id_carrier, H.Bill_of_Lading, H.Quantity, H.Dock, H.shipStatus,
+                    H.shipReason, H.shipComment, 
+                    C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant'
+                FROM 
+                    [dbo].[LogInput] H
+                INNER JOIN 
+                    [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
+                INNER JOIN 
+                    [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier
+                INNER JOIN 
+                    [dbo].[Planta] P ON H.Id_planta = P.id_planta
+                WHERE 
+                    (
+                        (H.shipStatus IN ('Delayed', 'Without Shipper') AND H.EntryDate < CAST(GETDATE() AS DATE))
+                        OR 
+                        (
+                            (H.shipStatus IN ('Delayed', 'Without Shipper') AND H.EntryDate BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                            OR
+                            (H.shipStatus = 'On Time' AND H.EntryDate BETWEEN DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                            OR
+                            (H.shipStatus = 'Shipped' AND H.EntryDate BETWEEN DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                        )
+                    )
+                ORDER BY 
+                    H.EntryDate ASC;
+                ";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -959,7 +978,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         //}
 
         //RETURN LIST TO DIPSLAY IN DAILY LOG OUTPUT - HYDROFROM
-        public static List<Registro> ListadoRegistros_output(int Status)
+        public static List<Registro> ListadoRegistros_output()
         {
             List<Registro> lista = new List<Registro>();
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
@@ -973,6 +992,18 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_output = C.id_cliente
                     INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_output = L.id_carrier
                     INNER JOIN [dbo].[Planta]  P ON H.Id_planta_output  = P.id_planta
+                    WHERE 
+                    (
+                        (H.shipStatus_output IN ('Delayed', 'Without Shipper') AND H.EntryDate_output < CAST(GETDATE() AS DATE))
+                        OR 
+                        (
+                            (H.shipStatus_output IN ('Delayed', 'Without Shipper') AND H.EntryDate_output BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                            OR
+                            (H.shipStatus_output = 'On Time' AND H.EntryDate_output BETWEEN DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                            OR
+                            (H.shipStatus_output = 'Shipped' AND H.EntryDate_output BETWEEN DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                        )
+                    )
                     ORDER BY H.EntryDate_output ASC";
                 //WHERE H.shipStatus=@shipStatus
 
@@ -1876,7 +1907,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         }
 
         //RETURN LIST TO DIPSLAY IN DAILY LOG INPUT - COATINGS - DONE
-        public static List<Registro> ListadoRegistros_coatings(int Status)
+        public static List<Registro> ListadoRegistros_coatings()
         {
             List<Registro> lista = new List<Registro>();
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
@@ -1889,6 +1920,20 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_coatings = C.id_cliente
                     INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_coatings = L.id_carrier
                     INNER JOIN [dbo].[Planta] P ON H.Id_planta_coatings = P.id_planta
+                    
+                    WHERE 
+                        (
+                            (H.shipStatus_coatings IN ('Delayed', 'Without Shipper') AND H.EntryDate_coatings < CAST(GETDATE() AS DATE))
+                            OR 
+                            (
+                                (H.shipStatus_coatings IN ('Delayed', 'Without Shipper') AND H.EntryDate_coatings BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                                OR
+                                (H.shipStatus_coatings = 'On Time' AND H.EntryDate_coatings BETWEEN DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                                OR
+                                (H.shipStatus_coatings = 'Shipped' AND H.EntryDate_coatings BETWEEN DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                            )
+                        )
+                    
                     ORDER BY H.EntryDate_coatings ASC";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -2099,7 +2144,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             return Reg;
         }
 
-        public static List<Registro> ListadoRegistros_output_coatings(int Status)
+        public static List<Registro> ListadoRegistros_output_coatings()
         {
             List<Registro> lista = new List<Registro>();
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
@@ -2112,6 +2157,20 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_output_coatings = C.id_cliente
                     INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_output_coatings = L.id_carrier
                     INNER JOIN [dbo].[Planta] P ON H.Id_planta_output_coatings = P.id_planta
+
+                    WHERE 
+                    (
+                        (H.shipStatus_output_coatings IN ('Delayed', 'Without Shipper') AND H.EntryDate_output_coatings < CAST(GETDATE() AS DATE))
+                        OR 
+                        (
+                            (H.shipStatus_output_coatings IN ('Delayed', 'Without Shipper') AND H.EntryDate_output_coatings BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                            OR
+                            (H.shipStatus_output_coatings = 'On Time' AND H.EntryDate_output_coatings BETWEEN DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                            OR
+                            (H.shipStatus_output_coatings = 'Shipped' AND H.EntryDate_output_coatings BETWEEN DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                        )
+                    )                    
+
                     ORDER BY H.EntryDate_output_coatings ASC";
 
                 SqlCommand cmd = new SqlCommand(query, conn);

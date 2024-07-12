@@ -202,8 +202,7 @@ namespace ShippingDisplay.ShippingDisplay
         }
         private void CargarGrid()
         {
-            int shipStatus = 2;
-            gvRegistros.DataSource = RegistroDAL.ListadoRegistros_coatings(shipStatus);
+            gvRegistros.DataSource = RegistroDAL.ListadoRegistros_coatings();
             gvRegistros.DataBind();
         }
 
