@@ -74,13 +74,13 @@ namespace ShippingDisplay.ShippingDisplay
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
         {
-            //EXTRAER FILTROS SELECCIONADOS 
-            //EXTRAER VARIABLE DE INICIO DE SESION 
             string ReservFecha = reservation.Text;
-            string Fec_ini = ReservFecha.Substring(6, 4) + "-" + ReservFecha.Substring(0, 2) + "-" + ReservFecha.Substring(3, 2);
-            string Fec_fin = ReservFecha.Substring(19, 4) + "-" + ReservFecha.Substring(13, 2) + "-" + ReservFecha.Substring(16, 2);
-            int Id_plant = Convert.ToInt32(dblPlanta.SelectedValue);
-            gvRegistros.DataSource = RegistroDAL.FiltroReporte(Id_plant, Fec_ini, Fec_fin);
+            string StartDate = ReservFecha.Substring(6, 4) + "-" + ReservFecha.Substring(0, 2) + "-" + ReservFecha.Substring(3, 2);
+            string EndDate = ReservFecha.Substring(19, 4) + "-" + ReservFecha.Substring(13, 2) + "-" + ReservFecha.Substring(16, 2);
+            int plantName = Convert.ToInt32(dblPlanta.SelectedValue);
+            string Type_of_Shipment = ReportFilterDropDown.SelectedValue;
+
+            gvRegistros.DataSource = RegistroDAL.FiltroReporte(StartDate, EndDate, plantName, Type_of_Shipment);
             gvRegistros.DataBind();
         }
         private void ExportToExcel(string nameReport, GridView wControl)

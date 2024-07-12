@@ -67,8 +67,7 @@ namespace ShippingDisplay.ShippingDisplay
                 if (Context.User.Identity.IsAuthenticated)
                 {
                     string Username = HttpContext.Current.User.Identity.Name;
-                    //CargarPerfil(Username);
-                    //ObtenerWidgets();
+                    CargarPerfil(Username);
                 }
                 else
                 {
@@ -80,6 +79,33 @@ namespace ShippingDisplay.ShippingDisplay
         private bool IsNull(Registro OnTime)
         {
             throw new NotImplementedException();
+        }
+
+        private void CargarPerfil(string username)
+        {
+            Usuario perfil = UsuarioDAL.ObtenerUser(username);
+            lblNombre.Text = perfil.Nombre;
+            Id_Planta = perfil.Id_planta;
+            //ACTIVAR PESTAÑAS DE ACUERDO AL NIVEL DE USUARIO
+            int Dept = Convert.ToInt32(perfil.Id_depto);
+            if (Dept == 1)
+            {
+                LinkConfig.Visible = false;
+                LinkRegEntry.Visible = false;
+                LinkRegOut.Visible = false;
+                LinkRegister.Visible = false;
+                LinkShipIn.Visible = false;
+                LinkShipOut.Visible = false;
+                //LinkDashEmb.Visible = false;
+            }
+            else if (Dept == 2)
+            {
+                LinkShipper.Visible = false;
+                LinkRegister.Visible = false;
+                LinkShipIn.Visible = false;
+                LinkShipOut.Visible = false;
+                // LinkDashEmb.Visible = false;
+            }
         }
 
         protected void LinkSalir_Click(object sender, EventArgs e)

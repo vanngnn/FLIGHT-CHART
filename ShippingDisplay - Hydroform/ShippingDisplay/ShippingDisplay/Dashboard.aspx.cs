@@ -66,7 +66,7 @@ namespace ShippingDisplay.ShippingDisplay
             }
             catch
             {
-                //ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "Alert", "window.onload = function(){ alert('Oops! Something went wrong.'); };", true);
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "Alert", "window.onload = function(){ alert('Oops! Something went wrong.'); };", true);
             }
         }
 
@@ -103,7 +103,7 @@ namespace ShippingDisplay.ShippingDisplay
                 LinkRegister.Visible = false;
                 LinkShipIn.Visible = false;
                 LinkShipOut.Visible = false;
-                // LinkDashEmb.Visible = false;
+                //LinkDashEmb.Visible = false;
             }
         }
 

@@ -734,7 +734,7 @@
                     <div class="card">
                         <a href="DASHBOARD_DOCK2_COATINGS.aspx" class="card-link">
                             <div class="card-header bg-primary text-white">
-                                Dock 1
+                                Dock 2
                             </div>
                             <div class="card-body">
                                 <ul class="list-unstyled">

@@ -76,7 +76,8 @@
                     <img src="Template/dist/img/user_icon.png" class="img-circle elevation-2" alt="User Image" />
                 </div>
                 <div class="info">
-                    <span class="brand-text font-weight-light"><asp:Label ID="lblNombre" runat="server" Text="Username" ForeColor ="White"></asp:Label></span>
+                    <span class="brand-text font-weight-light"><asp:Label ID="lblNombre" runat="server" Text="
+                        " ForeColor ="White"></asp:Label></span>
                 </div>
             </div>
             <nav class="mt-2">

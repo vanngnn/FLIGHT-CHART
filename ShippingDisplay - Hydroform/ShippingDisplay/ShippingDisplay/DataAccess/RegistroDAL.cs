@@ -452,26 +452,302 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
 
 
         //FITLER REPORT - NOT DONE
-        public static List<Registro> FiltroReporte(int Id_planta, string FechaIni, string FechaFin)
+
+        public static List<Registro> FiltroReporte(string StartDate, string EndDate, int plantName, string Type_of_Shipment)
         {
             List<Registro> lista = new List<Registro>();
+
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
             {
                 conn.Open();
-                string query = @"
-                        SELECT H.Id_all, H.Id_cliente, H.Id_carrier, CASE WHEN H.Salida='1900-01-01 00:00:00.000' THEN '-' WHEN H.Salida<>'1900-01-01 00:00:00.000' THEN Convert(nvarchar,H.Salida,21) END AS 'Salida',
-                        C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant', H.Part_number, H.Bill_of_Lading, H.Quantity, H.Dock, H.shipStatus, H.shipReason, H.shipComment, H.Entrada, H.Salida,
-                        R.input, R.output,
-                        H.Shipper, H.Id_planta, 
-                        CASE WHEN shipStatus = 1 THEN 'NO SHIPPER ASSIGNMENT'
-                        WHEN H.Salida ='1900-01-01 00:00:00.000' THEN 'DO NOT REGISTER OUT;
-                        FROM [dbo].[LogInput] H
-                        INNER JOIN [dbo].[Shipdet] D ON H.Id_all=D.Id_all 
-                        INNER JOIN [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
-                        INNER JOIN [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier 
-                        WHERE  H.Id_planta=@Id_planta AND CONVERT(Date, ) BETWEEN '" + FechaIni + "' AND ' " + @FechaFin + "'  ORDER BY H.Entrada desc ";
+                string query = "";
+
+                if (plantName == 1 & Type_of_Shipment == "All")
+                {
+                    query = @"
+                SELECT 
+                    H.Id_all, 
+                    H.EntryDate AS EntryDate,
+                    H.From_time,
+                    H.To_time,
+                    H.Part_number,
+                    H.Id_cliente,
+                    H.Id_planta,
+                    H.Id_carrier,
+                    H.Bill_of_Lading,
+                    H.Quantity,
+                    H.Dock,
+                    H.shipStatus,
+                    H.shipReason,
+                    H.shipComment,
+                    C.description AS Cliente,
+                    L.description AS Carrier,
+                    P.description AS Plant
+                FROM 
+                    [dbo].[LogInput] H
+                INNER JOIN 
+                    [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
+                INNER JOIN 
+                    [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier
+                INNER JOIN 
+                    [dbo].[Planta] P ON H.Id_planta = P.id_planta
+                WHERE 
+                    H.EntryDate BETWEEN @StartDate AND @EndDate 
+
+                UNION
+
+                SELECT 
+                    H.Id_all_output,
+                    H.EntryDate_output AS EntryDate,
+                    H.From_time_output AS From_time,
+                    H.To_time_output AS To_time,
+                    H.Part_number_output AS Part_number,
+                    H.Id_cliente_output AS Id_cliente,
+                    H.Id_planta_output AS Id_planta,
+                    H.Id_carrier_output AS Id_carrier,
+                    H.Bill_of_Lading_output AS Bill_of_Lading,
+                    H.Quantity_output AS Quantity,
+                    H.Dock_output AS Dock,
+                    H.shipStatus_output AS shipStatus,
+                    H.shipReason_output AS shipReason,
+                    H.shipComment_output AS shipComment,
+                    C.description AS Cliente,
+                    L.description AS Carrier,
+                    P.description AS Plant
+                FROM 
+                    [dbo].[LogOutput] H
+                INNER JOIN 
+                    [dbo].[Cliente] C ON H.Id_cliente_output = C.id_cliente
+                INNER JOIN 
+                    [dbo].[Carrier] L ON H.Id_carrier_output = L.id_carrier
+                INNER JOIN 
+                    [dbo].[Planta] P ON H.Id_planta_output = P.id_planta
+                WHERE 
+                    H.EntryDate_output BETWEEN @StartDate AND @EndDate 
+
+                ORDER BY 
+                    EntryDate ASC;";
+                }
+                else if (plantName == 1 && Type_of_Shipment == "Inputs")
+                {
+                    query = @"
+                SELECT 
+                    H.Id_all, 
+                    H.EntryDate AS EntryDate,
+                    H.From_time,
+                    H.To_time,
+                    H.Part_number,
+                    H.Id_cliente,
+                    H.Id_planta,
+                    H.Id_carrier,
+                    H.Bill_of_Lading,
+                    H.Quantity,
+                    H.Dock,
+                    H.shipStatus,
+                    H.shipReason,
+                    H.shipComment,
+                    C.description AS Cliente,
+                    L.description AS Carrier,
+                    P.description AS Plant,
+                    'From: ' + P.description AS PlantDirection
+                FROM 
+                    [dbo].[LogInput] H
+                INNER JOIN 
+                    [dbo].[Cliente] C ON H.Id_cliente = C.id_cliente
+                INNER JOIN 
+                    [dbo].[Carrier] L ON H.Id_carrier = L.id_carrier
+                INNER JOIN 
+                    [dbo].[Planta] P ON H.Id_planta = P.id_planta
+                WHERE 
+                    H.EntryDate BETWEEN @StartDate AND @EndDate 
+
+                ORDER BY 
+                    EntryDate ASC;";
+                }
+                else if (plantName == 1 && Type_of_Shipment == "Outputs")
+                {
+                    query = @"
+                SELECT 
+                    H.Id_all_output AS Id_all, 
+                    H.EntryDate_output AS EntryDate,
+                    H.From_time_output AS From_time,
+                    H.To_time_output AS To_time,
+                    H.Part_number_output AS Part_number,
+                    H.Id_cliente_output AS Id_cliente,
+                    H.Id_planta_output AS Id_planta,
+                    H.Id_carrier_output AS Id_carrier,
+                    H.Bill_of_Lading_output AS Bill_of_Lading,
+                    H.Quantity_output AS Quantity,
+                    H.Dock_output AS Dock,
+                    H.shipStatus_output AS shipStatus,
+                    H.shipReason_output AS shipReason,
+                    H.shipComment_output AS shipComment,
+                    C.description AS Cliente,
+                    L.description AS Carrier,
+                    P.description AS Plant,
+                    'To: ' + P.description AS PlantDirection
+                FROM 
+                    [dbo].[LogOutput] H
+                INNER JOIN 
+                    [dbo].[Cliente] C ON H.Id_cliente_output = C.id_cliente
+                INNER JOIN 
+                    [dbo].[Carrier] L ON H.Id_carrier_output = L.id_carrier
+                INNER JOIN 
+                    [dbo].[Planta] P ON H.Id_planta_output = P.id_planta
+                WHERE
+                    H.EntryDate_output BETWEEN @StartDate AND @EndDate 
+
+                ORDER BY 
+                    EntryDate_output ASC;";
+                }
+                else if (plantName == 2 && Type_of_Shipment == "All")
+                {
+                    query = @"
+                SELECT 
+                    H.Id_all_coatings AS Id_all, 
+                    H.EntryDate_coatings AS EntryDate,
+                    H.From_time_coatings AS From_time,
+                    H.To_time_coatings AS To_time,
+                    H.Part_number_coatings AS Part_number ,
+                    H.Id_cliente_coatings AS Id_cliente,
+                    H.Id_planta_coatings AS Id_planta,
+                    H.Id_carrier_coatings AS Id_carrier,
+                    H.Bill_of_Lading_coatings AS Bill_of_Lading,
+                    H.Quantity_coatings AS Quantity,
+                    H.Dock_coatings AS Dock,
+                    H.shipStatus_coatings AS shipStatus,
+                    H.shipReason_coatings AS shipReason,
+                    H.shipComment_coatings AS shipComment,
+                    C.description AS Cliente,
+                    L.description AS Carrier,
+                    P.description AS Plant
+                FROM 
+                    [dbo].[LogInput_coatings] H
+                INNER JOIN 
+                    [dbo].[Cliente] C ON H.Id_cliente_coatings = C.id_cliente
+                INNER JOIN 
+                    [dbo].[Carrier] L ON H.Id_carrier_coatings = L.id_carrier
+                INNER JOIN 
+                    [dbo].[Planta] P ON H.Id_planta_coatings = P.id_planta
+                WHERE 
+                    H.EntryDate_coatings BETWEEN @StartDate AND @EndDate 
+
+                UNION
+
+                SELECT 
+                    H.Id_all_output_coatings,
+                    H.EntryDate_output_coatings AS EntryDate,
+                    H.From_time_output_coatings AS From_time,
+                    H.To_time_output_coatings AS To_time,
+                    H.Part_number_output_coatings AS Part_number,
+                    H.Id_cliente_output_coatings AS Id_cliente,
+                    H.Id_planta_output_coatings AS Id_planta,
+                    H.Id_carrier_output_coatings AS Id_carrier,
+                    H.Bill_of_Lading_output_coatings AS Bill_of_Lading,
+                    H.Quantity_output_coatings AS Quantity,
+                    H.Dock_output_coatings AS Dock,
+                    H.shipStatus_output_coatings AS shipStatus,
+                    H.shipReason_output_coatings AS shipReason,
+                    H.shipComment_output_coatings AS shipComment,
+                    C.description AS Cliente,
+                    L.description AS Carrier,
+                    P.description AS Plant
+                FROM 
+                    [dbo].[LogOutput_coatings] H
+                INNER JOIN 
+                    [dbo].[Cliente] C ON H.Id_cliente_output_coatings = C.id_cliente
+                INNER JOIN 
+                    [dbo].[Carrier] L ON H.Id_carrier_output_coatings = L.id_carrier
+                INNER JOIN 
+                    [dbo].[Planta] P ON H.Id_planta_output_coatings = P.id_planta
+                WHERE 
+                    H.EntryDate_output_coatings BETWEEN @StartDate AND @EndDate 
+
+                ORDER BY 
+                    EntryDate ASC;";
+                }
+                else if (plantName == 2 && Type_of_Shipment == "Inputs")
+                {
+                    query = @"
+                SELECT 
+                    H.Id_all_coatings AS Id_all, 
+                    H.EntryDate_coatings AS EntryDate,
+                    H.From_time_coatings AS From_time,
+                    H.To_time_coatings AS To_time,
+                    H.Part_number_coatings AS Part_number,
+                    H.Id_cliente_coatings AS Id_cliente,
+                    H.Id_planta_coatings AS Id_planta,
+                    H.Id_carrier_coatings AS Id_carrier,
+                    H.Bill_of_Lading_coatings AS Bill_of_Lading,
+                    H.Quantity_coatings AS Quantity,
+                    H.Dock_coatings AS Dock,
+                    H.shipStatus_coatings AS shipStatus,
+                    H.shipReason_coatings AS shipReason,
+                    H.shipComment_coatings AS shipComment,
+                    C.description AS Cliente,
+                    L.description AS Carrier,
+                    P.description AS Plant,
+                    'From: ' + P.description AS PlantDirection
+                FROM 
+                    [dbo].[LogInput_coatings] H
+                INNER JOIN 
+                    [dbo].[Cliente] C ON H.Id_cliente_coatings = C.id_cliente
+                INNER JOIN 
+                    [dbo].[Carrier] L ON H.Id_carrier_coatings = L.id_carrier
+                INNER JOIN 
+                    [dbo].[Planta] P ON H.Id_planta_coatings = P.id_planta
+                WHERE 
+                    H.EntryDate_coatings BETWEEN @StartDate AND @EndDate 
+
+                ORDER BY 
+                    EntryDate ASC;";
+                }
+                else if (plantName == 2 && Type_of_Shipment == "Outputs")
+                {
+                    query = @"
+                SELECT 
+                    H.Id_all_output_coatings AS Id_all, 
+                    H.EntryDate_output_coatings AS EntryDate,
+                    H.From_time_output_coatings AS From_time,
+                    H.To_time_output_coatings AS To_time,
+                    H.Part_number_output_coatings AS Part_number,
+                    H.Id_cliente_output_coatings AS Id_cliente,
+                    H.Id_planta_output_coatings AS Id_planta,
+                    H.Id_carrier_output_coatings AS Id_carrier,
+                    H.Bill_of_Lading_output_coatings AS Bill_of_Lading,
+                    H.Quantity_output_coatings AS Quantity,
+                    H.Dock_output_coatings AS Dock,
+                    H.shipStatus_output_coatings AS shipStatus,
+                    H.shipReason_output_coatings AS shipReason,
+                    H.shipComment_output_coatings AS shipComment,
+                    C.description AS Cliente,
+                    L.description AS Carrier,
+                    P.description AS Plant,
+                    'To: ' + P.description AS PlantDirection
+                FROM 
+                    [dbo].[LogOutput_coatings] H
+                INNER JOIN 
+                    [dbo].[Cliente] C ON H.Id_cliente_output_coatings = C.id_cliente
+                INNER JOIN 
+                    [dbo].[Carrier] L ON H.Id_carrier_output_coatings = L.id_carrier
+                INNER JOIN 
+                    [dbo].[Planta] P ON H.Id_planta_output_coatings = P.id_planta
+                WHERE 
+                    H.EntryDate_output_coatings BETWEEN @StartDate AND @EndDate 
+
+                ORDER BY 
+                    EntryDate ASC;";
+                }
+                else
+                {
+                    throw new InvalidOperationException("Invalid plantName or Type_of_Shipment");
+                }
+
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Id_planta", Id_planta);
+                cmd.Parameters.AddWithValue("@plantName", Convert.ToInt32(plantName));
+                cmd.Parameters.AddWithValue("@StartDate", StartDate);
+                cmd.Parameters.AddWithValue("@EndDate", EndDate);
+
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -481,32 +757,48 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             return lista;
         }
 
-        //DONT KNOW WHAT THIS IS FOR - NOT DONE
         private static Registro ConvertirFiltro(IDataReader reader)
         {
-            Registro Reg = new Registro();
-            Reg.Id_all = Convert.ToInt32(reader["Id_all"]);
-            Reg.assignedDate = Convert.ToDateTime(reader["EntryDate"]);
-            Reg.assignedFromtime = Convert.ToString(reader["From_time"]);
-            Reg.assignedTotime = Convert.ToString(reader["To_time"]);
-            Reg.partNumber = Convert.ToString(reader["Part_number"]);
-            Reg.Id_cliente = Convert.ToInt32(reader["Id_cliente"]);
-            Reg.Id_planta = Convert.ToInt32(reader["Id_planta"]);
-            Reg.Id_carrier = Convert.ToInt32(reader["Id_carrier"]);
-            Reg.PlantName = Convert.ToString(reader["Plant"]);
-            Reg.assignedBOL = Convert.ToInt32(reader["Bill_of_Lading"]);
-            Reg.assignedQTY = Convert.ToInt32(reader["Quantity"]);
-            Reg.assignedDock = Convert.ToString(reader["Dock"]);
-            Reg.shipStatus = Convert.ToString(reader["shipStatus"]);
-            Reg.shipReason = Convert.ToString(reader["shipReason"]);
-            Reg.shipComment = Convert.ToString(reader["shipComment"]);
-            Reg.ClienteName = Convert.ToString(reader["Cliente"]);
-            Reg.CarrierName = Convert.ToString(reader["Carrier"]);
-
-            Reg.PlantName = Convert.ToString(reader["Plant"]);
+            Registro Reg = new Registro
+            {
+                Id_all = Convert.ToInt32(reader["Id_all"]),
+                assignedDate = Convert.ToDateTime(reader["EntryDate"]),
+                assignedFromtime = reader["From_time"].ToString(),
+                assignedTotime = reader["To_time"].ToString(),
+                partNumber = reader["Part_number"].ToString(),
+                Id_cliente = Convert.ToInt32(reader["Id_cliente"]),
+                Id_planta = Convert.ToInt32(reader["Id_planta"]),
+                Id_carrier = Convert.ToInt32(reader["Id_carrier"]),
+                PlantName = reader["Plant"].ToString(),
+                assignedBOL = Convert.ToInt32(reader["Bill_of_Lading"]),
+                assignedQTY = Convert.ToInt32(reader["Quantity"]),
+                assignedDock = reader["Dock"].ToString(),
+                shipStatus = reader["shipStatus"].ToString(),
+                shipReason = reader["shipReason"].ToString(),
+                shipComment = reader["shipComment"].ToString(),
+                ClienteName = reader["Cliente"].ToString(),
+                CarrierName = reader["Carrier"].ToString(),
+            };
 
             return Reg;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //                                                                 HYDROFROM - OUTPUT 
 
         //ADDING NEW DATA TO THE TABLE - DONE
@@ -1340,6 +1632,8 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     [dbo].[LogInput] H
                 WHERE 
                     H.Dock = @dockName
+                    AND ((H.shipStatus NOT IN ('Shipped', 'On Time')) OR H.EntryDate >= CONVERT(date, GETDATE()))
+        
     
                 UNION ALL
     
@@ -1355,8 +1649,8 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     [dbo].[LogOutput] H
                 WHERE 
                     H.Dock_output = @dockName
+                    AND ((H.shipStatus_output NOT IN ('Shipped', 'On Time')) OR H.EntryDate_output >= CONVERT(date, GETDATE()))
             )
-
             SELECT TOP 5
                 SourceTable,
                 Id_all,
@@ -1368,7 +1662,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             FROM 
                 CombinedLogs
             ORDER BY 
-                From_time ASC";
+                EntryDate ASC";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@dockName", dockName);
@@ -1410,6 +1704,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     [dbo].[LogInput_coatings] H
                 WHERE 
                     H.Dock_coatings = @dockName
+                    AND ((H.shipStatus_coatings NOT IN ('Shipped', 'On Time')) OR H.EntryDate_coatings >= CONVERT(date, GETDATE()))
     
                 UNION ALL
     
@@ -1425,6 +1720,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     [dbo].[LogOutput_coatings] H
                 WHERE 
                     H.Dock_output_coatings = @dockName
+                    AND ((H.shipStatus_output_coatings NOT IN ('Shipped', 'On Time')) OR H.EntryDate_output_coatings >= CONVERT(date, GETDATE()))
             )
 
             SELECT TOP 5
@@ -1438,7 +1734,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             FROM 
                 CombinedLogs
             ORDER BY 
-                From_time_coatings ASC";
+                EntryDate_coatings ASC";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@dockName", dockName);

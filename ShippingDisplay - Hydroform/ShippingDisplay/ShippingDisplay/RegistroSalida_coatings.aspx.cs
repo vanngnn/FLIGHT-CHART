@@ -108,8 +108,7 @@ namespace ShippingDisplay.ShippingDisplay
             DockDropDown.Items.Insert(1, "Dock 2");
             DockDropDown.Items.Insert(2, "Dock 3");
             DockDropDown.Items.Insert(3, "Dock 4");
-            DockDropDown.Items.Insert(4, "Dock 5");
-            DockDropDown.Items.Insert(5, "Dock 6");
+
         }
 
         // DONE
@@ -140,7 +139,6 @@ namespace ShippingDisplay.ShippingDisplay
                     Reg.shipStatus_output_coatings = StatusDropDown.SelectedItem.Text;
                     Reg.shipReason_output_coatings = ReasonDropDown.SelectedItem.Text;
                     Reg.shipComment_output_coatings = txtComment.Text;
-                    Reg.Id_all_output_coatings = Convert.ToInt32(txtId_all.Text);
 
                 }
                 RegistroDAL.AgregarNuevo_output_coatings(Reg);
