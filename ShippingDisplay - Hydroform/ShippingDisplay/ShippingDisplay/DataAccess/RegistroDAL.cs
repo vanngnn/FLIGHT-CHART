@@ -137,7 +137,8 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
             {
                 conn.Open();
-                string query = @"SELECT 
+                string query = @"
+                SELECT 
                     H.Id_all, H.EntryDate, H.From_time, H.To_time, H.Part_number, H.Id_cliente, H.Id_planta, H.Id_carrier, H.Bill_of_Lading, H.Quantity, H.Dock, H.shipStatus,
                     H.shipReason, H.shipComment, 
                     C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant'
@@ -151,19 +152,18 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     [dbo].[Planta] P ON H.Id_planta = P.id_planta
                 WHERE 
                     (
-                        (H.shipStatus IN ('Delayed', 'Without Shipper') AND H.EntryDate < CAST(GETDATE() AS DATE))
-                        OR 
-                        (
-                            (H.shipStatus IN ('Delayed', 'Without Shipper') AND H.EntryDate BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
-                            OR
-                            (H.shipStatus = 'On Time' AND H.EntryDate BETWEEN DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
-                            OR
-                            (H.shipStatus = 'Shipped' AND H.EntryDate BETWEEN DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
-                        )
+                        -- Condition 1: Shipments on today's date
+                        (H.EntryDate = CAST(GETDATE() AS DATE))
+        
+                        -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                        OR (H.shipStatus IN ('Without Shipper', 'Delayed') AND H.EntryDate < CAST(GETDATE() AS DATE))
+        
+                        -- Condition 3: Shipments within the next 7 days
+                        OR (H.EntryDate BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
                     )
                 ORDER BY 
                     H.EntryDate ASC;
-                ";
+            ";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -246,16 +246,29 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             {
                 con.Open();
                 string query = @"
-                        SELECT
-                        ISNULL(SUM(CASE WHEN H.shipStatus = 'On time' AND (CONVERT(DATE, H.EntryDate) = CONVERT(DATE, GETDATE()) OR H.EntryDate > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'OnTime',
-                        ISNULL(SUM(CASE WHEN H.shipStatus = 'Delayed' THEN 1 ELSE 0 END), 0) AS 'Delayed',
-                        ISNULL(SUM(CASE WHEN H.shipStatus = 'Without shipper' THEN 1 ELSE 0 END), 0) AS 'WithoutShipper',
-                        ISNULL(SUM(CASE WHEN H.shipStatus = 'Shipped' AND (CONVERT(DATE, H.EntryDate) = CONVERT(DATE, GETDATE()) OR H.EntryDate > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'Shipped'
-                    FROM (
-                        SELECT shipStatus, EntryDate FROM LogInput
-                        UNION ALL
-                        SELECT shipStatus_output AS shipStatus, EntryDate_output AS EntryDate FROM LogOutput
-                    ) AS H;";
+                SELECT
+                    ISNULL(SUM(CASE WHEN H.shipStatus = 'On time' THEN 1 ELSE 0 END), 0) AS 'OnTime',
+                    ISNULL(SUM(CASE WHEN H.shipStatus = 'Delayed' THEN 1 ELSE 0 END), 0) AS 'Delayed',
+                    ISNULL(SUM(CASE WHEN H.shipStatus = 'Without shipper' THEN 1 ELSE 0 END), 0) AS 'WithoutShipper',
+                    ISNULL(SUM(CASE WHEN H.shipStatus = 'Shipped' THEN 1 ELSE 0 END), 0) AS 'Shipped'
+                FROM (
+                    SELECT shipStatus, EntryDate FROM LogInput
+                    WHERE
+                        (
+                            EntryDate = CAST(GETDATE() AS DATE) -- Condition 1: Shipments on today's date
+                            OR (shipStatus IN ('Without shipper', 'Delayed') AND EntryDate < CAST(GETDATE() AS DATE)) -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                            OR (EntryDate BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE))) -- Condition 3: Shipments within the next 7 days
+                        )
+                    UNION ALL
+                    SELECT shipStatus_output AS shipStatus, EntryDate_output AS EntryDate FROM LogOutput
+                    WHERE
+                        (
+                            EntryDate_output = CAST(GETDATE() AS DATE) -- Condition 1: Shipments on today's date
+                            OR (shipStatus_output IN ('Without shipper', 'Delayed') AND EntryDate_output < CAST(GETDATE() AS DATE)) -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                            OR (EntryDate_output BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE))) -- Condition 3: Shipments within the next 7 days
+                        )
+                ) AS H;";
+
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@Id_planta", Id_planta);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -275,17 +288,29 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             {
                 con.Open();
                 string query = @"
-            SELECT
-                ISNULL(SUM(CASE WHEN H.shipStatus = 'On time' AND (CONVERT(DATE, H.EntryDate) = CONVERT(DATE, GETDATE()) OR H.EntryDate > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'OnTime',
+                SELECT
+                ISNULL(SUM(CASE WHEN H.shipStatus = 'On Time' AND (CONVERT(DATE, H.EntryDate) = CONVERT(DATE, GETDATE()) OR H.EntryDate > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'OnTime',
                 ISNULL(SUM(CASE WHEN H.shipStatus = 'Delayed' THEN 1 ELSE 0 END), 0) AS 'Delayed',
-                ISNULL(SUM(CASE WHEN H.shipStatus = 'Without shipper' THEN 1 ELSE 0 END), 0) AS 'WithoutShipper',
+                ISNULL(SUM(CASE WHEN H.shipStatus = 'Without Shipper' THEN 1 ELSE 0 END), 0) AS 'WithoutShipper',
                 ISNULL(SUM(CASE WHEN H.shipStatus = 'Shipped' AND (CONVERT(DATE, H.EntryDate) = CONVERT(DATE, GETDATE()) OR H.EntryDate > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'Shipped'
             FROM (
                 SELECT shipStatus, EntryDate, Dock FROM LogInput
                 UNION ALL
                 SELECT shipStatus_output AS shipStatus, EntryDate_output AS EntryDate, Dock_output AS Dock FROM LogOutput
             ) AS H
-            WHERE H.Dock = @dockName;";
+            WHERE 
+            (
+                -- Condition 1: Shipments on today's date
+                (H.EntryDate = CAST(GETDATE() AS DATE))
+    
+                -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                OR (H.shipStatus IN ('Without shipper', 'Delayed') AND H.EntryDate < CAST(GETDATE() AS DATE))
+    
+                -- Condition 3: Shipments within the next 7 days
+                OR (H.EntryDate BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+            )
+            AND H.Dock = @dockName;";
+
 
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@dockName", dockName);
@@ -309,16 +334,27 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 con.Open();
                 string query = @"
             SELECT
-                ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'On time' AND (CONVERT(DATE, H.EntryDate_coatings) = CONVERT(DATE, GETDATE()) OR H.EntryDate_coatings > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'OnTime',
+                ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'On Time' AND (CONVERT(DATE, H.EntryDate_coatings) = CONVERT(DATE, GETDATE()) OR H.EntryDate_coatings > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'OnTime',
                 ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'Delayed' THEN 1 ELSE 0 END), 0) AS 'Delayed',
-                ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'Without shipper' THEN 1 ELSE 0 END), 0) AS 'WithoutShipper',
+                ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'Without Shipper' THEN 1 ELSE 0 END), 0) AS 'WithoutShipper',
                 ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'Shipped' AND (CONVERT(DATE, H.EntryDate_coatings) = CONVERT(DATE, GETDATE()) OR H.EntryDate_coatings > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'Shipped'
             FROM (
                 SELECT shipStatus_coatings, EntryDate_coatings, Dock_coatings FROM LogInput_coatings
                 UNION ALL
                 SELECT shipStatus_output_coatings AS shipStatus_coatings, EntryDate_output_coatings AS EntryDate_coatings, Dock_output_coatings AS Dock_coatings FROM LogOutput_coatings
             ) AS H
-            WHERE H.Dock_coatings = @dockName;";
+            WHERE 
+            (
+                -- Condition 1: Shipments on today's date
+                (H.EntryDate_coatings = CAST(GETDATE() AS DATE))
+    
+                -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                OR (H.shipStatus_coatings IN ('Without shipper', 'Delayed') AND H.EntryDate_coatings < CAST(GETDATE() AS DATE))
+    
+                -- Condition 3: Shipments within the next 7 days
+                OR (H.EntryDate_coatings BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+            )
+            AND H.Dock_coatings = @dockName;";
 
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@dockName", dockName);
@@ -485,6 +521,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 {
                     query = @"
                 SELECT 
+                    'LogInput' AS SourceTable,
                     H.Id_all, 
                     H.EntryDate AS EntryDate,
                     H.From_time,
@@ -501,7 +538,8 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     H.shipComment,
                     C.description AS Cliente,
                     L.description AS Carrier,
-                    P.description AS Plant
+                    P.description AS Plant,
+                    'From: ' + P.description AS PlantDirection
                 FROM 
                     [dbo].[LogInput] H
                 INNER JOIN 
@@ -516,6 +554,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 UNION
 
                 SELECT 
+                    'LogOutput' AS SourceTable,
                     H.Id_all_output,
                     H.EntryDate_output AS EntryDate,
                     H.From_time_output AS From_time,
@@ -532,7 +571,8 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     H.shipComment_output AS shipComment,
                     C.description AS Cliente,
                     L.description AS Carrier,
-                    P.description AS Plant
+                    P.description AS Plant,
+                    'To: ' + P.description AS PlantDirection
                 FROM 
                     [dbo].[LogOutput] H
                 INNER JOIN 
@@ -551,6 +591,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 {
                     query = @"
                 SELECT 
+                    'LogInput' AS SourceTable,
                     H.Id_all, 
                     H.EntryDate AS EntryDate,
                     H.From_time,
@@ -587,6 +628,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 {
                     query = @"
                 SELECT 
+                    'LogOutput' AS SourceTable,
                     H.Id_all_output AS Id_all, 
                     H.EntryDate_output AS EntryDate,
                     H.From_time_output AS From_time,
@@ -623,6 +665,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 {
                     query = @"
                 SELECT 
+                    'LogInput_coatings' AS SourceTable,
                     H.Id_all_coatings AS Id_all, 
                     H.EntryDate_coatings AS EntryDate,
                     H.From_time_coatings AS From_time,
@@ -639,7 +682,8 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     H.shipComment_coatings AS shipComment,
                     C.description AS Cliente,
                     L.description AS Carrier,
-                    P.description AS Plant
+                    P.description AS Plant,
+                    'From: ' + P.description AS PlantDirection
                 FROM 
                     [dbo].[LogInput_coatings] H
                 INNER JOIN 
@@ -654,6 +698,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 UNION
 
                 SELECT 
+                    'LogOutput_coatings' AS SourceTable,
                     H.Id_all_output_coatings,
                     H.EntryDate_output_coatings AS EntryDate,
                     H.From_time_output_coatings AS From_time,
@@ -670,7 +715,8 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     H.shipComment_output_coatings AS shipComment,
                     C.description AS Cliente,
                     L.description AS Carrier,
-                    P.description AS Plant
+                    P.description AS Plant,
+                    'To: ' + P.description AS PlantDirection
                 FROM 
                     [dbo].[LogOutput_coatings] H
                 INNER JOIN 
@@ -689,6 +735,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 {
                     query = @"
                 SELECT 
+                    'LogInput_coatings' AS SourceTable,
                     H.Id_all_coatings AS Id_all, 
                     H.EntryDate_coatings AS EntryDate,
                     H.From_time_coatings AS From_time,
@@ -725,6 +772,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 {
                     query = @"
                 SELECT 
+                    'LogOutput_coatings' AS SourceTable,
                     H.Id_all_output_coatings AS Id_all, 
                     H.EntryDate_output_coatings AS EntryDate,
                     H.From_time_output_coatings AS From_time,
@@ -767,10 +815,12 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 cmd.Parameters.AddWithValue("@StartDate", StartDate);
                 cmd.Parameters.AddWithValue("@EndDate", EndDate);
 
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using (SqlDataReader dr = cmd.ExecuteReader())
                 {
-                    lista.Add(ConvertirFiltro(reader));
+                    while (dr.Read())
+                    {
+                        lista.Add(ConvertirFiltro(dr));
+                    }
                 }
             }
             return lista;
@@ -797,6 +847,9 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 shipComment = reader["shipComment"].ToString(),
                 ClienteName = reader["Cliente"].ToString(),
                 CarrierName = reader["Carrier"].ToString(),
+                IsInput = String.Equals(Convert.ToString(reader["SourceTable"]), "LogInput", StringComparison.OrdinalIgnoreCase),
+                IsInput_coatings = String.Equals(Convert.ToString(reader["SourceTable"]), "LogInput_coatings", StringComparison.OrdinalIgnoreCase),
+                PlantDirection = reader["PlantDirection"].ToString()
             };
 
             return Reg;
@@ -994,15 +1047,14 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     INNER JOIN [dbo].[Planta]  P ON H.Id_planta_output  = P.id_planta
                     WHERE 
                     (
-                        (H.shipStatus_output IN ('Delayed', 'Without Shipper') AND H.EntryDate_output < CAST(GETDATE() AS DATE))
-                        OR 
-                        (
-                            (H.shipStatus_output IN ('Delayed', 'Without Shipper') AND H.EntryDate_output BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
-                            OR
-                            (H.shipStatus_output = 'On Time' AND H.EntryDate_output BETWEEN DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
-                            OR
-                            (H.shipStatus_output = 'Shipped' AND H.EntryDate_output BETWEEN DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
-                        )
+                        -- Condition 1: Shipments on today's date
+                        (H.EntryDate_output = CAST(GETDATE() AS DATE))
+        
+                        -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                        OR (H.shipStatus_output IN ('Without Shipper', 'Delayed') AND H.EntryDate_output < CAST(GETDATE() AS DATE))
+        
+                        -- Condition 3: Shipments within the next 7 days
+                        OR (H.EntryDate_output BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
                     )
                     ORDER BY H.EntryDate_output ASC";
                 //WHERE H.shipStatus=@shipStatus
@@ -1297,7 +1349,16 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 INNER JOIN 
                     [dbo].[Planta] P ON H.Id_planta = P.id_planta
                 WHERE 
-                    ((H.shipStatus NOT IN ('Shipped', 'On Time')) OR H.EntryDate >= CONVERT(date, GETDATE()))
+                    (
+                        -- Condition 1: Shipments on today's date
+                        (H.EntryDate = CAST(GETDATE() AS DATE))
+        
+                        -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                        OR (H.shipStatus IN ('Without Shipper', 'Delayed') AND H.EntryDate < CAST(GETDATE() AS DATE))
+        
+                        -- Condition 3: Shipments within the next 7 days
+                        OR (H.EntryDate BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                    )
 
                 UNION
 
@@ -1329,7 +1390,16 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                 INNER JOIN 
                     [dbo].[Planta] P ON H.Id_planta_output = P.id_planta
                 WHERE 
-                    ((H.shipStatus_output NOT IN ('Shipped', 'On Time')) OR H.EntryDate_output >= CONVERT(date, GETDATE()))
+                    (
+                        -- Condition 1: Shipments on today's date
+                        (H.EntryDate_output = CAST(GETDATE() AS DATE))
+        
+                        -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                        OR (H.shipStatus_output IN ('Without Shipper', 'Delayed') AND H.EntryDate_output < CAST(GETDATE() AS DATE))
+        
+                        -- Condition 3: Shipments within the next 7 days
+                        OR (H.EntryDate_output BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                    )
 
                 ORDER BY 
                     EntryDate ASC;";
@@ -1366,7 +1436,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         }
 
         // DASHBOARD FOR COATINGS DISPLAY  - BOTH INS AND OUTS - DONE
-        public static List<Registro> ListDashboard_COATINGS(int Status)
+        public static List<Registro> ListDashboard_COATINGS()
 {
             List<Registro> list_dashboard_coatings = new List<Registro>();
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
@@ -1387,7 +1457,16 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         INNER JOIN 
             [dbo].[Planta] P ON H.Id_planta_coatings = P.id_planta
         WHERE 
-                    ((H.shipStatus_coatings NOT IN ('Shipped', 'On Time')) OR H.EntryDate_coatings >= CONVERT(date, GETDATE()))
+                (
+                        -- Condition 1: Shipments on today's date
+                        (H.EntryDate_coatings = CAST(GETDATE() AS DATE))
+        
+                        -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                        OR (H.shipStatus_coatings IN ('Without Shipper', 'Delayed') AND H.EntryDate_coatings < CAST(GETDATE() AS DATE))
+        
+                        -- Condition 3: Shipments within the next 7 days
+                        OR (H.EntryDate_coatings BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                    )
 
         UNION
 
@@ -1419,7 +1498,16 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
         INNER JOIN 
             [dbo].[Planta] P ON H.Id_planta_output_coatings = P.id_planta
         WHERE 
-                    ((H.shipStatus_output_coatings NOT IN ('Shipped', 'On Time')) OR H.EntryDate_output_coatings >= CONVERT(date, GETDATE()))
+                (
+                        -- Condition 1: Shipments on today's date
+                        (H.EntryDate_output_coatings = CAST(GETDATE() AS DATE))
+        
+                        -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                        OR (H.shipStatus_output_coatings IN ('Without Shipper', 'Delayed') AND H.EntryDate_output_coatings < CAST(GETDATE() AS DATE))
+        
+                        -- Condition 3: Shipments within the next 7 days
+                        OR (H.EntryDate_output_coatings BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                    )
         ORDER BY 
             EntryDate_coatings ASC";
 
@@ -1479,7 +1567,17 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                    [dbo].[Planta] P ON H.Id_planta = P.id_planta
                WHERE 
                H.Dock = @dockName 
-               AND ((H.shipStatus NOT IN ('Shipped', 'On Time')) OR H.EntryDate >= CONVERT(date, GETDATE()))
+               AND 
+                    (
+                        -- Condition 1: Shipments on today's date
+                        (H.EntryDate = CAST(GETDATE() AS DATE))
+        
+                        -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                        OR (H.shipStatus IN ('Without Shipper', 'Delayed') AND H.EntryDate < CAST(GETDATE() AS DATE))
+        
+                        -- Condition 3: Shipments within the next 7 days
+                        OR (H.EntryDate BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                    )
 
                UNION
 
@@ -1512,7 +1610,17 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     [dbo].[Planta] P ON H.Id_planta_output = P.id_planta
                WHERE 
                 H.Dock_output = @dockName
-                AND ((H.shipStatus_output NOT IN ('Shipped', 'On Time')) OR H.EntryDate_output >= CONVERT(date, GETDATE()))
+                AND 
+                    (
+                        -- Condition 1: Shipments on today's date
+                        (H.EntryDate_output = CAST(GETDATE() AS DATE))
+        
+                        -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                        OR (H.shipStatus_output IN ('Without Shipper', 'Delayed') AND H.EntryDate_output < CAST(GETDATE() AS DATE))
+        
+                        -- Condition 3: Shipments within the next 7 days
+                        OR (H.EntryDate_output BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                    )
                ORDER BY 
                    EntryDate ASC";
 
@@ -1572,7 +1680,17 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             [dbo].[Planta] P ON H.Id_planta_coatings = P.id_planta
         WHERE 
         H.Dock_coatings = @dockName
-        AND ((H.shipStatus_coatings NOT IN ('Shipped', 'On Time')) OR H.EntryDate_coatings >= CONVERT(date, GETDATE()))
+        AND 
+            (
+                        -- Condition 1: Shipments on today's date
+                        (H.EntryDate_coatings = CAST(GETDATE() AS DATE))
+        
+                        -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                        OR (H.shipStatus_coatings IN ('Without Shipper', 'Delayed') AND H.EntryDate_coatings < CAST(GETDATE() AS DATE))
+        
+                        -- Condition 3: Shipments within the next 7 days
+                        OR (H.EntryDate_coatings BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                    )
 
         UNION
 
@@ -1607,7 +1725,17 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
 
         WHERE 
         H.Dock_output_coatings = @dockName
-        AND ((H.shipStatus_output_coatings NOT IN ('Shipped', 'On Time')) OR H.EntryDate_output_coatings >= CONVERT(date, GETDATE()))
+        AND 
+            (
+                        -- Condition 1: Shipments on today's date
+                        (H.EntryDate_output_coatings = CAST(GETDATE() AS DATE))
+        
+                        -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                        OR (H.shipStatus_output_coatings IN ('Without Shipper', 'Delayed') AND H.EntryDate_output_coatings < CAST(GETDATE() AS DATE))
+        
+                        -- Condition 3: Shipments within the next 7 days
+                        OR (H.EntryDate_output_coatings BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                    )
 
         ORDER BY 
             EntryDate_coatings ASC";
@@ -1663,9 +1791,11 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     [dbo].[LogInput] H
                 WHERE 
                     H.Dock = @dockName
-                    AND ((H.shipStatus NOT IN ('Shipped', 'On Time')) OR H.EntryDate >= CONVERT(date, GETDATE()))
-        
-    
+                    AND (
+                            EntryDate = CAST(GETDATE() AS DATE) -- Condition 1: Shipments on today's date
+                            OR (shipStatus IN ('Without shipper', 'Delayed') AND EntryDate < CAST(GETDATE() AS DATE)) -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                            OR (EntryDate BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE))) -- Condition 3: Shipments within the next 7 days
+                        )
                 UNION ALL
     
                 SELECT 
@@ -1680,7 +1810,11 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     [dbo].[LogOutput] H
                 WHERE 
                     H.Dock_output = @dockName
-                    AND ((H.shipStatus_output NOT IN ('Shipped', 'On Time')) OR H.EntryDate_output >= CONVERT(date, GETDATE()))
+                    AND (
+                            EntryDate_output = CAST(GETDATE() AS DATE) -- Condition 1: Shipments on today's date
+                            OR (shipStatus_output IN ('Without shipper', 'Delayed') AND EntryDate_output < CAST(GETDATE() AS DATE)) -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                            OR (EntryDate_output BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE))) -- Condition 3: Shipments within the next 7 days
+                        )
             )
             SELECT TOP 5
                 SourceTable,
@@ -1735,7 +1869,11 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     [dbo].[LogInput_coatings] H
                 WHERE 
                     H.Dock_coatings = @dockName
-                    AND ((H.shipStatus_coatings NOT IN ('Shipped', 'On Time')) OR H.EntryDate_coatings >= CONVERT(date, GETDATE()))
+                    AND (
+                            EntryDate_coatings = CAST(GETDATE() AS DATE) -- Condition 1: Shipments on today's date
+                            OR (shipStatus_coatings IN ('Without shipper', 'Delayed') AND EntryDate_coatings < CAST(GETDATE() AS DATE)) -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                            OR (EntryDate_coatings BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE))) -- Condition 3: Shipments within the next 7 days
+                        )
     
                 UNION ALL
     
@@ -1751,7 +1889,11 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     [dbo].[LogOutput_coatings] H
                 WHERE 
                     H.Dock_output_coatings = @dockName
-                    AND ((H.shipStatus_output_coatings NOT IN ('Shipped', 'On Time')) OR H.EntryDate_output_coatings >= CONVERT(date, GETDATE()))
+                    AND (
+                            EntryDate_output_coatings = CAST(GETDATE() AS DATE) -- Condition 1: Shipments on today's date
+                            OR (shipStatus_output_coatings IN ('Without shipper', 'Delayed') AND EntryDate_output_coatings < CAST(GETDATE() AS DATE)) -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                            OR (EntryDate_output_coatings BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE))) -- Condition 3: Shipments within the next 7 days
+                        )
             )
 
             SELECT TOP 5
@@ -1923,15 +2065,14 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                     
                     WHERE 
                         (
-                            (H.shipStatus_coatings IN ('Delayed', 'Without Shipper') AND H.EntryDate_coatings < CAST(GETDATE() AS DATE))
-                            OR 
-                            (
-                                (H.shipStatus_coatings IN ('Delayed', 'Without Shipper') AND H.EntryDate_coatings BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
-                                OR
-                                (H.shipStatus_coatings = 'On Time' AND H.EntryDate_coatings BETWEEN DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
-                                OR
-                                (H.shipStatus_coatings = 'Shipped' AND H.EntryDate_coatings BETWEEN DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
-                            )
+                            -- Condition 1: Shipments on today's date
+                            (H.EntryDate_coatings = CAST(GETDATE() AS DATE))
+        
+                            -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                            OR (H.shipStatus_coatings IN ('Without Shipper', 'Delayed') AND H.EntryDate_coatings < CAST(GETDATE() AS DATE))
+        
+                            -- Condition 3: Shipments within the next 7 days
+                            OR (H.EntryDate_coatings BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
                         )
                     
                     ORDER BY H.EntryDate_coatings ASC";
@@ -2002,16 +2143,29 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             {
                 con.Open();
                 string query = @"
-                        SELECT
-                        ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'On time' AND (CONVERT(DATE, H.EntryDate_coatings) = CONVERT(DATE, GETDATE()) OR H.EntryDate_coatings > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'OnTime',
-                        ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'Delayed' THEN 1 ELSE 0 END), 0) AS 'Delayed',
-                        ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'Without shipper' THEN 1 ELSE 0 END), 0) AS 'WithoutShipper',
-                        ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'Shipped' AND (CONVERT(DATE, H.EntryDate_coatings) = CONVERT(DATE, GETDATE()) OR H.EntryDate_coatings > GETDATE()) THEN 1 ELSE 0 END), 0) AS 'Shipped'
-                    FROM (
-                        SELECT shipStatus_coatings, EntryDate_coatings FROM LogInput_coatings
-                        UNION ALL
-                        SELECT shipStatus_output_coatings AS shipStatus_coatings, EntryDate_output_coatings AS EntryDate_coatings FROM LogOutput_coatings
-                    ) AS H;";
+                SELECT
+                    ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'On time' THEN 1 ELSE 0 END), 0) AS 'OnTime',
+                    ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'Delayed' THEN 1 ELSE 0 END), 0) AS 'Delayed',
+                    ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'Without shipper' THEN 1 ELSE 0 END), 0) AS 'WithoutShipper',
+                    ISNULL(SUM(CASE WHEN H.shipStatus_coatings = 'Shipped' THEN 1 ELSE 0 END), 0) AS 'Shipped'
+                FROM (
+                    SELECT shipStatus_coatings, EntryDate_coatings FROM LogInput_coatings
+                    WHERE
+                        (
+                            EntryDate_coatings = CAST(GETDATE() AS DATE) -- Condition 1: Shipments on today's date
+                            OR (shipStatus_coatings IN ('Without shipper', 'Delayed') AND EntryDate_coatings < CAST(GETDATE() AS DATE)) -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                            OR (EntryDate_coatings BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE))) -- Condition 3: Shipments within the next 7 days
+                        )
+                    UNION ALL
+                    SELECT shipStatus_output_coatings AS shipStatus_coatings, EntryDate_output_coatings AS EntryDate_coatings FROM LogOutput_coatings
+                    WHERE
+                        (
+                            EntryDate_output_coatings = CAST(GETDATE() AS DATE) -- Condition 1: Shipments on today's date
+                            OR (shipStatus_output_coatings IN ('Without shipper', 'Delayed') AND EntryDate_output_coatings < CAST(GETDATE() AS DATE)) -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                            OR (EntryDate_output_coatings BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE))) -- Condition 3: Shipments within the next 7 days
+                        )
+                ) AS H;";
+
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@Id_planta_coatings", Id_planta);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -2160,15 +2314,14 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
 
                     WHERE 
                     (
-                        (H.shipStatus_output_coatings IN ('Delayed', 'Without Shipper') AND H.EntryDate_output_coatings < CAST(GETDATE() AS DATE))
-                        OR 
-                        (
-                            (H.shipStatus_output_coatings IN ('Delayed', 'Without Shipper') AND H.EntryDate_output_coatings BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
-                            OR
-                            (H.shipStatus_output_coatings = 'On Time' AND H.EntryDate_output_coatings BETWEEN DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
-                            OR
-                            (H.shipStatus_output_coatings = 'Shipped' AND H.EntryDate_output_coatings BETWEEN DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
-                        )
+                        -- Condition 1: Shipments on today's date
+                        (H.EntryDate_output_coatings = CAST(GETDATE() AS DATE))
+        
+                        -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                        OR (H.shipStatus_output_coatings IN ('Without Shipper', 'Delayed') AND H.EntryDate_output_coatings < CAST(GETDATE() AS DATE))
+        
+                        -- Condition 3: Shipments within the next 7 days
+                        OR (H.EntryDate_output_coatings BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
                     )                    
 
                     ORDER BY H.EntryDate_output_coatings ASC";

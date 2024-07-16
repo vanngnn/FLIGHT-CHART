@@ -290,5 +290,51 @@ namespace ShippingDisplay.ShippingDisplay
             FormsAuthentication.SignOut();
             FormsAuthentication.RedirectToLoginPage();
         }
+
+        protected void gvRegistros_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                string shipStatus = e.Row.Cells[10].Text; // Assuming shipStatus is in the 10th column
+
+                // Exclude last two columns (Edit and Delete)
+                for (int i = 0; i < e.Row.Cells.Count - 2; i++)
+                {
+                    TableCell cell = e.Row.Cells[i];
+
+                    // Apply background color based on shipStatus
+                    switch (shipStatus)
+                    {
+                        case "On Time":
+                            cell.BackColor = System.Drawing.ColorTranslator.FromHtml("#28a745");
+                            break;
+                        case "Shipped":
+                            cell.BackColor = System.Drawing.ColorTranslator.FromHtml("#17a2b8");
+                            break;
+                        case "Delayed":
+                            cell.BackColor = System.Drawing.ColorTranslator.FromHtml("#dc3545");
+                            e.Row.CssClass = "blink"; // Apply class to the whole row for "Delayed"
+                            break;
+                        default:
+                            cell.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffc107");
+                            break;
+                    }
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

@@ -172,35 +172,8 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         }
 
         public bool IsInput_coatings { get; set; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        public object SourceTable { get; internal set; }
+        public string PlantDirection { get; set; }
 
     }
 }

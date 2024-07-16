@@ -35,8 +35,7 @@ namespace ShippingDisplay.ShippingDisplay
         }
         private void CargarGrid()
         {
-            int shipStatus = 1;
-            gvRegistros.DataSource = RegistroDAL.ListDashboard_COATINGS(shipStatus);
+            gvRegistros.DataSource = RegistroDAL.ListDashboard_COATINGS();
             gvRegistros.DataBind();
         }
         public void ObtenerWidgets()

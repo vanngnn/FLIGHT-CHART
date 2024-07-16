@@ -114,5 +114,45 @@ namespace ShippingDisplay.ShippingDisplay
         {
             ExportToExcel("Informe.xls", gvRegistros);
         }
+
+        protected void gvRegistros_RowDataBound (object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Registro registro = (Registro)e.Row.DataItem;
+                Label lblFromTo = (Label)e.Row.FindControl("lblFromTo");
+                Label lblToFrom = (Label)e.Row.FindControl("lblToFrom");
+
+                if (registro.IsInput || registro.IsInput_coatings)
+                {
+                    lblFromTo.Text = registro.PlantDirection;
+                    lblToFrom.Visible = false; // Hide lblToFrom when IsInput or IsInput_coatings is true
+                }
+                else
+                {
+                    lblFromTo.Visible = false; // Hide lblFromTo when IsInput or IsInput_coatings is false
+                    lblToFrom.Text = registro.PlantDirection;
+                }
+
+                string shipStatus = e.Row.Cells[9].Text;
+                if (shipStatus == "On Time")
+                {
+                    e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#28a745");
+                }
+                else if (shipStatus == "Shipped")
+                {
+                    e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#17a2b8");
+                }
+                else if (shipStatus == "Delayed")
+                {
+                    e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#dc3545");
+                    e.Row.CssClass = "blink";
+                }
+                else
+                {
+                    e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffc107");
+                }
+            }
+        }
     }
 }

@@ -519,13 +519,18 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" >
+                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all" class="table table-bordered table-striped" OnRowDataBound="gvRegistros_RowDataBound">
                                 <Columns>
                                     <asp:BoundField HeaderText="DATE" DataField="assignedDate" />
                                     <asp:BoundField HeaderText="ASSIGNED TIME" DataField="TimePeriodAssigned" />
                                     <asp:BoundField HeaderText="P/N" DataField="partNumber" />
                                     <asp:BoundField HeaderText="PROJECT" DataField="ClienteName" />
-                                    <asp:BoundField HeaderText="FROM" DataField="PlantName" />
+                                    <asp:TemplateField HeaderText="FROM/TO">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblFromTo" runat="server"></asp:Label>
+                                            <asp:Label ID="lblToFrom" runat="server"></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                     <asp:BoundField HeaderText="CARRIER" DataField="CarrierName" />
                                     <asp:BoundField HeaderText="B/L" DataField="assignedBOL" />
                                     <asp:BoundField HeaderText="QTY" DataField="assignedQTY" />

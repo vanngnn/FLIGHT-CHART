@@ -582,7 +582,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all_output" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" >
+                            <asp:GridView ID="gvRegistros" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_all_output" class="table table-bordered table-striped" OnRowCommand="gvRegistros_RowCommand" OnRowDataBound="gvRegistros_RowDataBound">
                                 <Columns>
                                     <asp:BoundField HeaderText="ID" DataField="Id_all_output" Visible="false" />
                                     <asp:BoundField HeaderText="DATE" DataField="assignedDate_output" />
