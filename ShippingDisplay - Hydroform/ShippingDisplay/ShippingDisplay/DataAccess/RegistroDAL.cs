@@ -175,6 +175,77 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             return lista;
         }
 
+        public static List<Registro> ListadoRegistros_Shipper(string plantName)
+        {
+            List<Registro> lista = new List<Registro>();
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                conn.Open();
+                string query = "";
+
+                if (plantName == "Hydroform")
+                {
+                    query = @"
+                    SELECT 
+                    H.Id_all_output,H.EntryDate_output,H.From_time_output, H.To_time_output, H.Part_number_output, H.Id_cliente_output, H.Id_planta_output, H.Id_carrier_output, H.Bill_of_Lading_output, H.Quantity_output, H.Dock_output,
+                    H.shipStatus_output,
+                    H.shipReason_output, H.shipComment_output, 
+                    C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant'
+                    FROM [dbo].[LogOutput] H
+                    INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_output = C.id_cliente
+                    INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_output = L.id_carrier
+                    INNER JOIN [dbo].[Planta]  P ON H.Id_planta_output  = P.id_planta
+                    WHERE 
+                    (
+                        -- Condition 1: Shipments on today's date
+                        (H.EntryDate_output = CAST(GETDATE() AS DATE))
+        
+                        -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                        OR (H.shipStatus_output IN ('Without Shipper', 'Delayed') AND H.EntryDate_output < CAST(GETDATE() AS DATE))
+        
+                        -- Condition 3: Shipments within the next 7 days
+                        OR (H.EntryDate_output BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                    )
+                    ORDER BY H.EntryDate_output ASC";
+                }
+
+                if (plantName == "Coatings")
+                {
+                    query = @"
+                    SELECT 
+                    H.Id_all_output_coatings AS Id_all_output,H.EntryDate_output_coatings AS EntryDate_output,H.From_time_output_coatings AS From_time_output, H.To_time_output_coatings AS To_time_output, H.Part_number_output_coatings AS Part_number_output, H.Id_cliente_output_coatings AS Id_cliente_output, H.Id_planta_output_coatings AS Id_planta_output, H.Id_carrier_output_coatings AS Id_carrier_output, H.Bill_of_Lading_output_coatings AS Bill_of_Lading_output, H.Quantity_output_coatings AS Quantity_output, H.Dock_output_coatings AS Dock_output,
+                    H.shipStatus_output_coatings AS shipStatus_output,
+                    H.shipReason_output_coatings AS shipReason_output, H.shipComment_output_coatings AS shipComment_output, 
+                    C.description AS 'Cliente', L.description AS 'Carrier', P.description AS 'Plant'
+                    FROM [dbo].[LogOutput_coatings] H
+                    INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_output_coatings = C.id_cliente
+                    INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_output_coatings = L.id_carrier
+                    INNER JOIN [dbo].[Planta]  P ON H.Id_planta_output_coatings  = P.id_planta
+                    WHERE 
+                    (
+                        -- Condition 1: Shipments on today's date
+                        (H.EntryDate_output_coatings = CAST(GETDATE() AS DATE))
+        
+                        -- Condition 2: Shipments with shipStatus 'Without Shipper' or 'Delayed' before today
+                        OR (H.shipStatus_output_coatings IN ('Without Shipper', 'Delayed') AND H.EntryDate_output_coatings < CAST(GETDATE() AS DATE))
+        
+                        -- Condition 3: Shipments within the next 7 days
+                        OR (H.EntryDate_output_coatings BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 7, CAST(GETDATE() AS DATE)))
+                    )
+                    ORDER BY H.EntryDate_output_coatings ASC";
+                }
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    lista.Add(ConvertirRegistro_output(reader));
+                }
+            }
+            return lista;
+        }
+
+
         // CONVERTIR REGISTRO - DONE
 
         private static Registro ConvertirRegistro(IDataReader reader)
@@ -223,7 +294,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             Reg.CarrierName = Convert.ToString(reader["Carrier"]);
             return Reg;
         }
-        //ACTUALIZAR SHIPPER  - NOT DONE (DONT NEED TO BUT SHOULD BE LOOKED INTO)
+        //ACTUALIZAR Shipper  - NOT DONE (DONT NEED TO BUT SHOULD BE LOOKED INTO)
         public static Registro ActualizarShipper(Registro Reg)
         {
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))

@@ -390,8 +390,8 @@
                     </li>
 
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkShipper" NavigateUrl="SHIPPER.aspx" runat="server" Visible="true"  class="nav-link"> 
-                            <i class="nav-icon fas fa-book"></i><p>Shipper</p>
+                        <asp:HyperLink ID="LinkShipper" NavigateUrl="Shipper.aspx" runat="server" Visible="true"  class="nav-link"> 
+                            <i class="nav-icon fas fa-book"></i><p>Shipper (Outputs only) </p>
                         </asp:HyperLink>
                     </li>
 

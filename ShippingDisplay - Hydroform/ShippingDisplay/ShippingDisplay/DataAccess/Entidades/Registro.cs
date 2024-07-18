@@ -32,7 +32,7 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
 
         //DONT NEED THESE
 
-        public int Shipper { get; set; } //ID SHIPPER
+        public int Shipper { get; set; } //ID Shipper
         public int Status { get; set; } //STATUS
 
         //
@@ -174,6 +174,12 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess.Entidades
         public bool IsInput_coatings { get; set; }
         public object SourceTable { get; internal set; }
         public string PlantDirection { get; set; }
+
+        public string ImageUrlField { get; set; }
+
+        public bool ImageVisibleField { get; set; }
+
+
 
     }
 }

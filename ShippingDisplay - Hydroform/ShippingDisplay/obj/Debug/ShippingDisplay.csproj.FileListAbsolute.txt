@@ -278,3 +278,8 @@ C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN 3\FLIGHT-CHART
 C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN 3\FLIGHT-CHART\ShippingDisplay - Hydroform\ShippingDisplay\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN 3\FLIGHT-CHART\ShippingDisplay - Hydroform\ShippingDisplay\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN 3\FLIGHT-CHART\ShippingDisplay - Hydroform\ShippingDisplay\obj\Debug\Shipping.B566B210.Up2Date
+C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN 3\FLIGHT-CHART\ShippingDisplay - Hydroform\ShippingDisplay\bin\QRCoder.dll
+C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN 3\FLIGHT-CHART\ShippingDisplay - Hydroform\ShippingDisplay\bin\zxing.dll
+C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN 3\FLIGHT-CHART\ShippingDisplay - Hydroform\ShippingDisplay\bin\zxing.presentation.dll
+C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN 3\FLIGHT-CHART\ShippingDisplay - Hydroform\ShippingDisplay\bin\zxing.xml
+C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN 3\FLIGHT-CHART\ShippingDisplay - Hydroform\ShippingDisplay\bin\zxing.presentation.xml

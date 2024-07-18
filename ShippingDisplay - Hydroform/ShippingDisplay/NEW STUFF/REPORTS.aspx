@@ -118,7 +118,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkShipper" NavigateUrl="SHIPPER.aspx" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkShipper" NavigateUrl="Shipper.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-book"></i><p>Shipper</p>
                         </asp:HyperLink>
                     </li>
@@ -241,7 +241,7 @@
                                     <asp:BoundField HeaderText="QUANTITY" DataField="RutaName" />
                                     <asp:BoundField HeaderText="TO" DataField="Input" />
                                     <asp:BoundField HeaderText="FROM" DataField="Output" />
-                                    <asp:BoundField HeaderText="SHIPPER" DataField="Shipper" />
+                                    <asp:BoundField HeaderText="Shipper" DataField="Shipper" />
                                     <%--<asp:BoundField HeaderText="ASN Sent" DataField="ASN_Sent" />
                                     <asp:BoundField HeaderText="ASN Ack" DataField="ASN_Ack" />--%>
                                 </Columns>

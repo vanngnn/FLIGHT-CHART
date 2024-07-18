@@ -391,7 +391,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkShipper" NavigateUrl="SHIPPER.aspx" runat="server" Visible="true"  class="nav-link"> 
+                        <asp:HyperLink ID="LinkShipper" NavigateUrl="Shipper.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-book"></i><p>Shipper</p>
                         </asp:HyperLink>
                     </li>
@@ -478,7 +478,7 @@
                         <div class="small-box bg-warning">
                             <div class="inner">
                                 <h3><asp:Label ID="lblSinShipper" runat="server" Text="0"></asp:Label></h3>
-                                <p><h3>WITHOUT SHIPPER</h3></p>
+                                <p><h3>WITHOUT Shipper</h3></p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-android-checkmark-circle"></i>
