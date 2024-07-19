@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -9,6 +10,7 @@ using System.Web.UI.WebControls;
 using ShippingDisplay.ShippingDisplay.DataAccess;
 using ShippingDisplay.ShippingDisplay.DataAccess.Entidades;
 using ZXing;
+using static System.Net.WebRequestMethods;
 
 namespace ShippingDisplay.ShippingDisplay
 {
@@ -108,7 +110,12 @@ namespace ShippingDisplay.ShippingDisplay
             {
                 int rowIndex = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = gvRegistros.Rows[rowIndex];
-                string data = row.Cells[3].Text; // Adjust index based on your data
+                string partNumber = row.Cells[3].Text; // Adjust index based on your data
+
+                Debug.WriteLine($"partNumber in gvRegistros_RowCommand: {partNumber}");
+
+
+                string url = $"http://localhost:60281/ShippingDisplay/ViewRecord.aspx?partNumber={partNumber}";
 
                 // Generate QR Code and update modal content
                 var qrWriter = new BarcodeWriter
@@ -120,7 +127,7 @@ namespace ShippingDisplay.ShippingDisplay
                         Height = 200
                     }
                 };
-                var qrBitmap = qrWriter.Write(data);
+                var qrBitmap = qrWriter.Write(url);
 
                 using (MemoryStream ms = new MemoryStream())
                 {

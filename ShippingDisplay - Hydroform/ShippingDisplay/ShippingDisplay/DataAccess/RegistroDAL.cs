@@ -2556,5 +2556,55 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             }
             return regList;
         }
+
+        // GET RECORD FOR SHIPPING
+
+        public static Registro GetRecordByPartNumber(string partNumber)
+        {
+            Registro record = null;
+            string connectionString = ConfigurationManager.ConnectionStrings["SqlCon"].ToString();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = @"SELECT H.EntryDate_output,H.From_time_output, H.To_time_output, H.Part_number_output, H.Id_cliente_output, H.Id_planta_output, H.Id_carrier_output, H.Bill_of_Lading_output, H.Quantity_output, H.Dock_output,H.shipStatus_output, H.shipReason_output, H.shipComment_output, 
+                            C.description AS 'Cliente_output', L.description AS 'Carrier_output', P.description AS 'Plant_output'
+                            FROM [dbo].[LogOutput] H
+                            INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_output = C.id_cliente
+                            INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_output = L.id_carrier
+                            INNER JOIN [dbo].[Planta]  P ON H.Id_planta_output = P.id_planta
+                            WHERE 
+                            H.Part_number_output = @PartNumber
+                            ";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@PartNumber", partNumber);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    record = new Registro
+                    {
+                        assignedDate_output = Convert.ToDateTime(reader["EntryDate_output"]),
+                        assignedFromtime_output = Convert.ToString(reader["From_time_output"]),
+                        assignedTotime_output = Convert.ToString(reader["To_time_output"]),
+                        partNumber_output = Convert.ToString(reader["Part_number_output"]),
+                        Id_cliente_output = Convert.ToInt32(reader["Id_cliente_output"]),
+                        Id_planta_output = Convert.ToInt32(reader["Id_planta_output"]),
+                        Id_carrier_output = Convert.ToInt32(reader["Id_carrier_output"]),
+                        PlantName_output = Convert.ToString(reader["Plant_output"]),
+                        assignedBOL_output = Convert.ToInt32(reader["Bill_of_Lading_output"]),
+                        assignedQTY_output = Convert.ToInt32(reader["Quantity_output"]),
+                        assignedDock_output = Convert.ToString(reader["Dock_output"]),
+                        shipStatus_output = Convert.ToString(reader["shipStatus_output"]),
+                        shipReason_output = Convert.ToString(reader["shipReason_output"]),
+                        shipComment_output = Convert.ToString(reader["shipComment_output"]),
+                        ClienteName_output = Convert.ToString(reader["Cliente_output"]),
+                        CarrierName_output = Convert.ToString(reader["Carrier_output"])
+                    };
+                }
+                reader.Close();
+            }
+            return record;
+        }
+
     }
 }

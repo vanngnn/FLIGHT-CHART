@@ -130,6 +130,7 @@
     <Content Include="ShippingDisplay\RegistroUsuarios.aspx" />
     <Content Include="ShippingDisplay\Reportes.aspx" />
     <Content Include="ShippingDisplay\Shipper.aspx" />
+    <Content Include="ShippingDisplay\ViewRecord.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -438,6 +439,13 @@
     </Compile>
     <Compile Include="ShippingDisplay\Shipper.aspx.designer.cs">
       <DependentUpon>Shipper.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingDisplay\ViewRecord.aspx.cs">
+      <DependentUpon>ViewRecord.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShippingDisplay\ViewRecord.aspx.designer.cs">
+      <DependentUpon>ViewRecord.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
