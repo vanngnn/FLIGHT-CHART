@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/png" href="Template/img/martinrea_logo.png"/>
     <title>Shipping Display</title>
-    <!-- Google Font: Source Sans Pro -->
     <style>
         table {
             width: 100%;
@@ -61,19 +60,17 @@
             color: white; /* Button text color */
         }
         .btn-primary {
-            background-color: #28a745 ; /* Green for Pick up button */
+            background-color: #28a745; /* Green for Pick up button */
         }
         .btn-secondary {
-            background-color: #dc3545; /* Red for Decline button */
+            background-color: #dc3545; /* Red for Decline button (will be removed) */
         }
         .card-body {
             margin-top: 30px; /* Space between the bottom of the logo and the card */
         }
-
-        /* Popup Styles*/
-        
-        .popup{
-            display:none;
+        /* Popup Styles */
+        .popup {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -84,31 +81,28 @@
             align-items: center;
             z-index: 1000;
         }
-        .popup-content{
+        .popup-content {
             background-color: white;
             padding: 20px;
             border-radius: 8px;
             text-align: center;
         }
-        .confirm-btn{
+        .confirm-btn {
             background-color: #28a745;
             color: white;
         }
-        .decline-btn{
+        .decline-btn {
             background-color: #dc3545;
             color: white;
         }
-
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        
         <!-- Hidden field for JavaScript access -->
         <asp:HiddenField ID="hdnPartNumber" runat="server" />
         <asp:HiddenField ID="hdnPlantName" runat="server" />
-
-
+        
         <section class="content">
             <div class="container-fluid">
                 <!-- Header Container -->
@@ -129,8 +123,7 @@
                             </div>
                             <div class="form-group pickup-button">
                                 <div class="button-group">
-                                    <asp:Button ID="btnPickup" runat="server" Text="Pick up" CssClass="btn btn-primary" />
-                                    <asp:Button ID="btnDecline" runat="server" Text="Decline" CssClass="btn btn-secondary" />
+                                    <asp:Button ID="btnPickup" runat="server" Text="Pick up" CssClass="btn btn-primary" OnClientClick="showPopup(); return false;" />
                                 </div>
                             </div>
                         </div>
@@ -143,7 +136,7 @@
     <!-- Pop up Notification -->
     <div id="popup" class="popup">
         <div class="popup-content">
-            <p id="popupMessage">Pick up part#: <span id= "partNumber"></span><br />Ship to: <span id="plantName"></span></p>
+            <p id="popupMessage">Pick up part#: <span id="partNumber"></span><br />Ship to: <span id="plantName"></span></p>
             <button class="confirm-btn" onclick="confirmAction()">Confirm</button>
             <button class="decline-btn" onclick="declineAction()">Decline</button>
         </div>
@@ -151,27 +144,27 @@
 
     <script>
         function showPopup() {
-            //Get values from hidden fields
+            // Get values from hidden fields
             var partNumber = document.getElementById('hdnPartNumber').value;
             var plantName = document.getElementById('hdnPlantName').value;
 
-            //Set the text for the popup message
+            // Set the text for the popup message
             document.getElementById('partNumber').textContent = partNumber;
             document.getElementById('plantName').textContent = plantName;
 
-            //Show popup
+            // Show popup
             document.getElementById('popup').style.display = 'flex';
         }
 
         function confirmAction() {
             document.getElementById('popup').style.display = 'none';
+            // You can add additional actions here, such as making an AJAX call to update the status
         }
 
         function declineAction() {
             document.getElementById('popup').style.display = 'none';
+            // You can add additional actions here, such as making an AJAX call to update the status
         }
-
     </script>
-
 </body>
 </html>
