@@ -2559,14 +2559,18 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
 
         // GET RECORD FOR SHIPPING
 
-        public static Registro GetRecordByPartNumber(string partNumber)
+        public static Registro GetRecordByPartNumber(string partNumber,string plantName)
         {
             Registro record = null;
             string connectionString = ConfigurationManager.ConnectionStrings["SqlCon"].ToString();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = @"SELECT H.EntryDate_output,H.From_time_output, H.To_time_output, H.Part_number_output, H.Id_cliente_output, H.Id_planta_output, H.Id_carrier_output, H.Bill_of_Lading_output, H.Quantity_output, H.Dock_output,H.shipStatus_output, H.shipReason_output, H.shipComment_output, 
+                string query = "";
+
+                if (plantName == "Hydroform")
+                {
+                    query = @"SELECT H.EntryDate_output,H.From_time_output, H.To_time_output, H.Part_number_output, H.Id_cliente_output, H.Id_planta_output, H.Id_carrier_output, H.Bill_of_Lading_output, H.Quantity_output, H.Dock_output,H.shipStatus_output, H.shipReason_output, H.shipComment_output, 
                             C.description AS 'Cliente_output', L.description AS 'Carrier_output', P.description AS 'Plant_output'
                             FROM [dbo].[LogOutput] H
                             INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_output = C.id_cliente
@@ -2575,6 +2579,19 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
                             WHERE 
                             H.Part_number_output = @PartNumber
                             ";
+                }
+                else if (plantName == "Coatings")
+                {
+                    query = @"SELECT H.EntryDate_output_coatings AS EntryDate_output,H.From_time_output_coatings AS From_time_output, H.To_time_output_coatings AS To_time_output, H.Part_number_output_coatings AS Part_number_output, H.Id_cliente_output_coatings AS Id_cliente_output, H.Id_planta_output_coatings AS Id_planta_output, H.Id_carrier_output_coatings AS Id_carrier_output, H.Bill_of_Lading_output_coatings AS Bill_of_Lading_output, H.Quantity_output_coatings AS Quantity_output, H.Dock_output_coatings AS Dock_output,H.shipStatus_output_coatings AS shipStatus_output, H.shipReason_output_coatings AS shipReason_output, H.shipComment_output_coatings AS shipComment_output, 
+                            C.description AS 'Cliente_output', L.description AS 'Carrier_output', P.description AS 'Plant_output'
+                            FROM [dbo].[LogOutput_coatings] H
+                            INNER JOIN [dbo].[Cliente] C ON H.Id_cliente_output_coatings = C.id_cliente
+                            INNER JOIN [dbo].[Carrier] L ON H.Id_carrier_output_coatings = L.id_carrier
+                            INNER JOIN [dbo].[Planta]  P ON H.Id_planta_output_coatings = P.id_planta
+                            WHERE 
+                            H.Part_number_output_coatings = @PartNumber
+                            ";
+                }
 
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@PartNumber", partNumber);

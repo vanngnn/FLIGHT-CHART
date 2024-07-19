@@ -9,17 +9,19 @@ namespace ShippingDisplay.ShippingDisplay
         protected void Page_Load(object sender, EventArgs e)
         {
             string partNumber = Request.QueryString["partNumber"];
-
+            string plantName = Request.QueryString["plantName"];
+           
 
 
             Debug.WriteLine($"partNumber from QueryString: {partNumber}");
+            Debug.WriteLine($"plantName from QueryString: {plantName}");
 
             if (!IsPostBack)
             {
                 if (!string.IsNullOrEmpty(partNumber))
                 {
                     // Fetch the data based on the part number
-                    var record = RegistroDAL.GetRecordByPartNumber(partNumber);
+                    var record = RegistroDAL.GetRecordByPartNumber(partNumber, plantName);
                     if (record != null)
                     {
                         // Display record details including Part_number_output

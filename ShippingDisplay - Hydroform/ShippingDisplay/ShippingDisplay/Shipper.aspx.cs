@@ -46,6 +46,7 @@ namespace ShippingDisplay.ShippingDisplay
         protected void btnRegistrar_Click(object sender, EventArgs e)
         {
             string plantName = Convert.ToString(ShipperPlantDropDown.SelectedValue);
+            Session["PlantName"] = plantName;
             gvRegistros.DataSource = RegistroDAL.ListadoRegistros_Shipper(plantName);
             gvRegistros.DataBind();
         }
@@ -111,11 +112,12 @@ namespace ShippingDisplay.ShippingDisplay
                 int rowIndex = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = gvRegistros.Rows[rowIndex];
                 string partNumber = row.Cells[3].Text; // Adjust index based on your data
-
                 Debug.WriteLine($"partNumber in gvRegistros_RowCommand: {partNumber}");
 
+                string plantName= Session["PlantName"].ToString();
 
-                string url = $"http://localhost:60281/ShippingDisplay/ViewRecord.aspx?partNumber={partNumber}";
+
+                string url = $"http://localhost:60281/ShippingDisplay/ViewRecord.aspx?partNumber={partNumber}&plantName={HttpUtility.UrlEncode(plantName)}";
 
                 // Generate QR Code and update modal content
                 var qrWriter = new BarcodeWriter
