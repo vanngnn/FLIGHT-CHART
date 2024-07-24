@@ -11,7 +11,7 @@ namespace ShippingDisplay.ShippingDisplay
 {
 
 
-    public partial class ViewRecord
+    public partial class LocationHandler
     {
 
         /// <summary>
@@ -22,24 +22,6 @@ namespace ShippingDisplay.ShippingDisplay
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-
-        /// <summary>
-        /// hdnPartNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnPartNumber;
-
-        /// <summary>
-        /// hdnPlantName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnPlantName;
 
         /// <summary>
         /// hdnLatitude control.
@@ -58,23 +40,5 @@ namespace ShippingDisplay.ShippingDisplay
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnLongitude;
-
-        /// <summary>
-        /// lblRecordDetails control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRecordDetails;
-
-        /// <summary>
-        /// btnPickup control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPickup;
     }
 }

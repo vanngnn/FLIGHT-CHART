@@ -1,6 +1,6 @@
-﻿using System;
+﻿using ShippingDisplay.ShippingDisplay.DataAccess;
+using System;
 using System.Diagnostics;
-using ShippingDisplay.ShippingDisplay.DataAccess;
 
 namespace ShippingDisplay.ShippingDisplay
 {
@@ -10,8 +10,6 @@ namespace ShippingDisplay.ShippingDisplay
         {
             string partNumber = Request.QueryString["partNumber"];
             string plantName = Request.QueryString["plantName"];
-           
-
 
             Debug.WriteLine($"partNumber from QueryString: {partNumber}");
             Debug.WriteLine($"plantName from QueryString: {plantName}");
@@ -20,11 +18,9 @@ namespace ShippingDisplay.ShippingDisplay
             {
                 if (!string.IsNullOrEmpty(partNumber))
                 {
-                    // Fetch the data based on the part number
                     var record = RegistroDAL.GetRecordByPartNumber(partNumber, plantName);
                     if (record != null)
                     {
-                        // Display record details including Part_number_output
                         lblRecordDetails.Text = $@"
                             <table>
                                 <tr>
@@ -81,9 +77,8 @@ namespace ShippingDisplay.ShippingDisplay
                                 </tr>
                             </table>";
 
-                            //Set values for hidden fields
-                            hdnPartNumber.Value = record.partNumber_output;
-                            hdnPlantName.Value = record.PlantName_output;
+                        hdnPartNumber.Value = record.partNumber_output;
+                        hdnPlantName.Value = record.PlantName_output;
                     }
                     else
                     {
@@ -94,6 +89,16 @@ namespace ShippingDisplay.ShippingDisplay
                 {
                     lblRecordDetails.Text = "No part number provided.";
                 }
+            }
+            else if (IsPostBack && Request["__EVENTTARGET"] == "LocationUpdate")
+            {
+                string latitude = hdnLatitude.Value;
+                string longitude = hdnLongitude.Value;
+
+                Debug.WriteLine("Latitude: " + latitude);
+                Debug.WriteLine("Longitude: " + longitude);
+
+                // Optionally, you can process the latitude and longitude further here
             }
         }
     }

@@ -90,10 +90,16 @@
         .confirm-btn {
             background-color: #28a745;
             color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
         }
         .decline-btn {
             background-color: #dc3545;
             color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -102,6 +108,8 @@
         <!-- Hidden field for JavaScript access -->
         <asp:HiddenField ID="hdnPartNumber" runat="server" />
         <asp:HiddenField ID="hdnPlantName" runat="server" />
+        <asp:HiddenField ID="hdnLatitude" runat="server" />
+        <asp:HiddenField ID="hdnLongitude" runat="server" />
         
         <section class="content">
             <div class="container-fluid">
@@ -143,10 +151,11 @@
     </div>
 
     <script>
-        function showPopup() {
+        function showPopup()
+        {
             // Get values from hidden fields
-            var partNumber = document.getElementById('hdnPartNumber').value;
-            var plantName = document.getElementById('hdnPlantName').value;
+            var partNumber = document.getElementById('<%= hdnPartNumber.ClientID %>').value;
+            var plantName = document.getElementById('<%= hdnPlantName.ClientID %>').value;
 
             // Set the text for the popup message
             document.getElementById('partNumber').textContent = partNumber;
@@ -156,14 +165,38 @@
             document.getElementById('popup').style.display = 'flex';
         }
 
-        function confirmAction() {
+        function confirmAction()
+        {
             document.getElementById('popup').style.display = 'none';
-            // You can add additional actions here, such as making an AJAX call to update the status
+            if (navigator.geolocation)
+            {
+                navigator.geolocation.getCurrentPosition(
+                    function (position)
+                    {
+                        var latitude = position.coords.latitude;
+                        var longitude = position.coords.longitude;
+
+                        // Set latitude and longitude in hidden fields
+                        document.getElementById('<%= hdnLatitude.ClientID %>').value = latitude;
+                        document.getElementById('<%= hdnLongitude.ClientID %>').value = longitude;
+                    
+                        // Trigger postback to server
+                        __doPostBack('LocationUpdate', '');
+                    },
+                    function (error)
+                    {
+                        console.error('Error getting location:', error.message);
+                    }
+                );
+
+            } else {
+                console.log('Geolocation is not supported by this browser.');
+            }
         }
 
         function declineAction() {
             document.getElementById('popup').style.display = 'none';
-            // You can add additional actions here, such as making an AJAX call to update the status
+            // You can add additional actions here if needed
         }
     </script>
 </body>
