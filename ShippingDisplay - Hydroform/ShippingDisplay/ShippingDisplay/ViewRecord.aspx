@@ -27,26 +27,43 @@
             justify-content: center;
         }
         .header-container {
-            position: relative;
             display: flex;
             align-items: center;
             margin: 40px 0;
+            position: relative;
+            justify-content: space-between; /* Space out items */
         }
         .logo-header {
             display: flex;
             align-items: center;
-            position: absolute;
-            left: 0;
         }
         .logo-header img {
             width: 150px; /* Adjust the width as needed */
             height: auto;
         }
         .shipment-info {
-            flex: 1;
             text-align: center;
-            margin-left: 200px; /* Adjust margin to fit your design */
-            margin-right: 20px; /* Adjust margin to fit your design */
+            flex: 1;
+        }
+        .status-label {
+            display: none;
+            background-color: #17a2b8; /* Blue background for status */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            margin-left: 20px; /* Space between the label and the shipment info */
+        }
+        .location-display {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-left: 20px; /* Space between the label and the shipment info */
         }
         .button-group {
             display: flex;
@@ -121,6 +138,9 @@
                     <div class="shipment-info">
                         <h1>Shipment Information</h1>
                     </div>
+                    <div id="locationDisplay" class="location-display">
+                        Latitude: <span id="latitudeDisplay"></span> | Longitude: <span id="longitudeDisplay"></span>
+                    </div>
                 </div>
                 <div class="card card-default">
                     <div class="card card-info">
@@ -150,9 +170,11 @@
         </div>
     </div>
 
+    <!-- Status Label -->
+    <div id="statusLabel" class="status-label">In Progress</div>
+
     <script>
-        function showPopup()
-        {
+        function showPopup() {
             // Get values from hidden fields
             var partNumber = document.getElementById('<%= hdnPartNumber.ClientID %>').value;
             var plantName = document.getElementById('<%= hdnPlantName.ClientID %>').value;
@@ -165,26 +187,31 @@
             document.getElementById('popup').style.display = 'flex';
         }
 
-        function confirmAction()
-        {
+        function confirmAction() {
             document.getElementById('popup').style.display = 'none';
-            if (navigator.geolocation)
-            {
+            if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
-                    function (position)
-                    {
+                    function (position) {
                         var latitude = position.coords.latitude;
                         var longitude = position.coords.longitude;
+
+                        //Display latitude and longitude
+                        document.getElementById('latitudeDisplay').textContent = latitude;
+                        document.getElementById('longitudeDisplay').textContent = longitude;
 
                         // Set latitude and longitude in hidden fields
                         document.getElementById('<%= hdnLatitude.ClientID %>').value = latitude;
                         document.getElementById('<%= hdnLongitude.ClientID %>').value = longitude;
-                    
-                        // Trigger postback to server
-                        __doPostBack('LocationUpdate', '');
+
+                        // Hide the "Pick up" button
+                        var pickupButton = document.getElementById('<%= btnPickup.ClientID %>');
+                        pickupButton.style.display = 'none';
+
+                        // Show the status label
+                        var statusLabel = document.getElementById('statusLabel');
+                        statusLabel.style.display = 'block';
                     },
-                    function (error)
-                    {
+                    function (error) {
                         console.error('Error getting location:', error.message);
                     }
                 );
@@ -201,3 +228,4 @@
     </script>
 </body>
 </html>
+
