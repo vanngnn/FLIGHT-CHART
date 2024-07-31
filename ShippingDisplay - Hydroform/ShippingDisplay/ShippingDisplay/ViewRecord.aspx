@@ -118,6 +118,10 @@
             border: none;
             cursor: pointer;
         }
+
+        #map { height: 400px; width: 100%; }
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxyg6peFAo07Q5iosf958WzKewd-3VYnU&libraries=geometry"></script>
+
     </style>
 </head>
 <body>
@@ -187,6 +191,22 @@
             document.getElementById('popup').style.display = 'flex';
         }
 
+        function sendLocationToServer(latitude, longitude) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "ViewRecord.aspx/UpdateLocation", true);
+            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            xhr.setRequestHeader("Accept", "application/json");
+
+            var data = JSON.stringify({
+                latitude: latitude,
+                longitude: longitude
+            });
+
+            xhr.send(data);
+        }
+
+
+
         function confirmAction() {
             document.getElementById('popup').style.display = 'none';
             if (navigator.geolocation) {
@@ -210,6 +230,10 @@
                         // Show the status label
                         var statusLabel = document.getElementById('statusLabel');
                         statusLabel.style.display = 'block';
+
+                        // Call the web method to update the shipment status
+                        var shipmentId = parseInt(document.getElementById('<%= hdnPartNumber.ClientID%>').value); //Make sure this is the one that determines the shipment that we want to update
+                        updateShipmentStatus(shipmentId);
                     },
                     function (error) {
                         console.error('Error getting location:', error.message);
@@ -221,10 +245,135 @@
             }
         }
 
+        function updateShipmentStatus(shipmentId) {
+                $.ajax({
+                type: 'POST',
+                url: 'ViewRecord.aspx/UpdateShipmentStatus',
+                data: JSON.stringify({ shipmentId: shipmentId }),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    console.log('Status updated successfully.');
+                    window.location.href = "Shipper.aspx";
+                },
+                error: function (error) {
+                    console.error('Error updating shipment status:', error);
+                }
+            });
+        
+        }
+
+
         function declineAction() {
             document.getElementById('popup').style.display = 'none';
             // You can add additional actions here if needed
         }
+
+        let map, userMarker, fromMarker, toMarker;
+        const fromCoordinates = {
+            LogOutput: { lat: 43.751838, lng: -79.7112873 },
+            LogOutput_coatings: { lat: 43.6930758, lng: -79.6016076 }
+        };
+
+        const toCoordinates = {
+            Hydroform: { lat: 43.751838, lng: -79.7112873 },
+            Coatings: { lat: 43.6930758, lng: -79.6016076 }
+        };
+
+        const RADIUS = 5000; // 5 km
+
+        function initMap()
+        {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 43.751838, lng: -79.7112873 }, //Hydroform
+                zoom: 10,
+            });
+
+            //Get source and plant name from hidden fields
+            const dataSource = '<%= hdnPartNumber.Value %>'; //LogOutput or LogOutput_coatings - depend on the part number dragged from which plant
+            const plantName = '<%= hdnPlantName.Value %>'; //Hydroform or Coatings
+
+            fromMarker = new google.maps.Marker({
+                position: fromCoordinates[dataSource],
+                map: map,
+                title: 'From'
+            });
+
+            toMarker = new google.maps.Marker({
+                position: toCoordinates[plantName],
+                map: map,
+                title: 'To'
+            });
+
+            const geofenceCircle = new google.maps.Circle({
+                strokeColor: "#FF0000",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#FF0000",
+                fillOpacity: 0.35,
+                map: map,
+                center: fromCoordinates[dataSource],
+                radius: RADIUS,
+            });
+
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(updateUserLocation);
+            } else {
+                console.log('Geolocation is not supported by this browser.');
+            }
+        }
+
+        function UpdateLocation(position) {
+            const userLatLng = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            if (!userMar) {
+                userMarker = new google.maps.Marker({
+                    position: userLatLng,
+                    map: map,
+                    title: 'You are here'
+                });
+            } else {
+                userMarker.setPosition(userLatLng);
+            }
+
+            const plantName = '<%= hdnPlantName.Value %>';
+            const plantLatlng = toCoordinates[plantName];
+
+            const distance = google.maps.geometry.spherical.computeDistanceBetween(
+                new google.maps.LatLng(userLatLng),
+                new google.maps.LatLng(plantLatlng)
+            );
+
+            if (distance <= RADIUS) {
+               // User is within the geofence
+                console.log('User is within the geofence');
+                sendEmailNotification('within');
+            } else {
+                // User is outside the geofence
+                console.log('User is outside the geofence');
+                sendEmailNotification('outside');
+            }
+        }
+
+        function sendEmailNotification(status) {
+            $.ajax({
+                type: 'POST',
+                url: 'ViewRecord.aspx/SendEmailNotification',
+                data: JSON.stringify({ status: status }),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    console.log('Email sent response:', response.d);
+                },
+                error: function (error) {
+                    console.error('Error sending email:', error);
+                }
+            });
+        }
+
     </script>
 </body>
 </html>

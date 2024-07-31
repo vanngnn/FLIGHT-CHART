@@ -163,8 +163,8 @@ namespace ShippingDisplay.ShippingDisplay.DataAccess
             {
                 conn.Open();
                 string query = @"select U.id_user, U.nombre, U.usuario, U.email, P.description as 'Planta', A.description as 'Area',
-                            case when U.activo= 1 then 'Activo' 
-                            when U.activo=0 then 'Inactivo' end status, U.fec_mod
+                            case when U.activo= 1 then 'Active' 
+                            when U.activo=0 then 'Inactive' end status, U.fec_mod
                             from Usuarios U
                             INNER JOIN Planta P on U.id_planta = P.id_planta
                             INNER JOIN Departamento A on U.id_depto = A.id_dept";

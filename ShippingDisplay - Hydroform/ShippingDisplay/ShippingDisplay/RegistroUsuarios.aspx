@@ -6,7 +6,6 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="refresh" content="30" />
     <link rel="icon" type="image/png" href="Template/img/martinrea_logo.png"/>
     <title>Shipping Display</title>
     <!-- Google Font: Source Sans Pro -->
@@ -427,7 +426,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h5>Perfiles</h5>
+                        <h5>Profiles</h5>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -498,7 +497,7 @@
                                     <div class="form-group row">
                                         <label for="inputExperience" class="col-sm-2 col-form-label">E-mail:</label>
                                         <div class="col-sm-10">
-                                            <asp:TextBox ID="txtEmail" class="form-control" runat="server" placeholder="Ejm: juan.perez@martinrea.com" TextMode="Email" />
+                                            <asp:TextBox ID="txtEmail" class="form-control" runat="server" placeholder="Ex: juan.perez@martinrea.com" TextMode="Email" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -519,7 +518,7 @@
                                                 <label>Status: </label>
                                                     <asp:RadioButtonList ID="rbActivo" runat="server" RepeatDirection="Horizontal">
                                                              <asp:ListItem text="YES" Value=1></asp:ListItem>
-                                                             <asp:ListItem text="NOT" Value=0></asp:ListItem>
+                                                             <asp:ListItem text="NO" Value=0></asp:ListItem>
                                                     </asp:RadioButtonList>
                                             </div>
                                         </div>

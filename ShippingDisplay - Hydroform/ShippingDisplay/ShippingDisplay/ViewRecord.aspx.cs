@@ -1,6 +1,10 @@
 ﻿using ShippingDisplay.ShippingDisplay.DataAccess;
 using System;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Net.Mail;
+using System.Web.Services;
 
 namespace ShippingDisplay.ShippingDisplay
 {
@@ -99,6 +103,63 @@ namespace ShippingDisplay.ShippingDisplay
                 Debug.WriteLine("Longitude: " + longitude);
 
                 // Optionally, you can process the latitude and longitude further here
+            }
+        }
+
+        [WebMethod]
+        public static void UpdateLocation(string latitude, string longitude)
+        {
+            // Optionally process latitude and longitude
+            Debug.WriteLine("Received Latitude: " + latitude);
+            Debug.WriteLine("Received Longitude: " + longitude);
+        }
+
+        [WebMethod]
+        public static void SendEmailNotification(string status)
+        {
+            string toEmail = "vhbnguye@gmail.com";
+            string subject = status == "within" ? "Shipment Status Update: Within Geofence" : "Shipment Status Update: Outside Geofence";
+            string body = status == "within"
+                ? "The shipment has arrived within the geofence radius."
+                : "The shipment is outside the geofence radius.";
+
+            try
+            {
+                using (MailMessage mail = new MailMessage())
+                {
+                    mail.From = new MailAddress("vhbnguye@gmail.com");
+                    mail.To.Add(toEmail);
+                    mail.Subject = subject;
+                    mail.Body = body;
+                    mail.IsBodyHtml = true;
+
+                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtp.Credentials = new System.Net.NetworkCredential("vhbnguye@gmail.com", "giangvuvan"); // Use App Password here
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error sending email: " + ex.Message);
+            }
+        }
+
+        [WebMethod]
+        public static void UpdateShipmentStatus(int shipmentId)
+        {
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            {
+                string query = "UPDATE LogOutput SET shipStatus_output = @status WHERE shipmentId = @id";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@status", "In Progress");
+                    cmd.Parameters.AddWithValue("@id", shipmentId);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
     }
