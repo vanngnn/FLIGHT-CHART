@@ -111,12 +111,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="NEW STUFF\DAILYLOG_INPUT.aspx" />
-    <Content Include="NEW STUFF\DAILYLOG_OUTPUT.aspx" />
-    <Content Include="NEW STUFF\DASHBOARD.aspx" />
-    <Content Include="NEW STUFF\REGISTERUSER.aspx" />
-    <Content Include="NEW STUFF\REPORTS.aspx" />
-    <Content Include="NEW STUFF\SHIPMENT.aspx" />
     <Content Include="ShippingDisplay\CONTROLPANEL.aspx" />
     <Content Include="ShippingDisplay\DAILYINPUT_DOCK1.aspx" />
     <Content Include="ShippingDisplay\DAILYINPUT_DOCK1_COATINGS.aspx" />
@@ -149,7 +143,6 @@
     <Content Include="ShippingDisplay\DASHBOARD_DOCK4_COATINGS.aspx" />
     <Content Include="ShippingDisplay\DASHBOARD_DOCK5.aspx" />
     <Content Include="ShippingDisplay\DASHBOARD_DOCK6.aspx" />
-    <Content Include="NEW STUFF\SHIPPER.aspx" />
     <Content Include="ShippingDisplay\Dashboard.aspx" />
     <Content Include="ShippingDisplay\login.aspx" />
     <Content Include="ShippingDisplay\RegistroEntrada.aspx" />

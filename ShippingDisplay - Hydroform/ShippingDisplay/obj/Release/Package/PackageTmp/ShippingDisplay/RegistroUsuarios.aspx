@@ -28,19 +28,8 @@
     <link rel="stylesheet" href="template/plugins/daterangepicker/daterangepicker.css" />
     <!-- summernote -->
     <link rel="stylesheet" href="template/plugins/summernote/summernote-bs4.min.css" />
-    <script type = "text/javascript">
-        function DisableButton()
-        {
-            document.getElementById("<%=btnGuardar.ClientID %>").disabled = true;
-        }
-        window.onbeforeunload = DisableButton;
-        function isDelete() {
-            var r = confirm("En realidad deseas eliminarlo?");
-            return r;
-        }
-    </script>
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini sidebar-collapse">
     
 <div class="wrapper">
     <!-- Preloader -->
@@ -55,7 +44,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="Dashboard.aspx" class="nav-link">Inicio</a>
+                <a href="Dashboard.aspx" class="nav-link">Dashboard</a>
             </li>
         </ul>
         <!-- Right navbar links -->
@@ -85,38 +74,320 @@
                     <img src="Template/dist/img/user_icon.png" class="img-circle elevation-2" alt="User Image" />
                 </div>
                 <div class="info">
-                    <span class="brand-text font-weight-light"><asp:Label ID="lblNombre" runat="server" Text="Usuario" ForeColor ="White"></asp:Label></span>
+                    <span class="brand-text font-weight-light"><asp:Label ID="lblNombre" runat="server" Text="Username" ForeColor ="White"></asp:Label></span>
                 </div>
             </div>
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkDash" NavigateUrl="Dashboard.aspx" runat="server" Visible="true"  class="nav-link"> 
-                            <i class="nav-icon fas fa-tachometer-alt"></i><p>Dashboard</p>
+                        <asp:HyperLink ID="LinkControlPanel" NavigateUrl="CONTROLPANEL.aspx" runat="server" Visible="true"  class="nav-link active">
+                            <i class="nav-icon fas fa-solar-panel"></i><p>Control Panel</p>
                         </asp:HyperLink>
                     </li>
+
                     <li class="nav-item">
-                        <asp:HyperLink ID="LinkDashEmb" NavigateUrl="DashboardV1.aspx" runat="server" Visible="true"  class="nav-link"> 
-                            <i class="nav-icon fas fa-ellipsis-h"></i><p>Embarques</p>
+                        <asp:HyperLink ID="HyperLink1" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>Dashboard<i class="fas fa-angle-left right"></i></p>
                         </asp:HyperLink>
-                    </li>
-                    <li class="nav-item">
-                        <asp:HyperLink ID="LinkConfig" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
-                            <i class="nav-icon fas fa-edit"></i><p>Registro<i class="fas fa-angle-left right"></i></p>
-                        </asp:HyperLink>
+    
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegEntry" NavigateUrl="RegistroEntrada.aspx" runat="server" Visible="true"  class="nav-link"> 
-                                    <i class="far fa-circle nav-icon"></i><p>Entrada</p>
+                                <asp:HyperLink ID="linkhydroform" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>HYDROFORM<i class="fas fa-angle-left right"></i></p>
                                 </asp:HyperLink>
+
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkDash" NavigateUrl="Dashboard.aspx" runat="server" Visible="true" class="nav-link">
+                                            <p>All</p>
+                                        </asp:HyperLink>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkDock1_hfs" NavigateUrl="DASHBOARD_DOCK1.aspx" runat="server" Visible="true" class="nav-link">
+                                            <p>DOCK 1</p>
+                                        </asp:HyperLink>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkDock2_hfs" NavigateUrl="DASHBOARD_DOCK2.aspx" runat="server" Visible="true" class="nav-link">
+                                            <p>DOCK 2</p>
+                                        </asp:HyperLink>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="HyperLink2" NavigateUrl="DASHBOARD_DOCK3.aspx" runat="server" Visible="true" class="nav-link">
+                                            <p>DOCK 3</p>
+                                        </asp:HyperLink>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="dashboard_dock4" NavigateUrl="DASHBOARD_DOCK4.aspx" runat="server" Visible="true" class="nav-link">
+                                            <p>DOCK 4</p>
+                                        </asp:HyperLink>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="dashboard_dock5" NavigateUrl="DASHBOARD_DOCK5.aspx" runat="server" Visible="true" class="nav-link">
+                                            <p>DOCK 5</p>
+                                        </asp:HyperLink>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="dashboard_dock6" NavigateUrl="DASHBOARD_DOCK6.aspx" runat="server" Visible="true" class="nav-link">
+                                            <p>DOCK 6</p>
+                                        </asp:HyperLink>
+                                    </li>
+                                </ul>
                             </li>
+        
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegOut" NavigateUrl="RegistroSalida.aspx" runat="server" Visible="true"  class="nav-link" > 
-                                    <i class="far fa-circle nav-icon"></i><p>Salida</p>
+                                <asp:HyperLink ID="HyperLink3" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>COATINGS<i class="fas fa-angle-left right"></i></p>
                                 </asp:HyperLink>
+
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="HyperLink5" NavigateUrl="Dashboard_COATINGS.aspx" runat="server" Visible="true" class="nav-link">
+                                            <p>All</p>
+                                        </asp:HyperLink>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="HyperLink6" NavigateUrl="DASHBOARD_DOCK1_COATINGS.aspx" runat="server" Visible="true" class="nav-link">
+                                            <p>DOCK 1</p>
+                                        </asp:HyperLink>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="HyperLink7" NavigateUrl="DASHBOARD_DOCK2_COATINGS.aspx" runat="server" Visible="true" class="nav-link">
+                                            <p>DOCK 2</p>
+                                        </asp:HyperLink>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="HyperLink8" NavigateUrl="DASHBOARD_DOCK3_COATINGS.aspx" runat="server" Visible="true" class="nav-link">
+                                            <p>DOCK 3</p>
+                                        </asp:HyperLink>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="HyperLink9" NavigateUrl="DASHBOARD_DOCK4_COATINGS.aspx" runat="server" Visible="true" class="nav-link">
+                                            <p>DOCK 4</p>
+                                        </asp:HyperLink>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </li>
+
+                    <li class="nav-item">
+                        <asp:HyperLink ID="HyperLink4" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
+                            <i class="nav-icon fas fa-ellipsis-h"></i><p>Shipments<i class="fas fa-angle-left right"></i></p>
+                        </asp:HyperLink>
+
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <asp:HyperLink ID="shipment_hydroform" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i><p>HYDROFORM<i class="fas fa-angle-left right"></i></p>
+                                </asp:HyperLink>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkShipIn" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i><p>Inputs<i class="fas fa-angle-left right"></i></p>
+                                        </asp:HyperLink>
+
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyinput_dock1" NavigateUrl="~/ShippingDisplay/DAILYINPUT_DOCK1.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 1</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyinput_dock2" NavigateUrl="~/ShippingDisplay/DAILYINPUT_DOCK2.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 2</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyinput_dock3" NavigateUrl="~/ShippingDisplay/DAILYINPUT_DOCK3.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 3</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyinput_dock4" NavigateUrl="~/ShippingDisplay/DAILYINPUT_DOCK4.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 4</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyinput_dock5" NavigateUrl="~/ShippingDisplay/DAILYINPUT_DOCK5.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 5</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyinput_dock6" NavigateUrl="~/ShippingDisplay/DAILYINPUT_DOCK6.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 6</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkShipOut" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i><p>Outputs<i class="fas fa-angle-left right"></i></p>
+                                        </asp:HyperLink>
+
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyoutput_dock1" NavigateUrl="~/ShippingDisplay/DAILYOUTPUT_DOCK1.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 1</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyoutput_dock2" NavigateUrl="~/ShippingDisplay/DAILYOUTPUT_DOCK2.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 2</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyoutput_dock3" NavigateUrl="~/ShippingDisplay/DAILYOUTPUT_DOCK3.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 3</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyoutput_dock4" NavigateUrl="~/ShippingDisplay/DAILYOUTPUT_DOCK4.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 4</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyoutput_dock5" NavigateUrl="~/ShippingDisplay/DAILYOUTPUT_DOCK5.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 5</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyoutput_dock6" NavigateUrl="~/ShippingDisplay/DAILYOUTPUT_DOCK6.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 6</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item">
+                                <asp:HyperLink ID="shipment_coatings" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i><p>COATINGS<i class="fas fa-angle-left right"></i></p>
+                                </asp:HyperLink>
+
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="HyperLink10" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i><p>Inputs<i class="fas fa-angle-left right"></i></p>
+                                        </asp:HyperLink>
+
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyinput_dock1_coatings" NavigateUrl="~/ShippingDisplay/DAILYINPUT_DOCK1_COATINGS.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 1</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyinput_dock2_coatings" NavigateUrl="~/ShippingDisplay/DAILYINPUT_DOCK2_COATINGS.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 2</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyinput_dock3_coatings" NavigateUrl="~/ShippingDisplay/DAILYINPUT_DOCK3_COATINGS.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 3</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyinput_dock4_coatings" NavigateUrl="~/ShippingDisplay/DAILYINPUT_DOCK4_COATINGS.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 4</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="HyperLink15" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i><p>Outputs<i class="fas fa-angle-left right"></i></p>
+                                        </asp:HyperLink>
+
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyoutput_dock1_coatings" NavigateUrl="~/ShippingDisplay/DAILYOUTPUT_DOCK1_COATINGS.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 1</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyoutput_dock2_coatings" NavigateUrl="~/ShippingDisplay/DAILYOUTPUT_DOCK2_COATINGS.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 2</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyoutput_dock3_coatings" NavigateUrl="~/ShippingDisplay/DAILYOUTPUT_DOCK3_COATINGS.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 3</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <asp:HyperLink ID="dailyoutput_dock4_coatings" NavigateUrl="~/ShippingDisplay/DAILYOUTPUT_DOCK4_COATINGS.aspx" runat="server" Visible="true" class="nav-link">
+                                                    <p>DOCK 4</p>
+                                                </asp:HyperLink>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>                  
+
+                    <li class="nav-item">
+                        <asp:HyperLink ID="LinkConfig" NavigateUrl="#" runat="server" Visible="true"  class="nav-link"> 
+                            <i class="nav-icon fas fa-edit"></i><p>Daily Log<i class="fas fa-angle-left right"></i></p>
+                        </asp:HyperLink>
+
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <asp:HyperLink ID="dailylog_input_coatings" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i><p>HYDROFORM<i class="fas fa-angle-left right"></i></p>
+                                </asp:HyperLink>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkRegEntry" NavigateUrl="RegistroEntrada.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                            <i class="far fa-circle nav-icon"></i><p>Inputs</p>
+                                        </asp:HyperLink>
+                                    </li>
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkRegOut" NavigateUrl="RegistroSalida.aspx" runat="server" Visible="true"  class="nav-link" > 
+                                            <i class="far fa-circle nav-icon"></i><p>Outputs</p>
+                                        </asp:HyperLink>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item">
+                                <asp:HyperLink ID="dailylog_output_coatings" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i><p>COATINGS<i class="fas fa-angle-left right"></i></p>
+                                </asp:HyperLink>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkRegEntry_coatings" NavigateUrl="RegistroEntrada_Coatings.aspx" runat="server" Visible="true"  class="nav-link"> 
+                                            <i class="far fa-circle nav-icon"></i><p>Inputs</p>
+                                        </asp:HyperLink>
+                                    </li>
+                                    <li class="nav-item">
+                                        <asp:HyperLink ID="LinkRegOut_coatings" NavigateUrl="RegistroSalida_Coatings.aspx" runat="server" Visible="true"  class="nav-link" > 
+                                            <i class="far fa-circle nav-icon"></i><p>Outputs</p>
+                                        </asp:HyperLink>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
                     <li class="nav-item">
                         <asp:HyperLink ID="LinkShipper" NavigateUrl="Shipper.aspx" runat="server" Visible="true"  class="nav-link"> 
                             <i class="nav-icon fas fa-book"></i><p>Shipper</p>
@@ -124,30 +395,24 @@
                     </li>
                     <li class="nav-item">
                         <asp:HyperLink ID="LinkReport" NavigateUrl="Reportes.aspx" runat="server" Visible="true"  class="nav-link"> 
-                            <i class="nav-icon far fa-calendar-alt"></i><p>Reportes</p>
+                            <i class="nav-icon far fa-calendar-alt"></i><p>Reports</p>
                         </asp:HyperLink>
                     </li>
-                    <li class="nav-item menu-open">
-                        <a href="#" class="nav-link"><i class="nav-icon fa fa-cog"></i><p>Configuración<i class="fas fa-angle-left right"></i></p></a>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link"><i class="nav-icon fa fa-cog"></i><p>Configuration<i class="fas fa-angle-left right"></i></p></a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <asp:HyperLink ID="LinkRegister" NavigateUrl="RegistroUsuarios.aspx" runat="server" Visible="true" class="nav-link active">
-                                    <i class="nav-icon fa fa-user-plus"></i><p>Perfil de usuarios</p>
-                                </asp:HyperLink>
-                            </li>
-                            <li class="nav-item">
-                                <asp:HyperLink ID="LinkPerfil" NavigateUrl="#" runat="server" Visible="true" class="nav-link">
-                                    <i class="nav-icon fa fa-user"></i><p>Mi perfil</p>
+                                <asp:HyperLink ID="LinkRegister" NavigateUrl="RegistroUsuarios.aspx" runat="server" Visible="true" class="nav-link">
+                                    <i class="nav-icon fa fa-user-plus"></i><p>Users profiles</p>
                                 </asp:HyperLink>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <asp:LinkButton ID="LinkSalir" runat="server"  class="nav-link" OnClick="LinkSalir_Click" >
-                            <i class="nav-icon ion-log-out"></i><p>Salir</p>
+                        <asp:LinkButton ID="LinkSalir" runat="server" OnClick="LinkSalir_Click"  class="nav-link">
+                            <i class="nav-icon fa ion-log-out"></i><p>Log out</p>
                         </asp:LinkButton>
                     </li>
-              
                 </ul>
             </nav>
         </div>
@@ -161,12 +426,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h5>Perfiles</h5>
+                        <h5>Profiles</h5>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Registro de Usuarios</li>
+                            <li class="breadcrumb-item active">Users</li>
                         </ol>
                     </div>
                 </div>
@@ -182,8 +447,8 @@
 					            <div class="text-center">
 					                <img class="profile-user-img img-fluid img-circle" src="Template/dist/img/UserAdd.png" alt="User profile picture" />
 					            </div>
-					            <h3 class="profile-username text-center"><asp:Label ID="txtNameUsr" runat="server" placeholder="Nombre"/></h3>
-					            <p class="text-muted text-center"><asp:Label ID="txtUser" runat="server" placeholder="Usuario"/></p>
+					            <h3 class="profile-username text-center"><asp:Label ID="txtNameUsr" runat="server" placeholder="Name"/></h3>
+					            <p class="text-muted text-center"><asp:Label ID="txtUser" runat="server" placeholder="Username"/></p>
 					            <ul class="list-group list-group-unbordered mb-3">
 					                <li class="list-group-item">
 						                <b></b> <a class="float-right"></a>
@@ -204,22 +469,22 @@
                         <div class="card">
                             <div class="card-header p-2">
                                 <ul class="nav nav-pills">
-                                    <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Usuarios</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Users</a></li>
                                 </ul>
                             </div>
                             <div class="card-body">
                             <div class="tab-content">
                                 <div class="active tab-pane" id="activity">
                                     <div class="form-group row">
-                                        <label for="inputName" class="col-sm-2 col-form-label">Nombre</label>
+                                        <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                                         <div class="col-sm-10">
-                                            <asp:TextBox ID="txtNombre" class="form-control" runat="server" placeholder="Nombre"/>
+                                            <asp:TextBox ID="txtNombre" class="form-control" runat="server" placeholder="Name"/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputEmail" class="col-sm-2 col-form-label">Usuario</label>
+                                        <label for="inputEmail" class="col-sm-2 col-form-label">User</label>
                                         <div class="col-sm-10">
-                                             <asp:TextBox ID="txtUsuario" class="form-control" runat="server" placeholder="Usuario"/>
+                                             <asp:TextBox ID="txtUsuario" class="form-control" runat="server" placeholder="Username"/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -230,19 +495,19 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputExperience" class="col-sm-2 col-form-label">Correo Electrónico</label>
+                                        <label for="inputExperience" class="col-sm-2 col-form-label">E-mail:</label>
                                         <div class="col-sm-10">
-                                            <asp:TextBox ID="txtEmail" class="form-control" runat="server" placeholder="Ejm: juan.perez@martinrea.com" TextMode="Email" />
+                                            <asp:TextBox ID="txtEmail" class="form-control" runat="server" placeholder="Ex: juan.perez@martinrea.com" TextMode="Email" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputSkills" class="col-sm-2 col-form-label">Planta</label>
+                                        <label for="inputSkills" class="col-sm-2 col-form-label">Plant</label>
                                         <div class="col-sm-10">
                                             <asp:DropDownList ID="dblPlanta" class="form-control" runat="server"></asp:DropDownList>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputSkills" class="col-sm-2 col-form-label">Departamento</label>
+                                        <label for="inputSkills" class="col-sm-2 col-form-label">Department</label>
                                         <div class="col-sm-10">
                                             <asp:DropDownList ID="dblDepartamento" class="form-control" runat="server"></asp:DropDownList>
                                         </div>
@@ -250,9 +515,9 @@
                                     <div class="form-group row">
                                         <div class="offset-sm-2 col-sm-10">
                                             <div class="checkbox">
-                                                <label>Activo: </label>
+                                                <label>Status: </label>
                                                     <asp:RadioButtonList ID="rbActivo" runat="server" RepeatDirection="Horizontal">
-                                                             <asp:ListItem text="SI" Value=1></asp:ListItem>
+                                                             <asp:ListItem text="YES" Value=1></asp:ListItem>
                                                              <asp:ListItem text="NO" Value=0></asp:ListItem>
                                                     </asp:RadioButtonList>
                                             </div>
@@ -260,7 +525,7 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="offset-sm-2 col-sm-10">
-                                            <asp:Button ID="btnGuardar" Text="Guardar" CssClass="btn btn-success"  runat="server" OnClick="btnGuardar_Click" />
+                                            <asp:Button ID="btnGuardar" Text="Save" CssClass="btn btn-success"  runat="server" OnClick="btnGuardar_Click" />
                                         </div>
                                     </div>
                                 </div>
@@ -274,27 +539,27 @@
                 <div class="col-md-12">
                     <div class="card card-outline card-info">
                         <div class="card-header">
-                            <h3 class="card-title">Listado de usuarios</h3>
+                            <h3 class="card-title">User list</h3>
                         </div>
                         <div class="card-body">
                             <asp:GridView ID="gvUsuarios" runat="server"  AutoGenerateColumns="false" DataKeyNames="Id_user" class="table table-bordered table-striped" OnRowCommand="gvUsuarios_RowCommand" >
                                 <Columns>
                                     <asp:BoundField HeaderText="ID" DataField="Id_user" />
-                                    <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
-                                    <asp:BoundField HeaderText="Usuario" DataField="User" />    
-                                    <asp:BoundField HeaderText="Correo" DataField="Email" />
-                                    <asp:BoundField HeaderText="Planta" DataField="DesPlanta" />
-                                    <asp:BoundField HeaderText="Departamento" DataField="DesDepto" />
-                                    <asp:BoundField HeaderText="Fec_Mod" DataField="Fec_mod" />
-                                    <asp:BoundField HeaderText="Estatus" DataField="Status" />
+                                    <asp:BoundField HeaderText="Name" DataField="Nombre" />
+                                    <asp:BoundField HeaderText="Username" DataField="User" />    
+                                    <asp:BoundField HeaderText="Email" DataField="Email" />
+                                    <asp:BoundField HeaderText="Plant" DataField="DesPlanta" />
+                                    <asp:BoundField HeaderText="Department" DataField="DesDepto" />
+                                    <asp:BoundField HeaderText="Updated" DataField="Fec_mod" />
+                                    <asp:BoundField HeaderText="Status" DataField="Status" />
                                     <asp:TemplateField>
                                         <ItemTemplate>
-                                            <asp:Button text="Editar" CommandName="Editar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-primary" />
+                                            <asp:Button text="Edit" CommandName="Editar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-primary" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField>
                                         <ItemTemplate>
-                                            <asp:Button text="Eliminar" CommandName="Eliminar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-danger" OnClientClick="return isDelete();" />
+                                            <asp:Button text="Delete" CommandName="Eliminar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" runat="server" CssClass="btn btn-danger" OnClientClick="return isDelete();" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>

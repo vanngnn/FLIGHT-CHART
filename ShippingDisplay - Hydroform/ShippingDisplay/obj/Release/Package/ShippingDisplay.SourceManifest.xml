@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <IisApp path="C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN 3\FLIGHT-CHART\ShippingDisplay - Hydroform\ShippingDisplay\obj\Release\Package\PackageTmp" managedRuntimeVersion="v4.0" />
+  <setAcl path="C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN 3\FLIGHT-CHART\ShippingDisplay - Hydroform\ShippingDisplay\obj\Release\Package\PackageTmp" setAclResourceType="Directory" />
+  <setAcl path="C:\Users\nguye\Documents\1B - MARTINREA PROJECTS\FLIGHT CHART VAN 3\FLIGHT-CHART\ShippingDisplay - Hydroform\ShippingDisplay\obj\Release\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
+</sitemanifest>

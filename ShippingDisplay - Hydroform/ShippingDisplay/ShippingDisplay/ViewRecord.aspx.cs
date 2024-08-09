@@ -148,15 +148,16 @@ namespace ShippingDisplay.ShippingDisplay
         }
 
         [WebMethod]
-        public static void UpdateShipmentStatus(int shipmentId)
+        public static void UpdateShipmentStatus(string shipmentId, string tableName)
         {
-            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlCon"].ToString()))
+            string connectionString = ConfigurationManager.ConnectionStrings["SqlCon"].ToString();
+            string query = $"UPDATE {tableName} SET shipStatus = 'In Progress' WHERE PartNumber = @PartNumber";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "UPDATE LogOutput SET shipStatus_output = @status WHERE shipmentId = @id";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@status", "In Progress");
-                    cmd.Parameters.AddWithValue("@id", shipmentId);
+                    cmd.Parameters.AddWithValue("@PartNumber", shipmentId);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }

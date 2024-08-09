@@ -24,13 +24,14 @@
             <div class="card-header text-center">
                 <img src="Template/img/martinrea_logo.png" width="200px" height="200px" />
                 <a href="login.aspx" class="h1"><b>MARTINREA</b></a>
+                <br/><b>Hydroform</b>
                 <br/><b>SHIPPING DISPLAY</b>
             </div>
             <div class="card-body">
 
                 <form id="form1" runat="server">
                     <div class="input-group mb-3">
-                        <asp:TextBox ID="txtUsuario" runat="server"  class="form-control" placeholder="Usuario"></asp:TextBox>
+                        <asp:TextBox ID="txtUsuario" runat="server"  class="form-control" placeholder="Username"></asp:TextBox>
                         <%--<input type="email" class="form-control" placeholder="Email" />--%>
                         <div class="input-group-append">
                             <div class="input-group-text">
@@ -39,7 +40,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <asp:TextBox ID="txtPassword" runat="server"  class="form-control" placeholder="Contraseña"  type="password"></asp:TextBox>
+                        <asp:TextBox ID="txtPassword" runat="server"  class="form-control" placeholder="Password"  type="password"></asp:TextBox>
                         <%--<input type="password" class="form-control" placeholder="Password" />--%>
                             <div class="input-group-append">
                                 <div class="input-group-text">
@@ -49,7 +50,7 @@
                     </div>
                     <div class="social-auth-links text-center mt-2 mb-3">
                         <a href="#" class="btn btn-block btn-primary">
-                        <asp:Button ID="btnLogin" runat="server" Text="INICIAR"  class="btn btn-block btn-primary" OnClick="btnLogin_Click"/>
+                        <asp:Button ID="btnLogin" runat="server" Text="Login"  class="btn btn-block btn-primary" OnClick="btnLogin_Click"/>
                         </a>
             </div>
             </form>

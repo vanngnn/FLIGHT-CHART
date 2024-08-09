@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="SqlCon-Web.config Connection String" description="SqlCon Connection String used in web.config by the application to access the database." defaultValue="Data Source=DESKTOP-QQPE8EM\SQL2023;Initial Catalog=ShippingDisplayH; User Id=test;Password='Test2024...'; Connection Timeout=15;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\nguye\\Documents\\1B\ -\ MARTINREA\ PROJECTS\\FLIGHT\ CHART\ VAN\ 3\\FLIGHT-CHART\\ShippingDisplay\ -\ Hydroform\\ShippingDisplay\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SqlCon']/@connectionString" />
+  </parameter>
+</parameters>
